@@ -1,0 +1,8 @@
+{
+    "skipValidateSpec": true,
+    "enablePostProcessFile": true,
+    "additionalProperties": {
+        "supportsES6": true,
+        "withoutRuntimeChecks": true
+    }
+}
