@@ -5,6 +5,7 @@
         "module": "ESNext",
         "lib": ["ESNext", "DOM"],
         "moduleResolution": "Node",
+        "outDir": "dist",
         "strict": true,
         "sourceMap": true,
         "resolveJsonModule": true,
@@ -14,8 +15,14 @@
         "noUnusedLocals": false,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "skipLibCheck": false
+        "skipLibCheck": false,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./*"],
+            "@generated/*": ["./openapi/generated/*"],
+            "@generated": ["./openapi/generated/index"]
+        }
     },
     "include": ["src"],
-    "exclude": ["**/*.test.ts", "node_modules", "test/**"]
+    "exclude": ["**/*.test.ts", "node_modules", "test/**", "types"]
 }

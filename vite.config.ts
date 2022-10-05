@@ -1,6 +1,7 @@
 import path from 'path';
 import { defineConfig } from 'vite';
 import packageJson from './package.json';
+import dts from 'vite-plugin-dts';
 
 const getPackageName = () => {
     return packageJson.name.split('/').slice(-1)[0];
@@ -22,6 +23,13 @@ const fileName = {
 
 module.exports = defineConfig({
     base: './',
+    resolve: {
+        // alias: [{ find: /^@\/(.+)/, replacement: resolve(__dirname, '$1') }]
+        alias: {
+            '@': path.resolve(__dirname),
+            '@generated': path.resolve(__dirname, 'openapi/generated'),
+        },
+    },
     build: {
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
@@ -31,4 +39,18 @@ module.exports = defineConfig({
         },
         sourcemap: true,
     },
+    plugins: [
+        dts({
+            outputDir: ['dist' /*, 'types'*/],
+            // include: ['src/index.ts'],
+            // exclude: ['src/ignore'],
+            // aliasesExclude: [/^@components/],
+            copyDtsFiles: false,
+            staticImport: true,
+            skipDiagnostics: false,
+            logDiagnostics: true,
+            // rollupTypes: true,
+            insertTypesEntry: true,
+        }),
+    ],
 });

@@ -14,7 +14,7 @@ export interface ApiError {
     message?: string | null;
 }
 /**
- * 
+ *
  * @export
  * @interface ApiErrorOfCreateOfferConflictErrorData
  */
@@ -26,27 +26,27 @@ export interface ApiErrorOfCreateOfferConflictErrorData {
      */
     message?: string | null;
     /**
-     * 
+     *
      * @type {CreateOfferConflictErrorData}
      * @memberof ApiErrorOfCreateOfferConflictErrorData
      */
     errorData?: CreateOfferConflictErrorData;
 }
 /**
- * 
+ *
  * @export
  * @interface ApiErrorOfCreateOfferConflictErrorDataAllOf
  */
 export interface ApiErrorOfCreateOfferConflictErrorDataAllOf {
     /**
-     * 
+     *
      * @type {CreateOfferConflictErrorData}
      * @memberof ApiErrorOfCreateOfferConflictErrorDataAllOf
      */
     errorData?: CreateOfferConflictErrorData;
 }
 /**
- * 
+ *
  * @export
  * @interface ApiErrorOfCreateOfferLimitReachedErrorData
  */
@@ -58,20 +58,20 @@ export interface ApiErrorOfCreateOfferLimitReachedErrorData {
      */
     message?: string | null;
     /**
-     * 
+     *
      * @type {CreateOfferLimitReachedErrorData}
      * @memberof ApiErrorOfCreateOfferLimitReachedErrorData
      */
     errorData?: CreateOfferLimitReachedErrorData;
 }
 /**
- * 
+ *
  * @export
  * @interface ApiErrorOfCreateOfferLimitReachedErrorDataAllOf
  */
 export interface ApiErrorOfCreateOfferLimitReachedErrorDataAllOf {
     /**
-     * 
+     *
      * @type {CreateOfferLimitReachedErrorData}
      * @memberof ApiErrorOfCreateOfferLimitReachedErrorDataAllOf
      */
@@ -108,13 +108,13 @@ export interface CartItemBody {
      */
     name?: string;
     /**
-     * Product description 
+     * Product description
      * @type {string}
      * @memberof CartItemBody
      */
     description?: string;
     /**
-     * Url of product page on target e-commerce platform 
+     * Url of product page on target e-commerce platform
      * @type {string}
      * @memberof CartItemBody
      */
@@ -144,7 +144,7 @@ export interface CartItemBody {
      */
     variantCategories?: Array<VariantCategory> | null;
     /**
-     * 
+     *
      * @type {PriceData}
      * @memberof CartItemBody
      */
@@ -156,7 +156,7 @@ export interface CartItemBody {
      */
     available?: boolean;
     /**
-     * 
+     *
      * @type {EnPlatformType}
      * @memberof CartItemBody
      */
@@ -193,7 +193,7 @@ export interface CartItemBody {
     brand?: string | null;
 }
 /**
- * 
+ *
  * @export
  * @interface CartItemBodyAdmin
  */
@@ -223,13 +223,13 @@ export interface CartItemBodyAdmin {
      */
     name?: string;
     /**
-     * Product description 
+     * Product description
      * @type {string}
      * @memberof CartItemBodyAdmin
      */
     description?: string;
     /**
-     * Url of product page on target e-commerce platform 
+     * Url of product page on target e-commerce platform
      * @type {string}
      * @memberof CartItemBodyAdmin
      */
@@ -259,7 +259,7 @@ export interface CartItemBodyAdmin {
      */
     variantCategories?: Array<VariantCategory> | null;
     /**
-     * 
+     *
      * @type {PriceData}
      * @memberof CartItemBodyAdmin
      */
@@ -271,7 +271,7 @@ export interface CartItemBodyAdmin {
      */
     available?: boolean;
     /**
-     * 
+     *
      * @type {EnPlatformType}
      * @memberof CartItemBodyAdmin
      */
@@ -314,7 +314,7 @@ export interface CartItemBodyAdmin {
     userId?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface CartItemBodyAdminAllOf
  */
@@ -327,7 +327,7 @@ export interface CartItemBodyAdminAllOf {
     userId?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface CartItemGet
  */
@@ -357,13 +357,13 @@ export interface CartItemGet {
      */
     name?: string;
     /**
-     * Product description 
+     * Product description
      * @type {string}
      * @memberof CartItemGet
      */
     description?: string;
     /**
-     * Url of product page on target e-commerce platform 
+     * Url of product page on target e-commerce platform
      * @type {string}
      * @memberof CartItemGet
      */
@@ -393,7 +393,7 @@ export interface CartItemGet {
      */
     variantCategories?: Array<VariantCategory> | null;
     /**
-     * 
+     *
      * @type {PriceData}
      * @memberof CartItemGet
      */
@@ -405,7 +405,7 @@ export interface CartItemGet {
      */
     available?: boolean;
     /**
-     * 
+     *
      * @type {EnPlatformType}
      * @memberof CartItemGet
      */
@@ -454,7 +454,7 @@ export interface CartItemGet {
     platformId?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface CartItemGetAdmin
  */
@@ -484,13 +484,13 @@ export interface CartItemGetAdmin {
      */
     name?: string;
     /**
-     * Product description 
+     * Product description
      * @type {string}
      * @memberof CartItemGetAdmin
      */
     description?: string;
     /**
-     * Url of product page on target e-commerce platform 
+     * Url of product page on target e-commerce platform
      * @type {string}
      * @memberof CartItemGetAdmin
      */
@@ -520,7 +520,7 @@ export interface CartItemGetAdmin {
      */
     variantCategories?: Array<VariantCategory> | null;
     /**
-     * 
+     *
      * @type {PriceData}
      * @memberof CartItemGetAdmin
      */
@@ -532,7 +532,7 @@ export interface CartItemGetAdmin {
      */
     available?: boolean;
     /**
-     * 
+     *
      * @type {EnPlatformType}
      * @memberof CartItemGetAdmin
      */
@@ -619,7 +619,7 @@ export interface CartItemGetAllOf {
     platformId?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface CartItemPagingResponse
  */
@@ -650,7 +650,7 @@ export interface CartItemPagingResponse {
     nextPageToken?: string | null;
 }
 /**
- * 
+ *
  * @export
  * @interface CartItemPatch
  */
@@ -680,13 +680,13 @@ export interface CartItemPatch {
      */
     name?: string | null;
     /**
-     * Product description 
+     * Product description
      * @type {string}
      * @memberof CartItemPatch
      */
     description?: string | null;
     /**
-     * Url of product page on target e-commerce platform 
+     * Url of product page on target e-commerce platform
      * @type {string}
      * @memberof CartItemPatch
      */
@@ -716,7 +716,7 @@ export interface CartItemPatch {
      */
     variantCategories?: Array<VariantCategory> | null;
     /**
-     * 
+     *
      * @type {PriceData}
      * @memberof CartItemPatch
      */
@@ -728,7 +728,7 @@ export interface CartItemPatch {
      */
     available?: boolean | null;
     /**
-     * 
+     *
      * @type {EnPlatformType}
      * @memberof CartItemPatch
      */
@@ -795,13 +795,13 @@ export interface CartItemPatchAllOf {
      */
     name?: string | null;
     /**
-     * Product description 
+     * Product description
      * @type {string}
      * @memberof CartItemPatchAllOf
      */
     description?: string | null;
     /**
-     * Url of product page on target e-commerce platform 
+     * Url of product page on target e-commerce platform
      * @type {string}
      * @memberof CartItemPatchAllOf
      */
@@ -831,7 +831,7 @@ export interface CartItemPatchAllOf {
      */
     variantCategories?: Array<VariantCategory> | null;
     /**
-     * 
+     *
      * @type {PriceData}
      * @memberof CartItemPatchAllOf
      */
@@ -843,7 +843,7 @@ export interface CartItemPatchAllOf {
      */
     available?: boolean | null;
     /**
-     * 
+     *
      * @type {EnPlatformType}
      * @memberof CartItemPatchAllOf
      */
@@ -931,19 +931,19 @@ export interface CreateOfferLimitReachedErrorData {
     limitReached?: boolean | null;
 }
 /**
- * 
+ *
  * @export
  * @interface DiscountCoupon
  */
 export interface DiscountCoupon {
     /**
-     * 
+     *
      * @type {string}
      * @memberof DiscountCoupon
      */
     seller?: string | null;
     /**
-     * 
+     *
      * @type {string}
      * @memberof DiscountCoupon
      */
@@ -960,7 +960,7 @@ export interface DiscountCoupons {
      * @type {{ [key: string]: { [key: string]: DiscountCoupon; }; }}
      * @memberof DiscountCoupons
      */
-    coupons?: { [key: string]: { [key: string]: DiscountCoupon; }; };
+    coupons?: { [key: string]: { [key: string]: DiscountCoupon } };
 }
 
 /**
@@ -969,13 +969,13 @@ export interface DiscountCoupons {
  */
 export const EnPageDirection = {
     Desc: 'Desc',
-    Asc: 'Asc'
+    Asc: 'Asc',
 } as const;
-export type EnPageDirection = typeof EnPageDirection[keyof typeof EnPageDirection];
-
+export type EnPageDirection =
+    typeof EnPageDirection[keyof typeof EnPageDirection];
 
 /**
- * 
+ *
  * @export
  */
 export const EnPlatformType = {
@@ -1125,7 +1125,7 @@ export const EnPlatformType = {
     SquareSpaceApp: 'SquareSpaceApp',
     WixApp: 'WixApp',
     PrestaShopApp: 'PrestaShopApp',
-    ShopwareApp: 'ShopwareApp'
+    ShopwareApp: 'ShopwareApp',
 } as const;
 export type EnPlatformType = typeof EnPlatformType[keyof typeof EnPlatformType];
 
@@ -1148,14 +1148,14 @@ export interface OfferBody {
      */
     name?: string;
     /**
-     * 
+     *
      * @type {OfferInfo}
      * @memberof OfferBody
      */
     offerInfo?: OfferInfo;
 }
 /**
- * 
+ *
  * @export
  * @interface OfferGet
  */
@@ -1173,7 +1173,7 @@ export interface OfferGet {
      */
     name?: string;
     /**
-     * 
+     *
      * @type {OfferInfo}
      * @memberof OfferGet
      */
@@ -1229,7 +1229,7 @@ export interface OfferGetAllOf {
  */
 export interface OfferInfo {
     /**
-     * 
+     *
      * @type {DiscountCoupons}
      * @memberof OfferInfo
      */
@@ -1259,7 +1259,7 @@ export interface OfferInfo {
      */
     link?: string | null;
     /**
-     * Offer relationships with influencers 
+     * Offer relationships with influencers
      * @type {Array<OfferLinkData>}
      * @memberof OfferInfo
      */
@@ -1302,7 +1302,7 @@ export interface OfferInfo {
  */
 export interface OfferLinkData {
     /**
-     * 
+     *
      * @type {string}
      * @memberof OfferLinkData
      */
@@ -1315,7 +1315,7 @@ export interface OfferLinkData {
     influencer?: string;
 }
 /**
- * 
+ *
  * @export
  * @interface OfferPagingResponse
  */
@@ -1346,7 +1346,7 @@ export interface OfferPagingResponse {
     nextPageToken?: string | null;
 }
 /**
- * 
+ *
  * @export
  * @interface OfferPatch
  */
@@ -1364,7 +1364,7 @@ export interface OfferPatch {
      */
     name?: string | null;
     /**
-     * 
+     *
      * @type {OfferInfo}
      * @memberof OfferPatch
      */
@@ -1395,7 +1395,7 @@ export interface OfferPatchAllOf {
      */
     name?: string | null;
     /**
-     * 
+     *
      * @type {OfferInfo}
      * @memberof OfferPatchAllOf
      */
@@ -1408,7 +1408,7 @@ export interface OfferPatchAllOf {
     cartItems?: Array<CartItemPost> | null;
 }
 /**
- * 
+ *
  * @export
  * @interface OfferPost
  */
@@ -1426,7 +1426,7 @@ export interface OfferPost {
      */
     name?: string;
     /**
-     * 
+     *
      * @type {OfferInfo}
      * @memberof OfferPost
      */
@@ -1538,7 +1538,7 @@ export interface PriceData {
      */
     currentValue?: number;
     /**
-     * Regular product price. 
+     * Regular product price.
      * @type {number}
      * @memberof PriceData
      */
@@ -1643,7 +1643,7 @@ export interface VariantCategory {
      */
     variants?: Array<Variant>;
     /**
-     * 
+     *
      * @type {VariantCategoryOptions}
      * @memberof VariantCategory
      */
@@ -1664,9 +1664,10 @@ export const VariantCategoryDisplayType = {
     Default: 'Default',
     Dropdown: 'Dropdown',
     Radio: 'Radio',
-    CustomInput: 'CustomInput'
+    CustomInput: 'CustomInput',
 } as const;
-export type VariantCategoryDisplayType = typeof VariantCategoryDisplayType[keyof typeof VariantCategoryDisplayType];
+export type VariantCategoryDisplayType =
+    typeof VariantCategoryDisplayType[keyof typeof VariantCategoryDisplayType];
 
 /**
  * Variant category options
@@ -1675,13 +1676,13 @@ export type VariantCategoryDisplayType = typeof VariantCategoryDisplayType[keyof
  */
 export interface VariantCategoryOptions {
     /**
-     * 
+     *
      * @type {VariantCategoryDisplayType}
      * @memberof VariantCategoryOptions
      */
     categoryDisplayType?: VariantCategoryDisplayType;
     /**
-     * 
+     *
      * @type {VariantDisplayType}
      * @memberof VariantCategoryOptions
      */
@@ -1702,7 +1703,7 @@ export const VariantDisplayType = {
     Default: 'Default',
     Name: 'Name',
     Swatch: 'Swatch',
-    Color: 'Color'
+    Color: 'Color',
 } as const;
-export type VariantDisplayType = typeof VariantDisplayType[keyof typeof VariantDisplayType];
-
+export type VariantDisplayType =
+    typeof VariantDisplayType[keyof typeof VariantDisplayType];

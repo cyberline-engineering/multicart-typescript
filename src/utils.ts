@@ -2,7 +2,7 @@ import {
     DefaultConfig,
     Configuration,
     ConfigurationParameters,
-} from '../openapi/generated';
+} from '@generated';
 import {
     DefaultMulticartOAuthConfig,
     MulticartOAuthClient,

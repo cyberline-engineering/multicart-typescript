@@ -1,2 +1,2 @@
-export * from '../openapi/generated';
+export * from '@generated';
 export * from './utils';
