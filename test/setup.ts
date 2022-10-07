@@ -1,5 +1,5 @@
 import { initializeMulticartApiClient } from '../src';
-import { MulticartOAuthClient } from '../src/cle-oidc-client';
+import { MulticartOAuthClient } from '@cyberline-engineering/cle-oidc-client';
 import { debuggerIsAttached } from 'debugger-is-attached';
 
 import 'cross-fetch/polyfill';
@@ -21,7 +21,7 @@ beforeAll(async () => {
             accessToken: async (_, scopes) => {
                 const oauthClient = new MulticartOAuthClient();
                 const user = await oauthClient.signinClientCredentials({
-                    scope: scopes?.join(' '),
+                    scopes,
                 });
                 return `Bearer ${user.access_token}`;
             },

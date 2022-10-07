@@ -2,9 +2,10 @@ import {
     DefaultConfig,
     Configuration,
     ConfigurationParameters,
-} from '@generated';
+} from './openapi/generated';
 import {
     DefaultMulticartOAuthConfig,
+    mergeScopes,
     MulticartOAuthClient,
     MulticartOAuthConfiguration,
     MulticartOAuthConfigurationParameters,
@@ -17,10 +18,14 @@ export const initializeMulticartApiClient = ({
     oauthConfig?: MulticartOAuthConfigurationParameters;
     clientConfig?: ConfigurationParameters;
 } = {}) => {
-    DefaultMulticartOAuthConfig.config = new MulticartOAuthConfiguration({
-        scopes: [...(oauthConfig?.scopes || []), 'multicart.api'],
-        ...oauthConfig,
-    });
+    DefaultMulticartOAuthConfig.config = new MulticartOAuthConfiguration(
+        Object.assign(
+            {
+                ...oauthConfig,
+            },
+            { scopes: mergeScopes(oauthConfig?.scopes, ['multicart.api']) }
+        )
+    );
 
     if (!clientConfig?.accessToken) {
         const oauthClient = new MulticartOAuthClient();
@@ -29,7 +34,7 @@ export const initializeMulticartApiClient = ({
                 (await oauthClient.signinSilent()) ||
                 (await oauthClient.signinPopup());
 
-            return user?.access_token || '';
+            return user ? `Bearer ${user?.access_token}` : '';
         };
 
         if (clientConfig) {

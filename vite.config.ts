@@ -25,10 +25,9 @@ module.exports = defineConfig({
     base: './',
     resolve: {
         // alias: [{ find: /^@\/(.+)/, replacement: resolve(__dirname, '$1') }]
-        alias: {
-            '@': path.resolve(__dirname),
-            '@generated': path.resolve(__dirname, 'openapi/generated'),
-        },
+        // alias: {
+        //     '@': path.resolve(__dirname),
+        // },
     },
     build: {
         lib: {
@@ -49,7 +48,7 @@ module.exports = defineConfig({
             staticImport: true,
             skipDiagnostics: false,
             logDiagnostics: true,
-            // rollupTypes: true,
+            rollupTypes: true,
             insertTypesEntry: true,
         }),
     ],

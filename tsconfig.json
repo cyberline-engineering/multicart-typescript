@@ -16,12 +16,7 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "skipLibCheck": false,
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["./*"],
-            "@generated/*": ["./openapi/generated/*"],
-            "@generated": ["./openapi/generated/index"]
-        }
+        "baseUrl": "."
     },
     "include": ["src"],
     "exclude": ["**/*.test.ts", "node_modules", "test/**", "types"]

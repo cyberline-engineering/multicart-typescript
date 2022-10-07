@@ -1,11 +1,11 @@
-var Ae = Object.defineProperty;
-var xe = (e, t, r) => t in e ? Ae(e, t, { enumerable: !0, configurable: !0, writable: !0, value: r }) : e[t] = r;
-var L = (e, t, r) => (xe(e, typeof t != "symbol" ? t + "" : t, r), r);
-const Ue = "https://stage.redoc.cledeploy.com".replace(
+var Ue = Object.defineProperty;
+var Oe = (e, t, r) => t in e ? Ue(e, t, { enumerable: !0, configurable: !0, writable: !0, value: r }) : e[t] = r;
+var L = (e, t, r) => (Oe(e, typeof t != "symbol" ? t + "" : t, r), r);
+const Be = "https://stage.redoc.cledeploy.com".replace(
   /\/+$/,
   ""
 );
-class de {
+class le {
   constructor(t = {}) {
     this.configuration = t;
   }
@@ -13,7 +13,7 @@ class de {
     this.configuration = t;
   }
   get basePath() {
-    return this.configuration.basePath != null ? this.configuration.basePath : Ue;
+    return this.configuration.basePath != null ? this.configuration.basePath : Be;
   }
   get fetchApi() {
     return this.configuration.fetchApi;
@@ -22,7 +22,7 @@ class de {
     return this.configuration.middleware || [];
   }
   get queryParamsStringify() {
-    return this.configuration.queryParamsStringify || le;
+    return this.configuration.queryParamsStringify || ge;
   }
   get username() {
     return this.configuration.username;
@@ -47,9 +47,9 @@ class de {
     return this.configuration.credentials;
   }
 }
-const he = new de();
-class Y {
-  constructor(t = he) {
+const ue = new le();
+class X {
+  constructor(t = ue) {
     L(this, "middleware");
     L(this, "fetchApi", async (t, r) => {
       let i = { url: t, init: r };
@@ -74,7 +74,7 @@ class Y {
             response: s ? s.clone() : void 0
           }) || s);
         if (s === void 0)
-          throw n instanceof Error ? new Me(
+          throw n instanceof Error ? new He(
             n,
             "The request failed and the interceptors did not return an alternative response"
           ) : n;
@@ -109,7 +109,7 @@ class Y {
     ), n = await this.fetchApi(i, s);
     if (n.status >= 200 && n.status < 300)
       return n;
-    throw new qe(n, "Response returned an error code");
+    throw new Ne(n, "Response returned an error code");
   }
   async createFetchParams(t, r) {
     let i = this.configuration.basePath + t.path;
@@ -135,7 +135,7 @@ class Y {
       })
     }, d = {
       ...c,
-      body: Be(c.body) || c.body instanceof URLSearchParams || Oe(c.body) ? c.body : JSON.stringify(c.body)
+      body: qe(c.body) || c.body instanceof URLSearchParams || Me(c.body) ? c.body : JSON.stringify(c.body)
     };
     return { url: i, init: d };
   }
@@ -144,20 +144,20 @@ class Y {
     return r.middleware = this.middleware.slice(), r;
   }
 }
-function Oe(e) {
+function Me(e) {
   return typeof Blob < "u" && e instanceof Blob;
 }
-function Be(e) {
+function qe(e) {
   return typeof FormData < "u" && e instanceof FormData;
 }
-class qe extends Error {
+class Ne extends Error {
   constructor(r, i) {
     super(i);
     L(this, "name", "ResponseError");
     this.response = r;
   }
 }
-class Me extends Error {
+class He extends Error {
   constructor(r, i) {
     super(i);
     L(this, "name", "FetchError");
@@ -171,16 +171,16 @@ class T extends Error {
     this.field = r;
   }
 }
-const Et = {
+const Ut = {
   csv: ",",
   ssv: " ",
   tsv: "	",
   pipes: "|"
 };
-function le(e, t = "") {
-  return Object.keys(e).map((r) => ue(r, e[r], t)).filter((r) => r.length > 0).join("&");
+function ge(e, t = "") {
+  return Object.keys(e).map((r) => pe(r, e[r], t)).filter((r) => r.length > 0).join("&");
 }
-function ue(e, t, r = "") {
+function pe(e, t, r = "") {
   const i = r + (r.length ? `[${e}]` : e);
   if (t instanceof Array) {
     const s = t.map((n) => encodeURIComponent(String(n))).join(`&${encodeURIComponent(i)}=`);
@@ -188,21 +188,21 @@ function ue(e, t, r = "") {
   }
   if (t instanceof Set) {
     const s = Array.from(t);
-    return ue(e, s, r);
+    return pe(e, s, r);
   }
   return t instanceof Date ? `${encodeURIComponent(i)}=${encodeURIComponent(
     t.toISOString()
-  )}` : t instanceof Object ? le(t, i) : `${encodeURIComponent(i)}=${encodeURIComponent(
+  )}` : t instanceof Object ? ge(t, i) : `${encodeURIComponent(i)}=${encodeURIComponent(
     String(t)
   )}`;
 }
-function At(e) {
+function Ot(e) {
   for (const t of e)
     if (t.contentType === "multipart/form-data")
       return !0;
   return !1;
 }
-class M {
+class q {
   constructor(t, r = (i) => i) {
     this.raw = t, this.transformer = r;
   }
@@ -217,7 +217,7 @@ class U {
   async value() {
   }
 }
-class xt {
+class Bt {
   constructor(t) {
     this.raw = t;
   }
@@ -225,7 +225,7 @@ class xt {
     return await this.raw.blob();
   }
 }
-class Ut {
+class Mt {
   constructor(t) {
     this.raw = t;
   }
@@ -233,7 +233,7 @@ class Ut {
     return await this.raw.text();
   }
 }
-class Ot extends Y {
+class qt extends X {
   async adminCartItemDeleteRaw(t, r) {
     if (t.id === null || t.id === void 0)
       throw new T(
@@ -279,7 +279,7 @@ class Ot extends Y {
       },
       r
     );
-    return new M(n);
+    return new q(n);
   }
   async adminCartItemGet(t, r) {
     return await (await this.adminCartItemGetRaw(
@@ -301,7 +301,7 @@ class Ot extends Y {
       },
       r
     );
-    return new M(n);
+    return new q(n);
   }
   async adminCartItemList(t = {}, r) {
     return await (await this.adminCartItemListRaw(
@@ -358,7 +358,7 @@ class Ot extends Y {
       },
       r
     );
-    return new M(n);
+    return new q(n);
   }
   async adminCartItemPost(t, r) {
     return await (await this.adminCartItemPostRaw(
@@ -398,7 +398,7 @@ class Ot extends Y {
     await this.adminCartItemPutRaw(t, r);
   }
 }
-class Bt extends Y {
+class Nt extends X {
   async cartItemDeleteRaw(t, r) {
     if (t.id === null || t.id === void 0)
       throw new T(
@@ -444,7 +444,7 @@ class Bt extends Y {
       },
       r
     );
-    return new M(n);
+    return new q(n);
   }
   async cartItemGet(t, r) {
     return await (await this.cartItemGetRaw(
@@ -466,7 +466,7 @@ class Bt extends Y {
       },
       r
     );
-    return new M(n);
+    return new q(n);
   }
   async cartItemList(t = {}, r) {
     return await (await this.cartItemListRaw(
@@ -523,7 +523,7 @@ class Bt extends Y {
       },
       r
     );
-    return new M(n);
+    return new q(n);
   }
   async cartItemPost(t, r) {
     return await (await this.cartItemPostRaw(
@@ -563,7 +563,7 @@ class Bt extends Y {
     await this.cartItemPutRaw(t, r);
   }
 }
-class qt extends Y {
+class Ht extends X {
   async offerDeleteRaw(t, r) {
     if (t.id === null || t.id === void 0)
       throw new T(
@@ -609,7 +609,7 @@ class qt extends Y {
       },
       r
     );
-    return new M(n);
+    return new q(n);
   }
   async offerGet(t, r) {
     return await (await this.offerGetRaw(
@@ -631,7 +631,7 @@ class qt extends Y {
       },
       r
     );
-    return new M(n);
+    return new q(n);
   }
   async offerList(t = {}, r) {
     return await (await this.offerListRaw(
@@ -725,10 +725,10 @@ class qt extends Y {
     await this.offerPutRaw(t, r);
   }
 }
-const Mt = {
+const jt = {
   Desc: "Desc",
   Asc: "Asc"
-}, Nt = {
+}, Lt = {
   Walmart: "Walmart",
   Shopify: "Shopify",
   Target: "Target",
@@ -876,19 +876,19 @@ const Mt = {
   WixApp: "WixApp",
   PrestaShopApp: "PrestaShopApp",
   ShopwareApp: "ShopwareApp"
-}, Ht = {
+}, Dt = {
   Default: "Default",
   Dropdown: "Dropdown",
   Radio: "Radio",
   CustomInput: "CustomInput"
-}, jt = {
+}, Wt = {
   Default: "Default",
   Name: "Name",
   Swatch: "Swatch",
   Color: "Color"
 };
 var H = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-function Ne(e) {
+function je(e) {
   var t = e.default;
   if (typeof t == "function") {
     var r = function() {
@@ -907,201 +907,203 @@ function Ne(e) {
     });
   }), r;
 }
-function He(e) {
+function Le(e) {
   throw new Error('Could not dynamically require "' + e + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
 }
-var F = { exports: {} };
-const je = {}, Le = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+var ie = { exports: {} };
+const De = {}, We = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: je
-}, Symbol.toStringTag, { value: "Module" })), De = /* @__PURE__ */ Ne(Le);
-(function(e, t) {
-  (function(r, i) {
-    e.exports = i();
-  })(H, function() {
-    var r = r || function(i, s) {
-      var n;
-      if (typeof window < "u" && window.crypto && (n = window.crypto), typeof self < "u" && self.crypto && (n = self.crypto), typeof globalThis < "u" && globalThis.crypto && (n = globalThis.crypto), !n && typeof window < "u" && window.msCrypto && (n = window.msCrypto), !n && typeof H < "u" && H.crypto && (n = H.crypto), !n && typeof He == "function")
-        try {
-          n = De;
-        } catch {
-        }
-      var o = function() {
-        if (n) {
-          if (typeof n.getRandomValues == "function")
-            try {
-              return n.getRandomValues(new Uint32Array(1))[0];
-            } catch {
+  default: De
+}, Symbol.toStringTag, { value: "Module" })), Fe = /* @__PURE__ */ je(We);
+var se;
+function $() {
+  return se || (se = 1, function(e, t) {
+    (function(r, i) {
+      e.exports = i();
+    })(H, function() {
+      var r = r || function(i, s) {
+        var n;
+        if (typeof window < "u" && window.crypto && (n = window.crypto), typeof self < "u" && self.crypto && (n = self.crypto), typeof globalThis < "u" && globalThis.crypto && (n = globalThis.crypto), !n && typeof window < "u" && window.msCrypto && (n = window.msCrypto), !n && typeof H < "u" && H.crypto && (n = H.crypto), !n && typeof Le == "function")
+          try {
+            n = Fe;
+          } catch {
+          }
+        var o = function() {
+          if (n) {
+            if (typeof n.getRandomValues == "function")
+              try {
+                return n.getRandomValues(new Uint32Array(1))[0];
+              } catch {
+              }
+            if (typeof n.randomBytes == "function")
+              try {
+                return n.randomBytes(4).readInt32LE();
+              } catch {
+              }
+          }
+          throw new Error("Native crypto module could not be used to get secure random number.");
+        }, c = Object.create || function() {
+          function a() {
+          }
+          return function(h) {
+            var _;
+            return a.prototype = h, _ = new a(), a.prototype = null, _;
+          };
+        }(), d = {}, l = d.lib = {}, p = l.Base = function() {
+          return {
+            extend: function(a) {
+              var h = c(this);
+              return a && h.mixIn(a), (!h.hasOwnProperty("init") || this.init === h.init) && (h.init = function() {
+                h.$super.init.apply(this, arguments);
+              }), h.init.prototype = h, h.$super = this, h;
+            },
+            create: function() {
+              var a = this.extend();
+              return a.init.apply(a, arguments), a;
+            },
+            init: function() {
+            },
+            mixIn: function(a) {
+              for (var h in a)
+                a.hasOwnProperty(h) && (this[h] = a[h]);
+              a.hasOwnProperty("toString") && (this.toString = a.toString);
+            },
+            clone: function() {
+              return this.init.prototype.extend(this);
             }
-          if (typeof n.randomBytes == "function")
-            try {
-              return n.randomBytes(4).readInt32LE();
-            } catch {
-            }
-        }
-        throw new Error("Native crypto module could not be used to get secure random number.");
-      }, c = Object.create || function() {
-        function a() {
-        }
-        return function(h) {
-          var _;
-          return a.prototype = h, _ = new a(), a.prototype = null, _;
-        };
-      }(), d = {}, l = d.lib = {}, p = l.Base = function() {
-        return {
-          extend: function(a) {
-            var h = c(this);
-            return a && h.mixIn(a), (!h.hasOwnProperty("init") || this.init === h.init) && (h.init = function() {
-              h.$super.init.apply(this, arguments);
-            }), h.init.prototype = h, h.$super = this, h;
+          };
+        }(), g = l.WordArray = p.extend({
+          init: function(a, h) {
+            a = this.words = a || [], h != s ? this.sigBytes = h : this.sigBytes = a.length * 4;
           },
-          create: function() {
-            var a = this.extend();
-            return a.init.apply(a, arguments), a;
+          toString: function(a) {
+            return (a || w).stringify(this);
           },
-          init: function() {
+          concat: function(a) {
+            var h = this.words, _ = a.words, m = this.sigBytes, v = a.sigBytes;
+            if (this.clamp(), m % 4)
+              for (var k = 0; k < v; k++) {
+                var R = _[k >>> 2] >>> 24 - k % 4 * 8 & 255;
+                h[m + k >>> 2] |= R << 24 - (m + k) % 4 * 8;
+              }
+            else
+              for (var C = 0; C < v; C += 4)
+                h[m + C >>> 2] = _[C >>> 2];
+            return this.sigBytes += v, this;
           },
-          mixIn: function(a) {
-            for (var h in a)
-              a.hasOwnProperty(h) && (this[h] = a[h]);
-            a.hasOwnProperty("toString") && (this.toString = a.toString);
+          clamp: function() {
+            var a = this.words, h = this.sigBytes;
+            a[h >>> 2] &= 4294967295 << 32 - h % 4 * 8, a.length = i.ceil(h / 4);
           },
           clone: function() {
-            return this.init.prototype.extend(this);
+            var a = p.clone.call(this);
+            return a.words = this.words.slice(0), a;
+          },
+          random: function(a) {
+            for (var h = [], _ = 0; _ < a; _ += 4)
+              h.push(o());
+            return new g.init(h, a);
           }
-        };
-      }(), g = l.WordArray = p.extend({
-        init: function(a, h) {
-          a = this.words = a || [], h != s ? this.sigBytes = h : this.sigBytes = a.length * 4;
-        },
-        toString: function(a) {
-          return (a || w).stringify(this);
-        },
-        concat: function(a) {
-          var h = this.words, _ = a.words, m = this.sigBytes, v = a.sigBytes;
-          if (this.clamp(), m % 4)
-            for (var k = 0; k < v; k++) {
-              var R = _[k >>> 2] >>> 24 - k % 4 * 8 & 255;
-              h[m + k >>> 2] |= R << 24 - (m + k) % 4 * 8;
+        }), S = d.enc = {}, w = S.Hex = {
+          stringify: function(a) {
+            for (var h = a.words, _ = a.sigBytes, m = [], v = 0; v < _; v++) {
+              var k = h[v >>> 2] >>> 24 - v % 4 * 8 & 255;
+              m.push((k >>> 4).toString(16)), m.push((k & 15).toString(16));
             }
-          else
-            for (var C = 0; C < v; C += 4)
-              h[m + C >>> 2] = _[C >>> 2];
-          return this.sigBytes += v, this;
-        },
-        clamp: function() {
-          var a = this.words, h = this.sigBytes;
-          a[h >>> 2] &= 4294967295 << 32 - h % 4 * 8, a.length = i.ceil(h / 4);
-        },
-        clone: function() {
-          var a = p.clone.call(this);
-          return a.words = this.words.slice(0), a;
-        },
-        random: function(a) {
-          for (var h = [], _ = 0; _ < a; _ += 4)
-            h.push(o());
-          return new g.init(h, a);
-        }
-      }), S = d.enc = {}, w = S.Hex = {
-        stringify: function(a) {
-          for (var h = a.words, _ = a.sigBytes, m = [], v = 0; v < _; v++) {
-            var k = h[v >>> 2] >>> 24 - v % 4 * 8 & 255;
-            m.push((k >>> 4).toString(16)), m.push((k & 15).toString(16));
+            return m.join("");
+          },
+          parse: function(a) {
+            for (var h = a.length, _ = [], m = 0; m < h; m += 2)
+              _[m >>> 3] |= parseInt(a.substr(m, 2), 16) << 24 - m % 8 * 4;
+            return new g.init(_, h / 2);
           }
-          return m.join("");
-        },
-        parse: function(a) {
-          for (var h = a.length, _ = [], m = 0; m < h; m += 2)
-            _[m >>> 3] |= parseInt(a.substr(m, 2), 16) << 24 - m % 8 * 4;
-          return new g.init(_, h / 2);
-        }
-      }, b = S.Latin1 = {
-        stringify: function(a) {
-          for (var h = a.words, _ = a.sigBytes, m = [], v = 0; v < _; v++) {
-            var k = h[v >>> 2] >>> 24 - v % 4 * 8 & 255;
-            m.push(String.fromCharCode(k));
+        }, b = S.Latin1 = {
+          stringify: function(a) {
+            for (var h = a.words, _ = a.sigBytes, m = [], v = 0; v < _; v++) {
+              var k = h[v >>> 2] >>> 24 - v % 4 * 8 & 255;
+              m.push(String.fromCharCode(k));
+            }
+            return m.join("");
+          },
+          parse: function(a) {
+            for (var h = a.length, _ = [], m = 0; m < h; m++)
+              _[m >>> 2] |= (a.charCodeAt(m) & 255) << 24 - m % 4 * 8;
+            return new g.init(_, h);
           }
-          return m.join("");
-        },
-        parse: function(a) {
-          for (var h = a.length, _ = [], m = 0; m < h; m++)
-            _[m >>> 2] |= (a.charCodeAt(m) & 255) << 24 - m % 4 * 8;
-          return new g.init(_, h);
-        }
-      }, u = S.Utf8 = {
-        stringify: function(a) {
-          try {
-            return decodeURIComponent(escape(b.stringify(a)));
-          } catch {
-            throw new Error("Malformed UTF-8 data");
+        }, u = S.Utf8 = {
+          stringify: function(a) {
+            try {
+              return decodeURIComponent(escape(b.stringify(a)));
+            } catch {
+              throw new Error("Malformed UTF-8 data");
+            }
+          },
+          parse: function(a) {
+            return b.parse(unescape(encodeURIComponent(a)));
           }
-        },
-        parse: function(a) {
-          return b.parse(unescape(encodeURIComponent(a)));
-        }
-      }, y = l.BufferedBlockAlgorithm = p.extend({
-        reset: function() {
-          this._data = new g.init(), this._nDataBytes = 0;
-        },
-        _append: function(a) {
-          typeof a == "string" && (a = u.parse(a)), this._data.concat(a), this._nDataBytes += a.sigBytes;
-        },
-        _process: function(a) {
-          var h, _ = this._data, m = _.words, v = _.sigBytes, k = this.blockSize, R = k * 4, C = v / R;
-          a ? C = i.ceil(C) : C = i.max((C | 0) - this._minBufferSize, 0);
-          var B = C * k, E = i.min(B * 4, v);
-          if (B) {
-            for (var N = 0; N < B; N += k)
-              this._doProcessBlock(m, N);
-            h = m.splice(0, B), _.sigBytes -= E;
+        }, y = l.BufferedBlockAlgorithm = p.extend({
+          reset: function() {
+            this._data = new g.init(), this._nDataBytes = 0;
+          },
+          _append: function(a) {
+            typeof a == "string" && (a = u.parse(a)), this._data.concat(a), this._nDataBytes += a.sigBytes;
+          },
+          _process: function(a) {
+            var h, _ = this._data, m = _.words, v = _.sigBytes, k = this.blockSize, R = k * 4, C = v / R;
+            a ? C = i.ceil(C) : C = i.max((C | 0) - this._minBufferSize, 0);
+            var B = C * k, E = i.min(B * 4, v);
+            if (B) {
+              for (var N = 0; N < B; N += k)
+                this._doProcessBlock(m, N);
+              h = m.splice(0, B), _.sigBytes -= E;
+            }
+            return new g.init(h, E);
+          },
+          clone: function() {
+            var a = p.clone.call(this);
+            return a._data = this._data.clone(), a;
+          },
+          _minBufferSize: 0
+        });
+        l.Hasher = y.extend({
+          cfg: p.extend(),
+          init: function(a) {
+            this.cfg = this.cfg.extend(a), this.reset();
+          },
+          reset: function() {
+            y.reset.call(this), this._doReset();
+          },
+          update: function(a) {
+            return this._append(a), this._process(), this;
+          },
+          finalize: function(a) {
+            a && this._append(a);
+            var h = this._doFinalize();
+            return h;
+          },
+          blockSize: 16,
+          _createHelper: function(a) {
+            return function(h, _) {
+              return new a.init(_).finalize(h);
+            };
+          },
+          _createHmacHelper: function(a) {
+            return function(h, _) {
+              return new I.HMAC.init(a, _).finalize(h);
+            };
           }
-          return new g.init(h, E);
-        },
-        clone: function() {
-          var a = p.clone.call(this);
-          return a._data = this._data.clone(), a;
-        },
-        _minBufferSize: 0
-      });
-      l.Hasher = y.extend({
-        cfg: p.extend(),
-        init: function(a) {
-          this.cfg = this.cfg.extend(a), this.reset();
-        },
-        reset: function() {
-          y.reset.call(this), this._doReset();
-        },
-        update: function(a) {
-          return this._append(a), this._process(), this;
-        },
-        finalize: function(a) {
-          a && this._append(a);
-          var h = this._doFinalize();
-          return h;
-        },
-        blockSize: 16,
-        _createHelper: function(a) {
-          return function(h, _) {
-            return new a.init(_).finalize(h);
-          };
-        },
-        _createHmacHelper: function(a) {
-          return function(h, _) {
-            return new I.HMAC.init(a, _).finalize(h);
-          };
-        }
-      });
-      var I = d.algo = {};
-      return d;
-    }(Math);
-    return r;
-  });
-})(F);
-const We = F.exports;
-var ge = { exports: {} };
+        });
+        var I = d.algo = {};
+        return d;
+      }(Math);
+      return r;
+    });
+  }(ie)), ie.exports;
+}
+var ze = $(), _e = { exports: {} };
 (function(e, t) {
   (function(r, i) {
-    e.exports = i(F.exports);
+    e.exports = i($());
   })(H, function(r) {
     return function(i) {
       var s = r, n = s.lib, o = n.WordArray, c = n.Hasher, d = s.algo, l = [], p = [];
@@ -1130,8 +1132,8 @@ var ge = { exports: {} };
               var C = g[R - 15], B = (C << 25 | C >>> 7) ^ (C << 14 | C >>> 18) ^ C >>> 3, E = g[R - 2], N = (E << 15 | E >>> 17) ^ (E << 13 | E >>> 19) ^ E >>> 10;
               g[R] = B + g[R - 7] + N + g[R - 16];
             }
-            var G = _ & m ^ ~_ & v, Ce = y & I ^ y & a ^ I & a, Re = (y << 30 | y >>> 2) ^ (y << 19 | y >>> 13) ^ (y << 10 | y >>> 22), Pe = (_ << 26 | _ >>> 6) ^ (_ << 21 | _ >>> 11) ^ (_ << 7 | _ >>> 25), te = k + Pe + G + p[R] + g[R], Ee = Re + Ce;
-            k = v, v = m, m = _, _ = h + te | 0, h = a, a = I, I = y, y = te + Ee | 0;
+            var G = _ & m ^ ~_ & v, Pe = y & I ^ y & a ^ I & a, Ee = (y << 30 | y >>> 2) ^ (y << 19 | y >>> 13) ^ (y << 10 | y >>> 22), Ae = (_ << 26 | _ >>> 6) ^ (_ << 21 | _ >>> 11) ^ (_ << 7 | _ >>> 25), re = k + Ae + G + p[R] + g[R], xe = Ee + Pe;
+            k = v, v = m, m = _, _ = h + re | 0, h = a, a = I, I = y, y = re + xe | 0;
           }
           u[0] = u[0] + y | 0, u[1] = u[1] + I | 0, u[2] = u[2] + a | 0, u[3] = u[3] + h | 0, u[4] = u[4] + _ | 0, u[5] = u[5] + m | 0, u[6] = u[6] + v | 0, u[7] = u[7] + k | 0;
         },
@@ -1147,12 +1149,12 @@ var ge = { exports: {} };
       s.SHA256 = c._createHelper(S), s.HmacSHA256 = c._createHmacHelper(S);
     }(Math), r.SHA256;
   });
-})(ge);
-const Fe = ge.exports;
-var pe = { exports: {} };
+})(_e);
+const $e = _e.exports;
+var fe = { exports: {} };
 (function(e, t) {
   (function(r, i) {
-    e.exports = i(F.exports);
+    e.exports = i($());
   })(H, function(r) {
     return function() {
       var i = r, s = i.lib, n = s.WordArray, o = i.enc;
@@ -1195,22 +1197,22 @@ var pe = { exports: {} };
       }
     }(), r.enc.Base64;
   });
-})(pe);
-const re = pe.exports;
-var _e = { exports: {} };
+})(fe);
+const ne = fe.exports;
+var we = { exports: {} };
 (function(e, t) {
   (function(r, i) {
-    e.exports = i(F.exports);
+    e.exports = i($());
   })(H, function(r) {
     return r.enc.Utf8;
   });
-})(_e);
-const ze = _e.exports;
+})(we);
+const Ge = we.exports;
 function J(e) {
   this.message = e;
 }
 J.prototype = new Error(), J.prototype.name = "InvalidCharacterError";
-var ie = typeof window < "u" && window.atob && window.atob.bind(window) || function(e) {
+var oe = typeof window < "u" && window.atob && window.atob.bind(window) || function(e) {
   var t = String(e).replace(/=+$/, "");
   if (t.length % 4 == 1)
     throw new J("'atob' failed: The string to be decoded is not correctly encoded.");
@@ -1218,7 +1220,7 @@ var ie = typeof window < "u" && window.atob && window.atob.bind(window) || funct
     i = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(i);
   return o;
 };
-function $e(e) {
+function Je(e) {
   var t = e.replace(/-/g, "+").replace(/_/g, "/");
   switch (t.length % 4) {
     case 0:
@@ -1234,30 +1236,30 @@ function $e(e) {
   }
   try {
     return function(r) {
-      return decodeURIComponent(ie(r).replace(/(.)/g, function(i, s) {
+      return decodeURIComponent(oe(r).replace(/(.)/g, function(i, s) {
         var n = s.charCodeAt(0).toString(16).toUpperCase();
         return n.length < 2 && (n = "0" + n), "%" + n;
       }));
     }(t);
   } catch {
-    return ie(t);
+    return oe(t);
   }
 }
-function z(e) {
+function F(e) {
   this.message = e;
 }
-function Ge(e, t) {
+function Ke(e, t) {
   if (typeof e != "string")
-    throw new z("Invalid token specified");
+    throw new F("Invalid token specified");
   var r = (t = t || {}).header === !0 ? 0 : 1;
   try {
-    return JSON.parse($e(e.split(".")[r]));
+    return JSON.parse(Je(e.split(".")[r]));
   } catch (i) {
-    throw new z("Invalid token specified: " + i.message);
+    throw new F("Invalid token specified: " + i.message);
   }
 }
-z.prototype = new Error(), z.prototype.name = "InvalidTokenError";
-var Je = {
+F.prototype = new Error(), F.prototype.name = "InvalidTokenError";
+var Ve = {
   debug: () => {
   },
   info: () => {
@@ -1266,10 +1268,10 @@ var Je = {
   },
   error: () => {
   }
-}, A, x, $ = /* @__PURE__ */ ((e) => (e[e.NONE = 0] = "NONE", e[e.ERROR = 1] = "ERROR", e[e.WARN = 2] = "WARN", e[e.INFO = 3] = "INFO", e[e.DEBUG = 4] = "DEBUG", e))($ || {});
+}, A, x, z = /* @__PURE__ */ ((e) => (e[e.NONE = 0] = "NONE", e[e.ERROR = 1] = "ERROR", e[e.WARN = 2] = "WARN", e[e.INFO = 3] = "INFO", e[e.DEBUG = 4] = "DEBUG", e))(z || {});
 ((e) => {
   function t() {
-    A = 3, x = Je;
+    A = 3, x = Ve;
   }
   e.reset = t;
   function r(s) {
@@ -1282,7 +1284,7 @@ var Je = {
     x = s;
   }
   e.setLogger = i;
-})($ || ($ = {}));
+})(z || (z = {}));
 var f = class {
   constructor(e) {
     this._name = e;
@@ -1327,13 +1329,13 @@ var f = class {
     A >= 1 && x.error(f._format(e), ...t);
   }
 };
-$.reset();
-var Ke = "10000000-1000-4000-8000-100000000000", O = class {
+z.reset();
+var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   static _randomWord() {
-    return We.lib.WordArray.random(1).words[0];
+    return ze.lib.WordArray.random(1).words[0];
   }
   static generateUUIDv4() {
-    return Ke.replace(
+    return Qe.replace(
       /[018]/g,
       (e) => (+e ^ O._randomWord() & 15 >> +e / 4).toString(16)
     ).replace(/-/g, "");
@@ -1343,17 +1345,17 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   }
   static generateCodeChallenge(e) {
     try {
-      const t = Fe(e);
-      return re.stringify(t).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+      const t = $e(e);
+      return ne.stringify(t).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
     } catch (t) {
       throw f.error("CryptoUtils.generateCodeChallenge", t), t;
     }
   }
   static generateBasicAuth(e, t) {
-    const r = ze.parse([e, t].join(":"));
-    return re.stringify(r);
+    const r = Ge.parse([e, t].join(":"));
+    return ne.stringify(r);
   }
-}, q = class {
+}, M = class {
   constructor(e) {
     this._name = e, this._logger = new f(`Event('${this._name}')`), this._callbacks = [];
   }
@@ -1372,12 +1374,12 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
 }, K = class {
   static decode(e) {
     try {
-      return Ge(e);
+      return Ke(e);
     } catch (t) {
       throw f.error("JwtUtils.decode", t), t;
     }
   }
-}, se = class {
+}, ae = class {
   static center({ ...e }) {
     var t;
     return e.width == null && (e.width = (t = [800, 720, 600, 480].find((r) => r <= window.outerWidth / 1.618)) != null ? t : 360), e.left != null || (e.left = Math.max(0, Math.round(window.screenX + (window.outerWidth - e.width) / 2))), e.height != null && (e.top != null || (e.top = Math.max(0, Math.round(window.screenY + (window.outerHeight - e.height) / 2)))), e;
@@ -1385,7 +1387,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   static serialize(e) {
     return Object.entries(e).filter(([, t]) => t != null).map(([t, r]) => `${t}=${typeof r != "boolean" ? r : r ? "yes" : "no"}`).join(",");
   }
-}, P = class extends q {
+}, P = class extends M {
   constructor() {
     super(...arguments), this._logger = new f(`Timer('${this._name}')`), this._timerHandle = null, this._expiration = 0, this._callback = () => {
       const e = this._expiration - P.getEpochTime();
@@ -1427,11 +1429,11 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       throw f.error("ErrorResponse", "No error passed"), new Error("No error passed");
     this.error = e.error, this.error_description = (r = e.error_description) != null ? r : null, this.error_uri = (i = e.error_uri) != null ? i : null, this.state = e.userState, this.session_state = (s = e.session_state) != null ? s : null;
   }
-}, X = class extends Error {
+}, Z = class extends Error {
   constructor(e) {
     super(e), this.name = "ErrorTimeout";
   }
-}, Ve = class {
+}, Ye = class {
   constructor(e) {
     this._logger = new f("AccessTokenEvents"), this._expiringTimer = new P("Access token expiring"), this._expiredTimer = new P("Access token expired"), this._expiringNotificationTimeInSeconds = e.expiringNotificationTimeInSeconds;
   }
@@ -1464,7 +1466,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   removeAccessTokenExpired(e) {
     this._expiredTimer.removeHandler(e);
   }
-}, Qe = class {
+}, Xe = class {
   constructor(e, t, r, i, s) {
     this._callback = e, this._client_id = t, this._intervalInSeconds = i, this._stopOnError = s, this._logger = new f("CheckSessionIFrame"), this._timer = null, this._session_state = null, this._message = (o) => {
       o.origin === this._frame_origin && o.source === this._frame.contentWindow && (o.data === "error" ? (this._logger.error("error message from check session op iframe"), this._stopOnError && this.stop()) : o.data === "changed" ? (this._logger.debug("changed message from check session op iframe"), this.stop(), this._callback()) : this._logger.debug(o.data + " message from check session op iframe"));
@@ -1491,7 +1493,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   stop() {
     this._logger.create("stop"), this._session_state = null, this._timer && (clearInterval(this._timer), this._timer = null);
   }
-}, fe = class {
+}, me = class {
   constructor() {
     this._logger = new f("InMemoryWebStorage"), this._data = {};
   }
@@ -1513,7 +1515,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   key(e) {
     return Object.getOwnPropertyNames(this._data)[e];
   }
-}, Z = class {
+}, ee = class {
   constructor(e = [], t = null) {
     this._jwtHandler = t, this._logger = new f("JsonService"), this._contentTypes = [], this._contentTypes.push(...e, "application/json"), t && this._contentTypes.push("application/jwt");
   }
@@ -1528,7 +1530,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
         signal: s.signal
       });
     } catch (o) {
-      throw o instanceof DOMException && o.name === "AbortError" ? new X("Network timed out") : o;
+      throw o instanceof DOMException && o.name === "AbortError" ? new Z("Network timed out") : o;
     } finally {
       clearTimeout(n);
     }
@@ -1593,9 +1595,9 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       throw n.error("Error from server:", p), p.error ? new j(p, t) : new Error(`${c.statusText} (${c.status}): ${JSON.stringify(p)}`);
     return p;
   }
-}, Ye = class {
+}, Ze = class {
   constructor(e) {
-    this._settings = e, this._logger = new f("MetadataService"), this._jsonService = new Z(["application/jwk-set+json"]), this._signingKeys = null, this._metadata = null, this._metadataUrl = this._settings.metadataUrl, this._settings.signingKeys && (this._logger.debug("using signingKeys from settings"), this._signingKeys = this._settings.signingKeys), this._settings.metadata && (this._logger.debug("using metadata from settings"), this._metadata = this._settings.metadata);
+    this._settings = e, this._logger = new f("MetadataService"), this._jsonService = new ee(["application/jwk-set+json"]), this._signingKeys = null, this._metadata = null, this._metadataUrl = this._settings.metadataUrl, this._settings.signingKeys && (this._logger.debug("using signingKeys from settings"), this._signingKeys = this._settings.signingKeys), this._settings.metadata && (this._logger.debug("using metadata from settings"), this._metadata = this._settings.metadata);
   }
   resetSigningKeys() {
     this._signingKeys = null;
@@ -1656,7 +1658,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       throw e.throw(new Error("Missing keys on keyset")), null;
     return this._signingKeys = r.keys, this._signingKeys;
   }
-}, we = class {
+}, ye = class {
   constructor({ prefix: e = "oidc.", store: t = localStorage } = {}) {
     this._logger = new f("WebStorageStateStore"), this._store = t, this._prefix = e;
   }
@@ -1682,7 +1684,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
     }
     return Promise.resolve(e);
   }
-}, Xe = "code", Ze = "openid", et = "client_secret_post", tt = "query", rt = 60 * 15, it = 60 * 5, me = class {
+}, et = "code", tt = "openid", rt = "client_secret_post", it = "query", st = 60 * 15, nt = 60 * 5, Se = class {
   constructor({
     authority: e,
     metadataUrl: t,
@@ -1691,22 +1693,22 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
     metadataSeed: s,
     client_id: n,
     client_secret: o,
-    response_type: c = Xe,
-    scope: d = Ze,
+    response_type: c = et,
+    scope: d = tt,
     redirect_uri: l,
     post_logout_redirect_uri: p,
-    client_authentication: g = et,
+    client_authentication: g = rt,
     prompt: S,
     display: w,
     max_age: b,
     ui_locales: u,
     acr_values: y,
     resource: I,
-    response_mode: a = tt,
+    response_mode: a = it,
     filterProtocolClaims: h = !0,
     loadUserInfo: _ = !1,
-    staleStateAgeInSeconds: m = rt,
-    clockSkewInSeconds: v = it,
+    staleStateAgeInSeconds: m = st,
+    clockSkewInSeconds: v = nt,
     userInfoJwtIssuer: k = "OP",
     mergeClaims: R = !1,
     stateStore: C,
@@ -1717,12 +1719,12 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
     if (this.authority = e, t ? this.metadataUrl = t : (this.metadataUrl = e, e && (this.metadataUrl.endsWith("/") || (this.metadataUrl += "/"), this.metadataUrl += ".well-known/openid-configuration")), this.metadata = r, this.metadataSeed = s, this.signingKeys = i, this.client_id = n, this.client_secret = o, this.response_type = c, this.scope = d, this.redirect_uri = l, this.post_logout_redirect_uri = p, this.client_authentication = g, this.prompt = S, this.display = w, this.max_age = b, this.ui_locales = u, this.acr_values = y, this.resource = I, this.response_mode = a, this.filterProtocolClaims = !!h, this.loadUserInfo = !!_, this.staleStateAgeInSeconds = m, this.clockSkewInSeconds = v, this.userInfoJwtIssuer = k, this.mergeClaims = !!R, this.refreshTokenCredentials = B, C)
       this.stateStore = C;
     else {
-      const G = typeof window < "u" ? window.localStorage : new fe();
-      this.stateStore = new we({ store: G });
+      const G = typeof window < "u" ? window.localStorage : new me();
+      this.stateStore = new ye({ store: G });
     }
     this.extraQueryParams = E, this.extraTokenParams = N;
   }
-}, st = class {
+}, ot = class {
   constructor(e) {
     this._metadataService = e, this._logger = new f("UserInfoService"), this._getClaimsFromJwt = async (t) => {
       const r = this._logger.create("_getClaimsFromJwt");
@@ -1732,7 +1734,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       } catch (i) {
         throw r.error("Error parsing JWT response"), i;
       }
-    }, this._jsonService = new Z(void 0, this._getClaimsFromJwt);
+    }, this._jsonService = new ee(void 0, this._getClaimsFromJwt);
   }
   async getClaims(e) {
     const t = this._logger.create("getClaims");
@@ -1742,9 +1744,9 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
     const i = await this._jsonService.getJson(r, { token: e });
     return t.debug("got claims", i), i;
   }
-}, ye = class {
+}, ve = class {
   constructor(e, t) {
-    this._settings = e, this._metadataService = t, this._logger = new f("TokenClient"), this._jsonService = new Z();
+    this._settings = e, this._metadataService = t, this._logger = new f("TokenClient"), this._jsonService = new ee();
   }
   async exchangeCode({
     grant_type: e = "authorization_code",
@@ -1814,7 +1816,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       o != null && s.set(n, o);
     s.set("client_id", this._settings.client_id), this._settings.client_secret && s.set("client_secret", this._settings.client_secret), await this._jsonService.postForm(i, { body: s }), r.debug("got response");
   }
-}, nt = [
+}, at = [
   "iss",
   "aud",
   "exp",
@@ -1827,9 +1829,9 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   "amr",
   "azp",
   "at_hash"
-], ot = class {
+], ct = class {
   constructor(e, t) {
-    this._settings = e, this._metadataService = t, this._logger = new f("ResponseValidator"), this._userInfoService = new st(this._metadataService), this._tokenClient = new ye(this._settings, this._metadataService);
+    this._settings = e, this._metadataService = t, this._logger = new f("ResponseValidator"), this._userInfoService = new ot(this._metadataService), this._tokenClient = new ve(this._settings, this._metadataService);
   }
   async validateSigninResponse(e, t) {
     const r = this._logger.create("validateSigninResponse");
@@ -1874,7 +1876,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   _filterProtocolClaims(e) {
     const t = { ...e };
     if (this._settings.filterProtocolClaims)
-      for (const r of nt)
+      for (const r of at)
         delete t[r];
     return t;
   }
@@ -1938,7 +1940,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       d && (r.debug("removed item for key:", o), e.remove(o));
     }
   }
-}, ee = class extends D {
+}, te = class extends D {
   constructor(e) {
     super(e), e.code_verifier === !0 ? this.code_verifier = O.generateCodeVerifier() : e.code_verifier && (this.code_verifier = e.code_verifier), this.code_verifier && (this.code_challenge = O.generateCodeChallenge(this.code_verifier)), this.authority = e.authority, this.client_id = e.client_id, this.redirect_uri = e.redirect_uri, this.scope = e.scope, this.client_secret = e.client_secret, this.extraTokenParams = e.extraTokenParams, this.response_mode = e.response_mode, this.skipUserInfo = e.skipUserInfo;
   }
@@ -1962,9 +1964,9 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   static fromStorageString(e) {
     f.createStatic("SigninState", "fromStorageString");
     const t = JSON.parse(e);
-    return new ee(t);
+    return new te(t);
   }
-}, at = class {
+}, dt = class {
   constructor({
     url: e,
     authority: t,
@@ -1994,7 +1996,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       throw this._logger.error("ctor: No scope passed"), new Error("scope");
     if (!t)
       throw this._logger.error("ctor: No authority passed"), new Error("authority");
-    this.state = new ee({
+    this.state = new te({
       data: o,
       request_type: d,
       code_verifier: !0,
@@ -2013,7 +2015,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       I != null && u.searchParams.append(y, I.toString());
     this.url = u.href;
   }
-}, ct = "openid", ne = class {
+}, ht = "openid", ce = class {
   constructor(e) {
     this.access_token = "", this.token_type = "", this.profile = {}, this.state = e.get("state"), this.session_state = e.get("session_state"), this.error = e.get("error"), this.error_description = e.get("error_description"), this.error_uri = e.get("error_uri"), this.code = e.get("code");
   }
@@ -2026,9 +2028,9 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   }
   get isOpenId() {
     var e;
-    return ((e = this.scope) == null ? void 0 : e.split(" ").includes(ct)) || !!this.id_token;
+    return ((e = this.scope) == null ? void 0 : e.split(" ").includes(ht)) || !!this.id_token;
   }
-}, dt = class {
+}, lt = class {
   constructor({
     url: e,
     state_data: t,
@@ -2045,13 +2047,13 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       d != null && o.searchParams.append(c, d.toString());
     this.url = o.href;
   }
-}, ht = class {
+}, ut = class {
   constructor(e) {
     this.state = e.get("state"), this.error = e.get("error"), this.error_description = e.get("error_description"), this.error_uri = e.get("error_uri");
   }
-}, lt = class {
+}, gt = class {
   constructor(e) {
-    this._logger = new f("OidcClient"), this.settings = new me(e), this.metadataService = new Ye(this.settings), this._validator = new ot(this.settings, this.metadataService), this._tokenClient = new ye(this.settings, this.metadataService);
+    this._logger = new f("OidcClient"), this.settings = new Se(e), this.metadataService = new Ze(this.settings), this._validator = new ct(this.settings, this.metadataService), this._tokenClient = new ve(this.settings, this.metadataService);
   }
   async createSigninRequest({
     state: e,
@@ -2080,7 +2082,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       throw new Error("Only the Authorization Code flow (with PKCE) is supported");
     const m = await this.metadataService.getAuthorizationEndpoint();
     _.debug("Received authorization endpoint", m);
-    const v = new at({
+    const v = new dt({
       url: m,
       authority: this.settings.authority,
       client_id: this.settings.client_id,
@@ -2111,13 +2113,13 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
     return await this.settings.stateStore.set(k.id, k.toStorageString()), v;
   }
   async readSigninResponseState(e, t = !1) {
-    const r = this._logger.create("readSigninResponseState"), i = new ne(V.readParams(e, this.settings.response_mode));
+    const r = this._logger.create("readSigninResponseState"), i = new ce(V.readParams(e, this.settings.response_mode));
     if (!i.state)
       throw r.throw(new Error("No state in response")), null;
     const s = await this.settings.stateStore[t ? "remove" : "get"](i.state);
     if (!s)
       throw r.throw(new Error("No matching state found in storage")), null;
-    return { state: ee.fromStorageString(s), response: i };
+    return { state: te.fromStorageString(s), response: i };
   }
   async processSigninResponse(e) {
     const t = this._logger.create("processSigninResponse"), { state: r, response: i } = await this.readSigninResponseState(e, !0);
@@ -2132,7 +2134,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       scope: e.scope,
       timeoutInSeconds: t,
       refreshTokenCredentials: this.settings.refreshTokenCredentials
-    }), s = new ne(new URLSearchParams());
+    }), s = new ce(new URLSearchParams());
     return Object.assign(s, i), r.debug("validating response", s), await this._validator.validateRefreshResponse(s, e), s;
   }
   async createSignoutRequest({
@@ -2146,7 +2148,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
     if (!o)
       throw n.throw(new Error("No end session endpoint")), null;
     n.debug("Received end session endpoint", o);
-    const c = new dt({
+    const c = new lt({
       url: o,
       id_token_hint: t,
       post_logout_redirect_uri: i,
@@ -2159,7 +2161,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
     return d && (n.debug("Signout request has state to persist"), await this.settings.stateStore.set(d.id, d.toStorageString())), c;
   }
   async readSignoutResponseState(e, t = !1) {
-    const r = this._logger.create("readSignoutResponseState"), i = new ht(V.readParams(e, this.settings.response_mode));
+    const r = this._logger.create("readSignoutResponseState"), i = new ut(V.readParams(e, this.settings.response_mode));
     if (!i.state) {
       if (r.debug("No state in response"), i.error)
         throw r.warn("Response was error:", i.error), new j(i);
@@ -2183,7 +2185,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       token_type_hint: t
     });
   }
-}, ut = class {
+}, pt = class {
   constructor(e) {
     this._userManager = e, this._logger = new f("SessionMonitor"), this._start = async (t) => {
       const r = t.session_state;
@@ -2198,7 +2200,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
         const s = await this._userManager.metadataService.getCheckSessionIframe();
         if (s) {
           i.debug("initializing check session iframe");
-          const n = this._userManager.settings.client_id, o = this._userManager.settings.checkSessionIntervalInSeconds, c = this._userManager.settings.stopCheckSessionOnError, d = new Qe(this._callback, n, s, o, c);
+          const n = this._userManager.settings.client_id, o = this._userManager.settings.checkSessionIntervalInSeconds, c = this._userManager.settings.stopCheckSessionOnError, d = new Xe(this._callback, n, s, o, c);
           await d.load(), this._checkSessionIFrame = d, d.start(r);
         } else
           i.warn("no check session iframe found in the metadata");
@@ -2295,9 +2297,9 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   static fromStorageString(e) {
     return f.createStatic("User", "fromStorageString"), new W(JSON.parse(e));
   }
-}, oe = "oidc-client", Se = class {
+}, de = "oidc-client", be = class {
   constructor() {
-    this._abort = new q("Window navigation aborted"), this._disposeHandlers = /* @__PURE__ */ new Set(), this._window = null;
+    this._abort = new M("Window navigation aborted"), this._disposeHandlers = /* @__PURE__ */ new Set(), this._window = null;
   }
   async navigate(e) {
     const t = this._logger.create("navigate");
@@ -2308,7 +2310,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       const o = (c) => {
         var d;
         const l = c.data, p = (d = e.scriptOrigin) != null ? d : window.location.origin;
-        if (!(c.origin !== p || (l == null ? void 0 : l.source) !== oe)) {
+        if (!(c.origin !== p || (l == null ? void 0 : l.source) !== de)) {
           try {
             const g = V.readParams(l.url, e.response_mode).get("state");
             if (g || t.warn("no state found in response url"), c.source !== this._window && g !== e.state)
@@ -2333,51 +2335,51 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   }
   static _notifyParent(e, t, r = !1, i = window.location.origin) {
     e.postMessage({
-      source: oe,
+      source: de,
       url: t,
       keepOpen: r
     }, i);
   }
-}, ve = {
+}, ke = {
   location: !1,
   toolbar: !1,
   height: 640
-}, be = "_blank", gt = 60, pt = 2, ke = 10, _t = class extends me {
+}, Ie = "_blank", _t = 60, ft = 2, Te = 10, wt = class extends Se {
   constructor(e) {
     const {
       popup_redirect_uri: t = e.redirect_uri,
       popup_post_logout_redirect_uri: r = e.post_logout_redirect_uri,
-      popupWindowFeatures: i = ve,
-      popupWindowTarget: s = be,
+      popupWindowFeatures: i = ke,
+      popupWindowTarget: s = Ie,
       redirectMethod: n = "assign",
       redirectTarget: o = "self",
       iframeNotifyParentOrigin: c = e.iframeNotifyParentOrigin,
       iframeScriptOrigin: d = e.iframeScriptOrigin,
       silent_redirect_uri: l = e.redirect_uri,
-      silentRequestTimeoutInSeconds: p = ke,
+      silentRequestTimeoutInSeconds: p = Te,
       automaticSilentRenew: g = !0,
       validateSubOnSilentRenew: S = !0,
       includeIdTokenInSilentRenew: w = !1,
       monitorSession: b = !1,
       monitorAnonymousSession: u = !1,
-      checkSessionIntervalInSeconds: y = pt,
+      checkSessionIntervalInSeconds: y = ft,
       query_status_response_type: I = "code",
       stopCheckSessionOnError: a = !0,
       revokeTokenTypes: h = ["access_token", "refresh_token"],
       revokeTokensOnSignout: _ = !1,
-      accessTokenExpiringNotificationTimeInSeconds: m = gt,
+      accessTokenExpiringNotificationTimeInSeconds: m = _t,
       userStore: v
     } = e;
     if (super(e), this.popup_redirect_uri = t, this.popup_post_logout_redirect_uri = r, this.popupWindowFeatures = i, this.popupWindowTarget = s, this.redirectMethod = n, this.redirectTarget = o, this.iframeNotifyParentOrigin = c, this.iframeScriptOrigin = d, this.silent_redirect_uri = l, this.silentRequestTimeoutInSeconds = p, this.automaticSilentRenew = g, this.validateSubOnSilentRenew = S, this.includeIdTokenInSilentRenew = w, this.monitorSession = b, this.monitorAnonymousSession = u, this.checkSessionIntervalInSeconds = y, this.stopCheckSessionOnError = a, this.query_status_response_type = I, this.revokeTokenTypes = h, this.revokeTokensOnSignout = _, this.accessTokenExpiringNotificationTimeInSeconds = m, v)
       this.userStore = v;
     else {
-      const k = typeof window < "u" ? window.sessionStorage : new fe();
-      this.userStore = new we({ store: k });
+      const k = typeof window < "u" ? window.sessionStorage : new me();
+      this.userStore = new ye({ store: k });
     }
   }
-}, Q = class extends Se {
+}, Q = class extends be {
   constructor({
-    silentRequestTimeoutInSeconds: e = ke
+    silentRequestTimeoutInSeconds: e = Te
   }) {
     super(), this._logger = new f("IFrameWindow"), this._timeoutInSeconds = e, this._frame = Q.createHiddenIframe(), this._window = this._frame.contentWindow;
   }
@@ -2387,7 +2389,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   }
   async navigate(e) {
     this._logger.debug("navigate: Using timeout of:", this._timeoutInSeconds);
-    const t = setTimeout(() => this._abort.raise(new X("IFrame timed out without a response")), this._timeoutInSeconds * 1e3);
+    const t = setTimeout(() => this._abort.raise(new Z("IFrame timed out without a response")), this._timeoutInSeconds * 1e3);
     return this._disposeHandlers.add(() => clearTimeout(t)), await super.navigate(e);
   }
   close() {
@@ -2401,7 +2403,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   static notifyParent(e, t) {
     return super._notifyParent(window.parent, e, !1, t);
   }
-}, ft = class {
+}, mt = class {
   constructor(e) {
     this._settings = e, this._logger = new f("IFrameNavigator");
   }
@@ -2413,21 +2415,21 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   async callback(e) {
     this._logger.create("callback"), Q.notifyParent(e, this._settings.iframeNotifyParentOrigin);
   }
-}, wt = 500, ae = class extends Se {
+}, yt = 500, he = class extends be {
   constructor({
-    popupWindowTarget: e = be,
+    popupWindowTarget: e = Ie,
     popupWindowFeatures: t = {}
   }) {
     super(), this._logger = new f("PopupWindow");
-    const r = se.center({ ...ve, ...t });
-    this._window = window.open(void 0, e, se.serialize(r));
+    const r = ae.center({ ...ke, ...t });
+    this._window = window.open(void 0, e, ae.serialize(r));
   }
   async navigate(e) {
     var t;
     (t = this._window) == null || t.focus();
     const r = setInterval(() => {
       (!this._window || this._window.closed) && this._abort.raise(new Error("Popup closed by user"));
-    }, wt);
+    }, yt);
     return this._disposeHandlers.add(() => clearInterval(r)), await super.navigate(e);
   }
   close() {
@@ -2438,7 +2440,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       throw new Error("No window.opener. Can't complete notification.");
     return super._notifyParent(window.opener, e, t);
   }
-}, mt = class {
+}, St = class {
   constructor(e) {
     this._settings = e, this._logger = new f("PopupNavigator");
   }
@@ -2446,12 +2448,12 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
     popupWindowFeatures: e = this._settings.popupWindowFeatures,
     popupWindowTarget: t = this._settings.popupWindowTarget
   }) {
-    return new ae({ popupWindowFeatures: e, popupWindowTarget: t });
+    return new he({ popupWindowFeatures: e, popupWindowTarget: t });
   }
   async callback(e, t = !1) {
-    this._logger.create("callback"), ae.notifyOpener(e, t);
+    this._logger.create("callback"), he.notifyOpener(e, t);
   }
-}, yt = class {
+}, vt = class {
   constructor(e) {
     this._settings = e, this._logger = new f("RedirectNavigator");
   }
@@ -2478,9 +2480,9 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
       }
     };
   }
-}, St = class extends Ve {
+}, bt = class extends Ye {
   constructor(e) {
-    super({ expiringNotificationTimeInSeconds: e.accessTokenExpiringNotificationTimeInSeconds }), this._logger = new f("UserManagerEvents"), this._userLoaded = new q("User loaded"), this._userUnloaded = new q("User unloaded"), this._silentRenewError = new q("Silent renew error"), this._userSignedIn = new q("User signed in"), this._userSignedOut = new q("User signed out"), this._userSessionChanged = new q("User session changed");
+    super({ expiringNotificationTimeInSeconds: e.accessTokenExpiringNotificationTimeInSeconds }), this._logger = new f("UserManagerEvents"), this._userLoaded = new M("User loaded"), this._userUnloaded = new M("User unloaded"), this._silentRenewError = new M("Silent renew error"), this._userSignedIn = new M("User signed in"), this._userSignedOut = new M("User signed out"), this._userSessionChanged = new M("User session changed");
   }
   load(e, t = !0) {
     super.load(e), t && this._userLoaded.raise(e);
@@ -2536,14 +2538,14 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   _raiseUserSessionChanged() {
     this._userSessionChanged.raise();
   }
-}, vt = class {
+}, kt = class {
   constructor(e) {
     this._userManager = e, this._logger = new f("SilentRenewService"), this._isStarted = !1, this._retryTimer = new P("Retry Silent Renew"), this._tokenExpiring = async () => {
       const t = this._logger.create("_tokenExpiring");
       try {
         await this._userManager.signinSilent(), t.debug("silent token renewal successful");
       } catch (r) {
-        if (r instanceof X) {
+        if (r instanceof Z) {
           t.warn("ErrorTimeout from signinSilent:", r, "retry in 5s"), this._retryTimer.init(5);
           return;
         }
@@ -2565,13 +2567,13 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   stop() {
     this._isStarted && (this._retryTimer.cancel(), this._retryTimer.removeHandler(this._tokenExpiring), this._userManager.events.removeAccessTokenExpiring(this._tokenExpiring), this._isStarted = !1);
   }
-}, bt = class {
+}, It = class {
   constructor(e) {
     this.refresh_token = e.refresh_token, this.id_token = e.id_token, this.session_state = e.session_state, this.scope = e.scope, this.data = e.state;
   }
-}, kt = class {
+}, Tt = class {
   constructor(e) {
-    this._logger = new f("UserManager"), this.settings = new _t(e), this._client = new lt(e), this._redirectNavigator = new yt(this.settings), this._popupNavigator = new mt(this.settings), this._iframeNavigator = new ft(this.settings), this._events = new St(this.settings), this._silentRenewService = new vt(this), this.settings.automaticSilentRenew && this.startSilentRenew(), this._sessionMonitor = null, this.settings.monitorSession && (this._sessionMonitor = new ut(this));
+    this._logger = new f("UserManager"), this.settings = new wt(e), this._client = new gt(e), this._redirectNavigator = new vt(this.settings), this._popupNavigator = new St(this.settings), this._iframeNavigator = new mt(this.settings), this._events = new bt(this.settings), this._silentRenewService = new kt(this), this.settings.automaticSilentRenew && this.startSilentRenew(), this._sessionMonitor = null, this.settings.monitorSession && (this._sessionMonitor = new pt(this));
   }
   get events() {
     return this._events;
@@ -2630,7 +2632,7 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
     let n = await this._loadUser();
     if (n != null && n.refresh_token) {
       r.debug("using refresh token");
-      const l = new bt(n);
+      const l = new It(n);
       return await this._useRefreshToken(l);
     }
     const o = this.settings.silent_redirect_uri;
@@ -2852,9 +2854,9 @@ var Ke = "10000000-1000-4000-8000-100000000000", O = class {
   async clearStaleState() {
     await this._client.clearStaleState();
   }
-};
-const ce = (e, t) => (e || (e = []), t || (t = []), Array.isArray(e) || (e = e.split(" ")), Array.isArray(t) || (t = t.split(" ")), e.concat(t).filter((r, i, s) => s.indexOf(r) === i).join(" ").trim()), It = "https://stage.identity.multicartshop.com", Tt = "https://identity.multicartshop.com", Ct = "Multicart.TypeScript.Client";
-class Ie {
+}, Ct = "2.0.6", Ft = Ct;
+const Y = (e, t) => (e || (e = []), t || (t = []), Array.isArray(e) || (e = e.split(" ")), Array.isArray(t) || (t = t.split(" ")), e.concat(t).filter((r, i, s) => s.indexOf(r) === i).join(" ").trim()), Rt = "https://stage.identity.multicartshop.com", Pt = "https://identity.multicartshop.com", Et = "Multicart.TypeScript.Client";
+class Ce {
   constructor(t = {}) {
     this.configuration = t;
   }
@@ -2865,10 +2867,10 @@ class Ie {
     return !!this.configuration.sandbox;
   }
   get basePath() {
-    return this.configuration.basePath || this.sandbox ? It : Tt;
+    return this.configuration.basePath || this.sandbox ? Rt : Pt;
   }
   get client_id() {
-    return this.configuration.client_id || Ct;
+    return this.configuration.client_id || Et;
   }
   get redirect_uri() {
     return this.configuration.redirect_uri || this.basePath + "/login";
@@ -2880,16 +2882,16 @@ class Ie {
     return this.configuration.scopes;
   }
 }
-const Te = new Ie();
-class Rt extends kt {
-  constructor(t = Te) {
+const Re = new Ce();
+class At extends Tt {
+  constructor(t = Re) {
     const r = {
       authority: t.basePath,
       loadUserInfo: !0,
       client_id: t.client_id,
       redirect_uri: t.redirect_uri,
       client_secret: t.client_secret,
-      scope: ce(t.scopes)
+      scope: Y(t.scopes)
     };
     super(r), this.configuration = t;
   }
@@ -2913,7 +2915,7 @@ class Rt extends kt {
       client_id: n,
       client_secret: o,
       scope: c
-    } = this.settings, d = ce(c, t);
+    } = this.settings, d = Y(c, t);
     if (!o)
       throw new Error("No client_secret configured");
     try {
@@ -2936,44 +2938,75 @@ class Rt extends kt {
     }
   }
 }
-const Lt = ({
+const zt = ({
   oauthConfig: e,
   clientConfig: t
 } = {}) => {
-  if (Te.config = new Ie({
-    scopes: [...(e == null ? void 0 : e.scopes) || [], "multicart.api"],
-    ...e
-  }), !(t != null && t.accessToken)) {
-    const r = new Rt(), i = async () => {
+  if (Re.config = new Ce(
+    Object.assign(
+      {
+        ...e
+      },
+      { scopes: Y(e == null ? void 0 : e.scopes, ["multicart.api"]) }
+    )
+  ), !(t != null && t.accessToken)) {
+    const r = new At(), i = async () => {
       const s = await r.signinSilent() || await r.signinPopup();
-      return (s == null ? void 0 : s.access_token) || "";
+      return s ? `Bearer ${s == null ? void 0 : s.access_token}` : "";
     };
     t ? t.accessToken = i : t = { accessToken: i };
   }
-  he.config = new de(t);
+  ue.config = new le(t);
 };
 export {
-  Ot as AdminCartItemApi,
-  Ue as BASE_PATH,
-  Y as BaseAPI,
-  xt as BlobApiResponse,
-  Et as COLLECTION_FORMATS,
-  Bt as CartItemApi,
-  de as Configuration,
-  he as DefaultConfig,
-  Mt as EnPageDirection,
-  Nt as EnPlatformType,
-  Me as FetchError,
-  M as JSONApiResponse,
-  qt as OfferApi,
+  Pt as AUTH_PROD_PATH,
+  Rt as AUTH_SANDBOX_PATH,
+  Ye as AccessTokenEvents,
+  qt as AdminCartItemApi,
+  Be as BASE_PATH,
+  X as BaseAPI,
+  Bt as BlobApiResponse,
+  Ut as COLLECTION_FORMATS,
+  Nt as CartItemApi,
+  Xe as CheckSessionIFrame,
+  le as Configuration,
+  ue as DefaultConfig,
+  Re as DefaultMulticartOAuthConfig,
+  jt as EnPageDirection,
+  Lt as EnPlatformType,
+  j as ErrorResponse,
+  Z as ErrorTimeout,
+  He as FetchError,
+  me as InMemoryWebStorage,
+  q as JSONApiResponse,
+  z as Log,
+  f as Logger,
+  Et as MULTICART_CLIENT_ID,
+  Ze as MetadataService,
+  At as MulticartOAuthClient,
+  Ce as MulticartOAuthConfiguration,
+  Ht as OfferApi,
+  gt as OidcClient,
+  Se as OidcClientSettingsStore,
   T as RequiredError,
-  qe as ResponseError,
-  Ut as TextApiResponse,
-  Ht as VariantCategoryDisplayType,
-  jt as VariantDisplayType,
+  Ne as ResponseError,
+  pt as SessionMonitor,
+  ce as SigninResponse,
+  te as SigninState,
+  ut as SignoutResponse,
+  D as State,
+  Mt as TextApiResponse,
+  W as User,
+  Tt as UserManager,
+  wt as UserManagerSettingsStore,
+  Dt as VariantCategoryDisplayType,
+  Wt as VariantDisplayType,
+  Ft as Version,
   U as VoidApiResponse,
-  At as canConsumeForm,
-  Lt as initializeMulticartApiClient,
-  le as querystring
+  ye as WebStorageStateStore,
+  Ot as canConsumeForm,
+  zt as initializeMulticartApiClient,
+  Y as mergeScopes,
+  ge as querystring
 };
 //# sourceMappingURL=multicartshop-client.mjs.map
