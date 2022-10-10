@@ -1,18 +1,37 @@
 <script lang="ts" setup>
 import {
     CartItemApi,
+    CartItemListRequest,
     CartItemPagingResponse,
 } from '../../../../dist/multicartshop-client';
-import CartItem from '@/components/Cartitem.vue';
+import cartitem from '@/components/cartitem.vue';
+import Paging from '@/components/paging.vue';
+import { ref } from 'vue';
 
 const client = new CartItemApi();
-const data = await client.cartItemList().catch((e) => {
-    console.error(e);
-    return {} as CartItemPagingResponse;
-});
+const data = ref<CartItemPagingResponse>({});
+
+const loadData = async (request?: CartItemListRequest) => {
+    data.value = await client.cartItemList(request).catch((e) => {
+        console.error(e);
+        return {};
+    });
+};
+
+await loadData();
 </script>
 
 <template>
-    <h1>Products API demo</h1>
-    <cart-item v-for="product in data.data" :item="product"></cart-item>
+    <v-container class="bg-grey-lighten-4">
+        <h1>Products API demo</h1>
+        <paging
+            :item="{ ...data }"
+            @next-page="(e) => loadData({ pageToken: e })"
+        ></paging>
+        <cartitem
+            v-for="product in data.data"
+            :item="product"
+            class="my-4"
+        ></cartitem>
+    </v-container>
 </template>

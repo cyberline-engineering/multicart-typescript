@@ -90,6 +90,8 @@ initializeMulticartApiClient({
 const oauthClient = new MulticartOAuthClient();
 const user = ref<User>();
 
+oauthClient.getUser().then((u) => (user.value = u || undefined));
+
 const login = async () => {
     user.value = await oauthClient.signinPopup();
 };

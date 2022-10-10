@@ -31,6 +31,7 @@ export const initializeMulticartApiClient = ({
         const oauthClient = new MulticartOAuthClient();
         const getAccessToken = async () => {
             const user =
+                (await oauthClient.getUser()) ||
                 (await oauthClient.signinSilent()) ||
                 (await oauthClient.signinPopup());
 
