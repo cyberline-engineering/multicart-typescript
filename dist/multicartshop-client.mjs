@@ -1,5 +1,5 @@
-var Ue = Object.defineProperty;
-var Oe = (e, t, r) => t in e ? Ue(e, t, { enumerable: !0, configurable: !0, writable: !0, value: r }) : e[t] = r;
+var xe = Object.defineProperty;
+var Oe = (e, t, r) => t in e ? xe(e, t, { enumerable: !0, configurable: !0, writable: !0, value: r }) : e[t] = r;
 var L = (e, t, r) => (Oe(e, typeof t != "symbol" ? t + "" : t, r), r);
 const Be = "https://stage.redoc.cledeploy.com".replace(
   /\/+$/,
@@ -171,7 +171,7 @@ class T extends Error {
     this.field = r;
   }
 }
-const Ut = {
+const xt = {
   csv: ",",
   ssv: " ",
   tsv: "	",
@@ -210,7 +210,7 @@ class q {
     return this.transformer(await this.raw.json());
   }
 }
-class U {
+class x {
   constructor(t) {
     this.raw = t;
   }
@@ -254,7 +254,7 @@ class qt extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async adminCartItemDelete(t, r) {
     await this.adminCartItemDeleteRaw(t, r);
@@ -335,7 +335,7 @@ class qt extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async adminCartItemPatch(t, r) {
     await this.adminCartItemPatchRaw(t, r);
@@ -392,7 +392,7 @@ class qt extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async adminCartItemPut(t, r) {
     await this.adminCartItemPutRaw(t, r);
@@ -419,7 +419,7 @@ class Nt extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async cartItemDelete(t, r) {
     await this.cartItemDeleteRaw(t, r);
@@ -500,7 +500,7 @@ class Nt extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async cartItemPatch(t, r) {
     await this.cartItemPatchRaw(t, r);
@@ -557,7 +557,7 @@ class Nt extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async cartItemPut(t, r) {
     await this.cartItemPutRaw(t, r);
@@ -584,7 +584,7 @@ class Ht extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async offerDelete(t, r) {
     await this.offerDeleteRaw(t, r);
@@ -665,7 +665,7 @@ class Ht extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async offerPatch(t, r) {
     await this.offerPatchRaw(t, r);
@@ -688,7 +688,7 @@ class Ht extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async offerPost(t, r) {
     await this.offerPostRaw(t, r);
@@ -719,7 +719,7 @@ class Ht extends X {
       },
       r
     );
-    return new U(n);
+    return new x(n);
   }
   async offerPut(t, r) {
     await this.offerPutRaw(t, r);
@@ -1132,8 +1132,8 @@ var ze = $(), _e = { exports: {} };
               var C = g[R - 15], B = (C << 25 | C >>> 7) ^ (C << 14 | C >>> 18) ^ C >>> 3, E = g[R - 2], N = (E << 15 | E >>> 17) ^ (E << 13 | E >>> 19) ^ E >>> 10;
               g[R] = B + g[R - 7] + N + g[R - 16];
             }
-            var G = _ & m ^ ~_ & v, Pe = y & I ^ y & a ^ I & a, Ee = (y << 30 | y >>> 2) ^ (y << 19 | y >>> 13) ^ (y << 10 | y >>> 22), Ae = (_ << 26 | _ >>> 6) ^ (_ << 21 | _ >>> 11) ^ (_ << 7 | _ >>> 25), re = k + Ae + G + p[R] + g[R], xe = Ee + Pe;
-            k = v, v = m, m = _, _ = h + re | 0, h = a, a = I, I = y, y = re + xe | 0;
+            var G = _ & m ^ ~_ & v, Pe = y & I ^ y & a ^ I & a, Ee = (y << 30 | y >>> 2) ^ (y << 19 | y >>> 13) ^ (y << 10 | y >>> 22), Ae = (_ << 26 | _ >>> 6) ^ (_ << 21 | _ >>> 11) ^ (_ << 7 | _ >>> 25), re = k + Ae + G + p[R] + g[R], Ue = Ee + Pe;
+            k = v, v = m, m = _, _ = h + re | 0, h = a, a = I, I = y, y = re + Ue | 0;
           }
           u[0] = u[0] + y | 0, u[1] = u[1] + I | 0, u[2] = u[2] + a | 0, u[3] = u[3] + h | 0, u[4] = u[4] + _ | 0, u[5] = u[5] + m | 0, u[6] = u[6] + v | 0, u[7] = u[7] + k | 0;
         },
@@ -1268,10 +1268,10 @@ var Ve = {
   },
   error: () => {
   }
-}, A, x, z = /* @__PURE__ */ ((e) => (e[e.NONE = 0] = "NONE", e[e.ERROR = 1] = "ERROR", e[e.WARN = 2] = "WARN", e[e.INFO = 3] = "INFO", e[e.DEBUG = 4] = "DEBUG", e))(z || {});
+}, A, U, z = /* @__PURE__ */ ((e) => (e[e.NONE = 0] = "NONE", e[e.ERROR = 1] = "ERROR", e[e.WARN = 2] = "WARN", e[e.INFO = 3] = "INFO", e[e.DEBUG = 4] = "DEBUG", e))(z || {});
 ((e) => {
   function t() {
-    A = 3, x = Ve;
+    A = 3, U = Ve;
   }
   e.reset = t;
   function r(s) {
@@ -1281,7 +1281,7 @@ var Ve = {
   }
   e.setLevel = r;
   function i(s) {
-    x = s;
+    U = s;
   }
   e.setLogger = i;
 })(z || (z = {}));
@@ -1290,16 +1290,16 @@ var f = class {
     this._name = e;
   }
   debug(...e) {
-    A >= 4 && x.debug(f._format(this._name, this._method), ...e);
+    A >= 4 && U.debug(f._format(this._name, this._method), ...e);
   }
   info(...e) {
-    A >= 3 && x.info(f._format(this._name, this._method), ...e);
+    A >= 3 && U.info(f._format(this._name, this._method), ...e);
   }
   warn(...e) {
-    A >= 2 && x.warn(f._format(this._name, this._method), ...e);
+    A >= 2 && U.warn(f._format(this._name, this._method), ...e);
   }
   error(...e) {
-    A >= 1 && x.error(f._format(this._name, this._method), ...e);
+    A >= 1 && U.error(f._format(this._name, this._method), ...e);
   }
   throw(e) {
     throw this.error(e), e;
@@ -1317,16 +1317,16 @@ var f = class {
     return t ? `${r} ${t}:` : r;
   }
   static debug(e, ...t) {
-    A >= 4 && x.debug(f._format(e), ...t);
+    A >= 4 && U.debug(f._format(e), ...t);
   }
   static info(e, ...t) {
-    A >= 3 && x.info(f._format(e), ...t);
+    A >= 3 && U.info(f._format(e), ...t);
   }
   static warn(e, ...t) {
-    A >= 2 && x.warn(f._format(e), ...t);
+    A >= 2 && U.warn(f._format(e), ...t);
   }
   static error(e, ...t) {
-    A >= 1 && x.error(f._format(e), ...t);
+    A >= 1 && U.error(f._format(e), ...t);
   }
 };
 z.reset();
@@ -2873,7 +2873,10 @@ class Ce {
     return this.configuration.client_id || Et;
   }
   get redirect_uri() {
-    return this.configuration.redirect_uri || this.basePath + "/login";
+    return this.configuration.redirect_uri || (window == null ? void 0 : window.location.origin) + "/login";
+  }
+  get logout_redirect_uri() {
+    return this.configuration.logout_redirect_uri || (window == null ? void 0 : window.location.origin) + "/logout";
   }
   get client_secret() {
     return this.configuration.client_secret;
@@ -2890,6 +2893,7 @@ class At extends Tt {
       loadUserInfo: !0,
       client_id: t.client_id,
       redirect_uri: t.redirect_uri,
+      post_logout_redirect_uri: t.logout_redirect_uri,
       client_secret: t.client_secret,
       scope: Y(t.scopes)
     };
@@ -2959,14 +2963,12 @@ const zt = ({
   ue.config = new le(t);
 };
 export {
-  Pt as AUTH_PROD_PATH,
-  Rt as AUTH_SANDBOX_PATH,
   Ye as AccessTokenEvents,
   qt as AdminCartItemApi,
   Be as BASE_PATH,
   X as BaseAPI,
   Bt as BlobApiResponse,
-  Ut as COLLECTION_FORMATS,
+  xt as COLLECTION_FORMATS,
   Nt as CartItemApi,
   Xe as CheckSessionIFrame,
   le as Configuration,
@@ -2981,6 +2983,8 @@ export {
   q as JSONApiResponse,
   z as Log,
   f as Logger,
+  Pt as MULTICART_AUTH_PROD_PATH,
+  Rt as MULTICART_AUTH_SANDBOX_PATH,
   Et as MULTICART_CLIENT_ID,
   Ze as MetadataService,
   At as MulticartOAuthClient,
@@ -3002,7 +3006,7 @@ export {
   Dt as VariantCategoryDisplayType,
   Wt as VariantDisplayType,
   Ft as Version,
-  U as VoidApiResponse,
+  x as VoidApiResponse,
   ye as WebStorageStateStore,
   Ot as canConsumeForm,
   zt as initializeMulticartApiClient,

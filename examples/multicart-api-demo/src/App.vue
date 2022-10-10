@@ -64,8 +64,14 @@ import {
 
 initializeMulticartApiClient({
     oauthConfig: {
+        //set $BASE_PATH to MULTICART_AUTH_SANDBOX_PATH
         sandbox: true,
-        redirect_uri: import.meta.env.VITE_REDIRECT_URI,
+
+        //default: ${window.location.origin}/login
+        //redirect_uri: import.meta.env.VITE_REDIRECT_URI,
+        //default: ${window.location.origin}/logout
+        //logout_redirect_uri: import.meta.env.VITE_LOGOUT_REDIRECT_URI,
+
         client_id: import.meta.env.VITE_CLIENT_ID,
         client_secret: import.meta.env.VITE_CLIENT_SECRET,
     },
@@ -77,15 +83,12 @@ initializeMulticartApiClient({
 const oauthClient = new MulticartOAuthClient();
 const user = ref<User>();
 
-// oauthClient.events.addUserLoaded((u) => {
-//     user.value = u;
-// });
-
 const login = async () => {
     user.value = await oauthClient.signinPopup();
 };
 
 const logout = async () => {
     await oauthClient.signoutPopup();
+    user.value = undefined;
 };
 </script>
