@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {
     OfferApi,
+    OfferGet,
     OfferListRequest,
     OfferPagingResponse,
 } from '../../../../dist/multicartshop-client';
@@ -18,6 +19,20 @@ const loadData = async (request?: OfferListRequest) => {
     });
 };
 
+const offerLoad = async (offer: OfferGet) => {
+    if (!offer?.id) return;
+
+    const o = await client.offerGet({ id: offer.id });
+
+    Object.assign(offer, o);
+};
+
+const offerExpand = async (offer: OfferGet, expanded: Boolean) => {
+    if (!expanded || !!offer.cartItems) return;
+
+    await offerLoad(offer);
+};
+
 await loadData();
 </script>
 
@@ -29,9 +44,10 @@ await loadData();
             @next-page="(e) => loadData({ pageToken: e })"
         ></paging>
         <offeritem
-            v-for="product in data.data"
-            :item="product"
+            v-for="offer in data.data"
+            :item="offer"
             class="my-4"
+            @expand="(e) => offerExpand(offer, e)"
         ></offeritem>
     </v-container>
 </template>
