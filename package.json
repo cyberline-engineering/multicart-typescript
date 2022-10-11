@@ -21,15 +21,17 @@
         "build:dev": "vite build",
         "preview": "vite preview",
         "test": "cross-env GLOBAL_AGENT_HTTP_PROXY=http://127.0.0.1:8888 NODE_TLS_REJECT_UNAUTHORIZED=0 jest --forceExit --runInBand",
-        "oa:generate": "cross-env TS_POST_PROCESS_FILE=\"$pwd\\node_modules\\.bin\\prettier.cmd --write\" openapi-generator-cli generate -i https://stage.redoc.cledeploy.com/openapi/v1/openapi.json -g typescript-fetch -o openapi/generated -c openapi/oa-config.json",
-        "oa:generate:dev": "openapi-generator-cli generate -i http://localhost:5001/openapi/v1/openapi.json -g typescript-fetch -o openapi/generated -c openapi/oa-config.json"
+        "oa:generate": "cross-env TS_POST_PROCESS_FILE=\"$pwd\\node_modules\\.bin\\prettier.cmd --write\" openapi-generator-cli generate -i https://stage.redoc.cledeploy.com/openapi/v1/openapi.json -g typescript-fetch -o src/openapi/generated -c src/openapi/oa-config.json",
+        "oa:generate:dev": "openapi-generator-cli generate -i http://localhost:5001/openapi/v1/openapi.json -g typescript-fetch -o src/openapi/generated -c src/openapi/oa-config.json",
+        "oa:generate:doc": "openapi-generator-cli generate -i https://stage.redoc.cledeploy.com/openapi/v1/openapi.json -g markdown -o docs -c src/openapi/oa-config.json",
+        "oa:generate:doc:dev": "openapi-generator-cli generate -i http://localhost:5001/openapi/v1/openapi.json -g markdown -o docs -c src/openapi/oa-config.json"
     },
     "devDependencies": {
         "@openapitools/openapi-generator-cli": "^2.5.2",
         "@types/jest": "^29.1.2",
-        "@types/node": "^18.8.3",
-        "@typescript-eslint/eslint-plugin": "^5.39.0",
-        "@typescript-eslint/parser": "^5.39.0",
+        "@types/node": "^18.8.4",
+        "@typescript-eslint/eslint-plugin": "^5.40.0",
+        "@typescript-eslint/parser": "^5.40.0",
         "cross-env": "^7.0.3",
         "cross-fetch": "^3.1.5",
         "debugger-is-attached": "^1.2.0",
