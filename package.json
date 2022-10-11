@@ -1,10 +1,11 @@
 {
     "name": "@cyberline-engineering/multicartshop-client",
     "description": "Multicartshop API typescript client",
-    "homepage": "https://www.multicartshop.com",
+    "homepage": "https://github.com/cyberline-engineering/multicart-typescript#readme",
     "private": false,
     "version": "0.2.0",
     "repository": "github:cyberline-engineering/multicart-typescript",
+    "readme": "README.md",
     "main": "./dist/multicartshop-client.cjs",
     "module": "./dist/multicartshop-client.mjs",
     "types": "./dist/multicartshop-client.d.ts",
