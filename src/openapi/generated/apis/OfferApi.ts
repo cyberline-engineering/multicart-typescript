@@ -22,6 +22,7 @@ import type {
     OfferPagingResponse,
     OfferPatch,
     OfferPost,
+    ResultGuid,
 } from '../models';
 
 export interface OfferDeleteRequest {
@@ -32,9 +33,14 @@ export interface OfferGetRequest {
     id: string;
 }
 
+export interface OfferGetByLinkRequest {
+    link: string | null;
+}
+
 export interface OfferListRequest {
     name?: string | null;
     groupId?: string | null;
+    userId?: string | null;
     pageSize?: number | null;
     dir?: EnPageDirection;
     pageToken?: string | null;
@@ -174,6 +180,65 @@ export class OfferApi extends runtime.BaseAPI {
     }
 
     /**
+     * Retrieves offer by unique link
+     * Get offer by link
+     */
+    async offerGetByLinkRaw(
+        requestParameters: OfferGetByLinkRequest,
+        initOverrides?: RequestInit | runtime.InitOverrideFunction
+    ): Promise<runtime.ApiResponse<OfferGet>> {
+        if (
+            requestParameters.link === null ||
+            requestParameters.link === undefined
+        ) {
+            throw new runtime.RequiredError(
+                'link',
+                'Required parameter requestParameters.link was null or undefined when calling offerGetByLink.'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters['Authorization'] =
+                await this.configuration.accessToken('bearer', []);
+        }
+
+        const response = await this.request(
+            {
+                path: `/api/Offer/link/{link}`.replace(
+                    `{${'link'}}`,
+                    encodeURIComponent(String(requestParameters.link))
+                ),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            },
+            initOverrides
+        );
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves offer by unique link
+     * Get offer by link
+     */
+    async offerGetByLink(
+        requestParameters: OfferGetByLinkRequest,
+        initOverrides?: RequestInit | runtime.InitOverrideFunction
+    ): Promise<OfferGet> {
+        const response = await this.offerGetByLinkRaw(
+            requestParameters,
+            initOverrides
+        );
+        return await response.value();
+    }
+
+    /**
      * Retrieves offers by pages applying filters (name or group id)
      * Get offers for user (paged)
      */
@@ -189,6 +254,10 @@ export class OfferApi extends runtime.BaseAPI {
 
         if (requestParameters.groupId !== undefined) {
             queryParameters['GroupId'] = requestParameters.groupId;
+        }
+
+        if (requestParameters.userId !== undefined) {
+            queryParameters['UserId'] = requestParameters.userId;
         }
 
         if (requestParameters.pageSize !== undefined) {
@@ -318,7 +387,7 @@ export class OfferApi extends runtime.BaseAPI {
     async offerPostRaw(
         requestParameters: OfferPostRequest,
         initOverrides?: RequestInit | runtime.InitOverrideFunction
-    ): Promise<runtime.ApiResponse<void>> {
+    ): Promise<runtime.ApiResponse<ResultGuid>> {
         if (
             requestParameters.offerPost === null ||
             requestParameters.offerPost === undefined
@@ -352,7 +421,7 @@ export class OfferApi extends runtime.BaseAPI {
             initOverrides
         );
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response);
     }
 
     /**
@@ -361,8 +430,12 @@ export class OfferApi extends runtime.BaseAPI {
     async offerPost(
         requestParameters: OfferPostRequest,
         initOverrides?: RequestInit | runtime.InitOverrideFunction
-    ): Promise<void> {
-        await this.offerPostRaw(requestParameters, initOverrides);
+    ): Promise<ResultGuid> {
+        const response = await this.offerPostRaw(
+            requestParameters,
+            initOverrides
+        );
+        return await response.value();
     }
 
     /**

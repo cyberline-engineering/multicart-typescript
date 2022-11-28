@@ -34,10 +34,10 @@ export interface AdminCartItemGetRequest {
 }
 
 export interface AdminCartItemListRequest {
-    userId?: string | null;
     platform?: EnPlatformType;
     seller?: string | null;
     usItemId?: string | null;
+    userId?: string | null;
     pageSize?: number | null;
     dir?: EnPageDirection;
     pageToken?: string | null;
@@ -186,10 +186,6 @@ export class AdminCartItemApi extends runtime.BaseAPI {
     ): Promise<runtime.ApiResponse<CartItemPagingResponse>> {
         const queryParameters: any = {};
 
-        if (requestParameters.userId !== undefined) {
-            queryParameters['UserId'] = requestParameters.userId;
-        }
-
         if (requestParameters.platform !== undefined) {
             queryParameters['Platform'] = requestParameters.platform;
         }
@@ -200,6 +196,10 @@ export class AdminCartItemApi extends runtime.BaseAPI {
 
         if (requestParameters.usItemId !== undefined) {
             queryParameters['UsItemId'] = requestParameters.usItemId;
+        }
+
+        if (requestParameters.userId !== undefined) {
+            queryParameters['UserId'] = requestParameters.userId;
         }
 
         if (requestParameters.pageSize !== undefined) {

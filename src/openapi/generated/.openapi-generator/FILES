@@ -1,6 +1,7 @@
 apis/AdminCartItemApi.ts
 apis/CartItemApi.ts
 apis/OfferApi.ts
+apis/PurchaseApi.ts
 apis/index.ts
 index.ts
 models/index.ts

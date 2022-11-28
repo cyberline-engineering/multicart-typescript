@@ -78,6 +78,69 @@ export interface ApiErrorOfCreateOfferLimitReachedErrorDataAllOf {
     errorData?: CreateOfferLimitReachedErrorData;
 }
 /**
+ *
+ * @export
+ * @interface ApiErrorOfShoppingCartErrorData
+ */
+export interface ApiErrorOfShoppingCartErrorData {
+    /**
+     * Error message
+     * @type {string}
+     * @memberof ApiErrorOfShoppingCartErrorData
+     */
+    message?: string | null;
+    /**
+     *
+     * @type {ShoppingCartErrorData}
+     * @memberof ApiErrorOfShoppingCartErrorData
+     */
+    errorData?: ShoppingCartErrorData;
+}
+/**
+ *
+ * @export
+ * @interface ApiErrorOfShoppingCartErrorDataAllOf
+ */
+export interface ApiErrorOfShoppingCartErrorDataAllOf {
+    /**
+     *
+     * @type {ShoppingCartErrorData}
+     * @memberof ApiErrorOfShoppingCartErrorDataAllOf
+     */
+    errorData?: ShoppingCartErrorData;
+}
+/**
+ *
+ * @export
+ * @interface CaptchaChallengeOptions
+ */
+export interface CaptchaChallengeOptions {
+    /**
+     *
+     * @type {PerimetrXOptions}
+     * @memberof CaptchaChallengeOptions
+     */
+    perimetrXOptions?: PerimetrXOptions;
+    /**
+     *
+     * @type {CaptchaServiceType}
+     * @memberof CaptchaChallengeOptions
+     */
+    captchaServiceType?: CaptchaServiceType;
+}
+
+/**
+ *
+ * @export
+ */
+export const CaptchaServiceType = {
+    PerimetrX: 'PerimetrX',
+    HCaptcha: 'HCaptcha',
+} as const;
+export type CaptchaServiceType =
+    typeof CaptchaServiceType[keyof typeof CaptchaServiceType];
+
+/**
  * Cart item
  * @export
  * @interface CartItemBody
@@ -112,7 +175,7 @@ export interface CartItemBody {
      * @type {string}
      * @memberof CartItemBody
      */
-    description?: string;
+    description?: string | null;
     /**
      * Url of product page on target e-commerce platform
      * @type {string}
@@ -148,7 +211,7 @@ export interface CartItemBody {
      * @type {PriceData}
      * @memberof CartItemBody
      */
-    priceInfo?: PriceData;
+    priceData?: PriceData;
     /**
      * "Product availability"
      * @type {boolean}
@@ -227,7 +290,7 @@ export interface CartItemBodyAdmin {
      * @type {string}
      * @memberof CartItemBodyAdmin
      */
-    description?: string;
+    description?: string | null;
     /**
      * Url of product page on target e-commerce platform
      * @type {string}
@@ -263,7 +326,7 @@ export interface CartItemBodyAdmin {
      * @type {PriceData}
      * @memberof CartItemBodyAdmin
      */
-    priceInfo?: PriceData;
+    priceData?: PriceData;
     /**
      * "Product availability"
      * @type {boolean}
@@ -361,7 +424,7 @@ export interface CartItemGet {
      * @type {string}
      * @memberof CartItemGet
      */
-    description?: string;
+    description?: string | null;
     /**
      * Url of product page on target e-commerce platform
      * @type {string}
@@ -397,7 +460,7 @@ export interface CartItemGet {
      * @type {PriceData}
      * @memberof CartItemGet
      */
-    priceInfo?: PriceData;
+    priceData?: PriceData;
     /**
      * "Product availability"
      * @type {boolean}
@@ -488,7 +551,7 @@ export interface CartItemGetAdmin {
      * @type {string}
      * @memberof CartItemGetAdmin
      */
-    description?: string;
+    description?: string | null;
     /**
      * Url of product page on target e-commerce platform
      * @type {string}
@@ -524,7 +587,7 @@ export interface CartItemGetAdmin {
      * @type {PriceData}
      * @memberof CartItemGetAdmin
      */
-    priceInfo?: PriceData;
+    priceData?: PriceData;
     /**
      * "Product availability"
      * @type {boolean}
@@ -631,6 +694,12 @@ export interface CartItemPagingResponse {
      */
     data?: Array<CartItemGet>;
     /**
+     * Previous page relative url
+     * @type {string}
+     * @memberof CartItemPagingResponse
+     */
+    prevPage?: string | null;
+    /**
      * Next page url
      * @type {string}
      * @memberof CartItemPagingResponse
@@ -648,6 +717,12 @@ export interface CartItemPagingResponse {
      * @memberof CartItemPagingResponse
      */
     nextPageToken?: string | null;
+    /**
+     * Previous page token
+     * @type {string}
+     * @memberof CartItemPagingResponse
+     */
+    prevPageToken?: string | null;
 }
 /**
  *
@@ -720,7 +795,7 @@ export interface CartItemPatch {
      * @type {PriceData}
      * @memberof CartItemPatch
      */
-    priceInfo?: PriceData;
+    priceData?: PriceData;
     /**
      * "Product availability"
      * @type {boolean}
@@ -835,7 +910,7 @@ export interface CartItemPatchAllOf {
      * @type {PriceData}
      * @memberof CartItemPatchAllOf
      */
-    priceInfo?: PriceData;
+    priceData?: PriceData;
     /**
      * "Product availability"
      * @type {boolean}
@@ -893,6 +968,207 @@ export interface CartItemPost {
     id?: string;
 }
 /**
+ *
+ * @export
+ * @interface CartItemSync
+ */
+export interface CartItemSync {
+    /**
+     * Unique item id on target e-commerce platform
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    usItemId?: string;
+    /**
+     * Seller host on target e-commerce platform
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    seller?: string;
+    /**
+     * Product id on target e-commerce platform
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    productId?: string;
+    /**
+     * Product name
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    name?: string;
+    /**
+     * Product description
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    description?: string | null;
+    /**
+     * Url of product page on target e-commerce platform
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    url?: string;
+    /**
+     * Urls of product images
+     * @type {Array<string>}
+     * @memberof CartItemSync
+     */
+    imagesUrls?: Array<string>;
+    /**
+     * Small image url to display on product thumb
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    smallImageUrl?: string | null;
+    /**
+     * "Selected variants for target product"
+     * @type {Array<Variant>}
+     * @memberof CartItemSync
+     */
+    variants?: Array<Variant> | null;
+    /**
+     * "Available variants for target product grouped by categories"
+     * @type {Array<VariantCategory>}
+     * @memberof CartItemSync
+     */
+    variantCategories?: Array<VariantCategory> | null;
+    /**
+     *
+     * @type {PriceData}
+     * @memberof CartItemSync
+     */
+    priceData?: PriceData;
+    /**
+     * "Product availability"
+     * @type {boolean}
+     * @memberof CartItemSync
+     */
+    available?: boolean;
+    /**
+     *
+     * @type {EnPlatformType}
+     * @memberof CartItemSync
+     */
+    platform?: EnPlatformType;
+    /**
+     * Serialized specific platform product data usually in JSON format
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    platformData?: string | null;
+    /**
+     * Categories in which the product belongs
+     * @type {Array<string>}
+     * @memberof CartItemSync
+     */
+    productCategories?: Array<string> | null;
+    /**
+     * International marking code. UPC, GTIN-12, GTIN-13, GTIN-14 or ISBN
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    gtin?: string | null;
+    /**
+     * Product manufacturer code
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    mpn?: string | null;
+    /**
+     * Product brand
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    brand?: string | null;
+    /**
+     * Unique id
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    id?: string;
+    /**
+     * Unique e-commerce platform guid
+     * @type {string}
+     * @memberof CartItemSync
+     */
+    platformId?: string;
+    /**
+     * Order limit for cart item count
+     * @type {number}
+     * @memberof CartItemSync
+     */
+    orderLimit?: number | null;
+    /**
+     * Order limit for cart item count minimum
+     * @type {number}
+     * @memberof CartItemSync
+     */
+    orderMinLimit?: number | null;
+    /**
+     * Cart item shippable
+     * @type {boolean}
+     * @memberof CartItemSync
+     */
+    shippable?: boolean;
+    /**
+     *
+     * @type {PlatformState}
+     * @memberof CartItemSync
+     */
+    platformState?: PlatformState;
+}
+/**
+ * Cart item
+ * @export
+ * @interface CartItemSyncAllOf
+ */
+export interface CartItemSyncAllOf {
+    /**
+     * Order limit for cart item count
+     * @type {number}
+     * @memberof CartItemSyncAllOf
+     */
+    orderLimit?: number | null;
+    /**
+     * Order limit for cart item count minimum
+     * @type {number}
+     * @memberof CartItemSyncAllOf
+     */
+    orderMinLimit?: number | null;
+    /**
+     * Cart item shippable
+     * @type {boolean}
+     * @memberof CartItemSyncAllOf
+     */
+    shippable?: boolean;
+    /**
+     *
+     * @type {PlatformState}
+     * @memberof CartItemSyncAllOf
+     */
+    platformState?: PlatformState;
+}
+/**
+ * Cart item variant
+ * @export
+ * @interface CartItemVariantSelect
+ */
+export interface CartItemVariantSelect {
+    /**
+     * Selected category id (if exists)
+     * @type {string}
+     * @memberof CartItemVariantSelect
+     */
+    categoryId?: string;
+    /**
+     * Selected variant id
+     * @type {string}
+     * @memberof CartItemVariantSelect
+     */
+    variantId?: string;
+}
+/**
  * Create offer error data for conflict
  * @export
  * @interface CreateOfferConflictErrorData
@@ -931,36 +1207,17 @@ export interface CreateOfferLimitReachedErrorData {
     limitReached?: boolean | null;
 }
 /**
- *
- * @export
- * @interface DiscountCoupon
- */
-export interface DiscountCoupon {
-    /**
-     *
-     * @type {string}
-     * @memberof DiscountCoupon
-     */
-    seller?: string | null;
-    /**
-     *
-     * @type {string}
-     * @memberof DiscountCoupon
-     */
-    coupon?: string | null;
-}
-/**
  * Discount coupons info
  * @export
- * @interface DiscountCoupons
+ * @interface Discount
  */
-export interface DiscountCoupons {
+export interface Discount {
     /**
      * Dictionary by Platform guid key, then Dictionary by Seller key
-     * @type {{ [key: string]: { [key: string]: DiscountCoupon; }; }}
-     * @memberof DiscountCoupons
+     * @type {{ [key: string]: { [key: string]: string; }; }}
+     * @memberof Discount
      */
-    coupons?: { [key: string]: { [key: string]: DiscountCoupon } };
+    coupons?: { [key: string]: { [key: string]: string } };
 }
 
 /**
@@ -1118,6 +1375,26 @@ export const EnPlatformType = {
     Backcountry: 'Backcountry',
     Forever21: 'Forever21',
     Tyler: 'Tyler',
+    Saksfifthavenue: 'Saksfifthavenue',
+    Venus: 'Venus',
+    OnlineShoes: 'OnlineShoes',
+    Lee: 'Lee',
+    CampMan: 'CampMan',
+    BlackDiamond: 'BlackDiamond',
+    Fabulousfurs: 'Fabulousfurs',
+    Fragrancenet: 'Fragrancenet',
+    Belk: 'Belk',
+    Sears: 'Sears',
+    Reebok: 'Reebok',
+    DrJays: 'DrJays',
+    Burberry: 'Burberry',
+    Timberland: 'Timberland',
+    LlBean: 'LLBean',
+    Kmart: 'Kmart',
+    LittleBoyChic: 'LittleBoyChic',
+    NaturesJewelry: 'NaturesJewelry',
+    Converse: 'Converse',
+    Zara: 'Zara',
     ShopifyApp: 'ShopifyApp',
     WooCommerceApp: 'WooCommerceApp',
     BigCommerceApp: 'BigCommerceApp',
@@ -1126,6 +1403,7 @@ export const EnPlatformType = {
     WixApp: 'WixApp',
     PrestaShopApp: 'PrestaShopApp',
     ShopwareApp: 'ShopwareApp',
+    Unknown: 'Unknown',
 } as const;
 export type EnPlatformType = typeof EnPlatformType[keyof typeof EnPlatformType];
 
@@ -1148,11 +1426,77 @@ export interface OfferBody {
      */
     name?: string;
     /**
-     *
-     * @type {OfferInfo}
+     * Offer is activated
+     * @type {boolean}
      * @memberof OfferBody
      */
-    offerInfo?: OfferInfo;
+    isActive?: boolean;
+    /**
+     *
+     * @type {Discount}
+     * @memberof OfferBody
+     */
+    discount?: Discount;
+    /**
+     * Offer error notification flag
+     * @type {boolean}
+     * @memberof OfferBody
+     */
+    errorReported?: boolean | null;
+    /**
+     * Offer lifetime. Maybe empty
+     * @type {string}
+     * @memberof OfferBody
+     */
+    validUntil?: string | null;
+    /**
+     * Offer use custom url as https://www.multicartshop.com/custom-url
+     * @type {boolean}
+     * @memberof OfferBody
+     */
+    customLink?: boolean;
+    /**
+     * Offer custom url as https://www.multicartshop.com/custom-url
+     * @type {string}
+     * @memberof OfferBody
+     */
+    link?: string | null;
+    /**
+     * Offer relationships with influencers
+     * @type {Array<OfferLinkData>}
+     * @memberof OfferBody
+     */
+    shareLinks?: Array<OfferLinkData> | null;
+    /**
+     * Offer tags
+     * @type {Array<string>}
+     * @memberof OfferBody
+     */
+    tags?: Array<string> | null;
+    /**
+     * Offer brand commission fee
+     * @type {number}
+     * @memberof OfferBody
+     */
+    commissionFee?: number | null;
+    /**
+     * Use google analytics tracking for offer
+     * @type {boolean}
+     * @memberof OfferBody
+     */
+    useGoogleAnalytics?: boolean | null;
+    /**
+     * Google analitics tracking id
+     * @type {string}
+     * @memberof OfferBody
+     */
+    googleTrackingId?: string | null;
+    /**
+     * Offer using external link checkout flow
+     * @type {boolean}
+     * @memberof OfferBody
+     */
+    useExternalCheckout?: boolean | null;
 }
 /**
  *
@@ -1173,11 +1517,77 @@ export interface OfferGet {
      */
     name?: string;
     /**
-     *
-     * @type {OfferInfo}
+     * Offer is activated
+     * @type {boolean}
      * @memberof OfferGet
      */
-    offerInfo?: OfferInfo;
+    isActive?: boolean;
+    /**
+     *
+     * @type {Discount}
+     * @memberof OfferGet
+     */
+    discount?: Discount;
+    /**
+     * Offer error notification flag
+     * @type {boolean}
+     * @memberof OfferGet
+     */
+    errorReported?: boolean | null;
+    /**
+     * Offer lifetime. Maybe empty
+     * @type {string}
+     * @memberof OfferGet
+     */
+    validUntil?: string | null;
+    /**
+     * Offer use custom url as https://www.multicartshop.com/custom-url
+     * @type {boolean}
+     * @memberof OfferGet
+     */
+    customLink?: boolean;
+    /**
+     * Offer custom url as https://www.multicartshop.com/custom-url
+     * @type {string}
+     * @memberof OfferGet
+     */
+    link?: string | null;
+    /**
+     * Offer relationships with influencers
+     * @type {Array<OfferLinkData>}
+     * @memberof OfferGet
+     */
+    shareLinks?: Array<OfferLinkData> | null;
+    /**
+     * Offer tags
+     * @type {Array<string>}
+     * @memberof OfferGet
+     */
+    tags?: Array<string> | null;
+    /**
+     * Offer brand commission fee
+     * @type {number}
+     * @memberof OfferGet
+     */
+    commissionFee?: number | null;
+    /**
+     * Use google analytics tracking for offer
+     * @type {boolean}
+     * @memberof OfferGet
+     */
+    useGoogleAnalytics?: boolean | null;
+    /**
+     * Google analitics tracking id
+     * @type {string}
+     * @memberof OfferGet
+     */
+    googleTrackingId?: string | null;
+    /**
+     * Offer using external link checkout flow
+     * @type {boolean}
+     * @memberof OfferGet
+     */
+    useExternalCheckout?: boolean | null;
     /**
      * Id of offer
      * @type {string}
@@ -1223,79 +1633,6 @@ export interface OfferGetAllOf {
     cartItems?: Array<CartItemGet> | null;
 }
 /**
- * Offer additional data
- * @export
- * @interface OfferInfo
- */
-export interface OfferInfo {
-    /**
-     *
-     * @type {DiscountCoupons}
-     * @memberof OfferInfo
-     */
-    discountCoupons?: DiscountCoupons;
-    /**
-     * Offer error notification flag
-     * @type {boolean}
-     * @memberof OfferInfo
-     */
-    errorReported?: boolean | null;
-    /**
-     * Offer lifetime. Maybe empty
-     * @type {string}
-     * @memberof OfferInfo
-     */
-    validUntil?: string | null;
-    /**
-     * Offer use custom url as https://www.multicartshop.com/custom-url
-     * @type {boolean}
-     * @memberof OfferInfo
-     */
-    customLink?: boolean;
-    /**
-     * Offer custom url as https://www.multicartshop.com/custom-url
-     * @type {string}
-     * @memberof OfferInfo
-     */
-    link?: string | null;
-    /**
-     * Offer relationships with influencers
-     * @type {Array<OfferLinkData>}
-     * @memberof OfferInfo
-     */
-    shareLinks?: Array<OfferLinkData> | null;
-    /**
-     * Offer tags
-     * @type {Array<string>}
-     * @memberof OfferInfo
-     */
-    tags?: Array<string> | null;
-    /**
-     * Offer brand commission fee
-     * @type {number}
-     * @memberof OfferInfo
-     */
-    commissionFee?: number | null;
-    /**
-     * Use google analytics tracking for offer
-     * @type {boolean}
-     * @memberof OfferInfo
-     */
-    useGoogleAnalytics?: boolean | null;
-    /**
-     * Google analitics tracking id
-     * @type {string}
-     * @memberof OfferInfo
-     */
-    googleTrackingId?: string | null;
-    /**
-     * Offer using external link checkout flow
-     * @type {boolean}
-     * @memberof OfferInfo
-     */
-    useExternalCheckout?: boolean | null;
-}
-/**
  * Offer relationship
  * @export
  * @interface OfferLinkData
@@ -1327,6 +1664,12 @@ export interface OfferPagingResponse {
      */
     data?: Array<OfferGet>;
     /**
+     * Previous page relative url
+     * @type {string}
+     * @memberof OfferPagingResponse
+     */
+    prevPage?: string | null;
+    /**
      * Next page url
      * @type {string}
      * @memberof OfferPagingResponse
@@ -1344,6 +1687,12 @@ export interface OfferPagingResponse {
      * @memberof OfferPagingResponse
      */
     nextPageToken?: string | null;
+    /**
+     * Previous page token
+     * @type {string}
+     * @memberof OfferPagingResponse
+     */
+    prevPageToken?: string | null;
 }
 /**
  *
@@ -1364,11 +1713,77 @@ export interface OfferPatch {
      */
     name?: string | null;
     /**
-     *
-     * @type {OfferInfo}
+     * Offer is activated
+     * @type {boolean}
      * @memberof OfferPatch
      */
-    offerInfo?: OfferInfo;
+    isActive?: boolean | null;
+    /**
+     *
+     * @type {Discount}
+     * @memberof OfferPatch
+     */
+    discountCoupons?: Discount;
+    /**
+     * Offer error notification flag
+     * @type {boolean}
+     * @memberof OfferPatch
+     */
+    errorReported?: boolean | null;
+    /**
+     * Offer lifetime. Maybe empty
+     * @type {string}
+     * @memberof OfferPatch
+     */
+    validUntil?: string | null;
+    /**
+     * Offer use custom url as https://www.multicartshop.com/custom-url
+     * @type {boolean}
+     * @memberof OfferPatch
+     */
+    customLink?: boolean | null;
+    /**
+     * Offer custom url as https://www.multicartshop.com/custom-url
+     * @type {string}
+     * @memberof OfferPatch
+     */
+    link?: string | null;
+    /**
+     * Offer relationships with influencers
+     * @type {Array<OfferLinkData>}
+     * @memberof OfferPatch
+     */
+    shareLinks?: Array<OfferLinkData> | null;
+    /**
+     * Offer tags
+     * @type {Array<string>}
+     * @memberof OfferPatch
+     */
+    tags?: Array<string> | null;
+    /**
+     * Offer brand commission fee
+     * @type {number}
+     * @memberof OfferPatch
+     */
+    commissionFee?: number | null;
+    /**
+     * Use google analytics tracking for offer
+     * @type {boolean}
+     * @memberof OfferPatch
+     */
+    useGoogleAnalytics?: boolean | null;
+    /**
+     * Google analitics tracking id
+     * @type {string}
+     * @memberof OfferPatch
+     */
+    googleTrackingId?: string | null;
+    /**
+     * Offer using external link checkout flow
+     * @type {boolean}
+     * @memberof OfferPatch
+     */
+    useExternalCheckout?: boolean | null;
     /**
      * Offer cart items
      * @type {Array<CartItemPost>}
@@ -1395,11 +1810,77 @@ export interface OfferPatchAllOf {
      */
     name?: string | null;
     /**
-     *
-     * @type {OfferInfo}
+     * Offer is activated
+     * @type {boolean}
      * @memberof OfferPatchAllOf
      */
-    offerInfo?: OfferInfo;
+    isActive?: boolean | null;
+    /**
+     *
+     * @type {Discount}
+     * @memberof OfferPatchAllOf
+     */
+    discountCoupons?: Discount;
+    /**
+     * Offer error notification flag
+     * @type {boolean}
+     * @memberof OfferPatchAllOf
+     */
+    errorReported?: boolean | null;
+    /**
+     * Offer lifetime. Maybe empty
+     * @type {string}
+     * @memberof OfferPatchAllOf
+     */
+    validUntil?: string | null;
+    /**
+     * Offer use custom url as https://www.multicartshop.com/custom-url
+     * @type {boolean}
+     * @memberof OfferPatchAllOf
+     */
+    customLink?: boolean | null;
+    /**
+     * Offer custom url as https://www.multicartshop.com/custom-url
+     * @type {string}
+     * @memberof OfferPatchAllOf
+     */
+    link?: string | null;
+    /**
+     * Offer relationships with influencers
+     * @type {Array<OfferLinkData>}
+     * @memberof OfferPatchAllOf
+     */
+    shareLinks?: Array<OfferLinkData> | null;
+    /**
+     * Offer tags
+     * @type {Array<string>}
+     * @memberof OfferPatchAllOf
+     */
+    tags?: Array<string> | null;
+    /**
+     * Offer brand commission fee
+     * @type {number}
+     * @memberof OfferPatchAllOf
+     */
+    commissionFee?: number | null;
+    /**
+     * Use google analytics tracking for offer
+     * @type {boolean}
+     * @memberof OfferPatchAllOf
+     */
+    useGoogleAnalytics?: boolean | null;
+    /**
+     * Google analitics tracking id
+     * @type {string}
+     * @memberof OfferPatchAllOf
+     */
+    googleTrackingId?: string | null;
+    /**
+     * Offer using external link checkout flow
+     * @type {boolean}
+     * @memberof OfferPatchAllOf
+     */
+    useExternalCheckout?: boolean | null;
     /**
      * Offer cart items
      * @type {Array<CartItemPost>}
@@ -1426,11 +1907,77 @@ export interface OfferPost {
      */
     name?: string;
     /**
-     *
-     * @type {OfferInfo}
+     * Offer is activated
+     * @type {boolean}
      * @memberof OfferPost
      */
-    offerInfo?: OfferInfo;
+    isActive?: boolean;
+    /**
+     *
+     * @type {Discount}
+     * @memberof OfferPost
+     */
+    discount?: Discount;
+    /**
+     * Offer error notification flag
+     * @type {boolean}
+     * @memberof OfferPost
+     */
+    errorReported?: boolean | null;
+    /**
+     * Offer lifetime. Maybe empty
+     * @type {string}
+     * @memberof OfferPost
+     */
+    validUntil?: string | null;
+    /**
+     * Offer use custom url as https://www.multicartshop.com/custom-url
+     * @type {boolean}
+     * @memberof OfferPost
+     */
+    customLink?: boolean;
+    /**
+     * Offer custom url as https://www.multicartshop.com/custom-url
+     * @type {string}
+     * @memberof OfferPost
+     */
+    link?: string | null;
+    /**
+     * Offer relationships with influencers
+     * @type {Array<OfferLinkData>}
+     * @memberof OfferPost
+     */
+    shareLinks?: Array<OfferLinkData> | null;
+    /**
+     * Offer tags
+     * @type {Array<string>}
+     * @memberof OfferPost
+     */
+    tags?: Array<string> | null;
+    /**
+     * Offer brand commission fee
+     * @type {number}
+     * @memberof OfferPost
+     */
+    commissionFee?: number | null;
+    /**
+     * Use google analytics tracking for offer
+     * @type {boolean}
+     * @memberof OfferPost
+     */
+    useGoogleAnalytics?: boolean | null;
+    /**
+     * Google analitics tracking id
+     * @type {string}
+     * @memberof OfferPost
+     */
+    googleTrackingId?: string | null;
+    /**
+     * Offer using external link checkout flow
+     * @type {boolean}
+     * @memberof OfferPost
+     */
+    useExternalCheckout?: boolean | null;
     /**
      * Offer cart items
      * @type {Array<CartItemPost>}
@@ -1464,6 +2011,12 @@ export interface PagingResponseOfCartItemGet {
      */
     data?: Array<CartItemGet>;
     /**
+     * Previous page relative url
+     * @type {string}
+     * @memberof PagingResponseOfCartItemGet
+     */
+    prevPage?: string | null;
+    /**
      * Next page url
      * @type {string}
      * @memberof PagingResponseOfCartItemGet
@@ -1481,6 +2034,12 @@ export interface PagingResponseOfCartItemGet {
      * @memberof PagingResponseOfCartItemGet
      */
     nextPageToken?: string | null;
+    /**
+     * Previous page token
+     * @type {string}
+     * @memberof PagingResponseOfCartItemGet
+     */
+    prevPageToken?: string | null;
 }
 /**
  * Paged data response
@@ -1495,6 +2054,12 @@ export interface PagingResponseOfOfferGet {
      */
     data?: Array<OfferGet>;
     /**
+     * Previous page relative url
+     * @type {string}
+     * @memberof PagingResponseOfOfferGet
+     */
+    prevPage?: string | null;
+    /**
      * Next page url
      * @type {string}
      * @memberof PagingResponseOfOfferGet
@@ -1512,6 +2077,128 @@ export interface PagingResponseOfOfferGet {
      * @memberof PagingResponseOfOfferGet
      */
     nextPageToken?: string | null;
+    /**
+     * Previous page token
+     * @type {string}
+     * @memberof PagingResponseOfOfferGet
+     */
+    prevPageToken?: string | null;
+}
+/**
+ *
+ * @export
+ * @interface PerimetrXOptions
+ */
+export interface PerimetrXOptions {
+    /**
+     *
+     * @type {string}
+     * @memberof PerimetrXOptions
+     */
+    redirectUrl?: string | null;
+    /**
+     *
+     * @type {string}
+     * @memberof PerimetrXOptions
+     */
+    appId?: string | null;
+    /**
+     *
+     * @type {string}
+     * @memberof PerimetrXOptions
+     */
+    jsClientSrc?: string | null;
+    /**
+     *
+     * @type {boolean}
+     * @memberof PerimetrXOptions
+     */
+    firstPartyEnabled?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof PerimetrXOptions
+     */
+    vid?: string | null;
+    /**
+     *
+     * @type {string}
+     * @memberof PerimetrXOptions
+     */
+    uuid?: string | null;
+    /**
+     *
+     * @type {string}
+     * @memberof PerimetrXOptions
+     */
+    hostUrl?: string | null;
+    /**
+     *
+     * @type {string}
+     * @memberof PerimetrXOptions
+     */
+    blockScript?: string | null;
+    /**
+     *
+     * @type {string}
+     * @memberof PerimetrXOptions
+     */
+    host?: string | null;
+}
+/**
+ * Shopping platform service state
+ * @export
+ * @interface PlatformState
+ */
+export interface PlatformState {
+    /**
+     *
+     * @type {EnPlatformType}
+     * @memberof PlatformState
+     */
+    platformType?: EnPlatformType;
+    /**
+     * Platform state between sessions
+     * @type {string}
+     * @memberof PlatformState
+     */
+    state?: string | null;
+    /**
+     * Request from shopping platform service (for example, if it needs some action from the user)
+     * @type {string}
+     * @memberof PlatformState
+     */
+    serverRequest?: string | null;
+    /**
+     * Response to shopping platform service (if ше needs a response from the user)
+     * @type {string}
+     * @memberof PlatformState
+     */
+    clientResponse?: string | null;
+    /**
+     * Current step of a platform service process
+     * @type {string}
+     * @memberof PlatformState
+     */
+    step?: string | null;
+    /**
+     * Type of current platform state
+     * @type {string}
+     * @memberof PlatformState
+     */
+    type?: string | null;
+    /**
+     * Captcha challenge
+     * @type {boolean}
+     * @memberof PlatformState
+     */
+    isCaptchaChallenge?: boolean;
+    /**
+     *
+     * @type {CaptchaChallengeOptions}
+     * @memberof PlatformState
+     */
+    captchaChallengeOptions?: CaptchaChallengeOptions;
 }
 /**
  * Price data
@@ -1551,6 +2238,203 @@ export interface PriceData {
     salePriceEffectiveDate?: string | null;
 }
 /**
+ * Purchase
+ * @export
+ * @interface PurchaseBody
+ */
+export interface PurchaseBody {
+    /**
+     * Purchase unique identifier
+     * @type {string}
+     * @memberof PurchaseBody
+     */
+    id?: string;
+    /**
+     * Offer unique identifier
+     * @type {string}
+     * @memberof PurchaseBody
+     */
+    offerId?: string | null;
+    /**
+     *
+     * @type {Discount}
+     * @memberof PurchaseBody
+     */
+    discount?: Discount;
+    /**
+     * Offer link if exists
+     * @type {string}
+     * @memberof PurchaseBody
+     */
+    offerLink?: string | null;
+}
+/**
+ * Purchase cart item
+ * @export
+ * @interface PurchaseCartItemGet
+ */
+export interface PurchaseCartItemGet {
+    /**
+     * Purchase cart item unique identifier
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    id?: string;
+    /**
+     * Purchase id
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    purchaseId?: string;
+    /**
+     * Source cart item unique identifier
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    cartItemId?: string;
+    /**
+     * Cart item count
+     * @type {number}
+     * @memberof PurchaseCartItemGet
+     */
+    count?: number;
+    /**
+     *
+     * @type {EnPlatformType}
+     * @memberof PurchaseCartItemGet
+     */
+    platform?: EnPlatformType;
+    /**
+     * Seller host on target e-commerce platform
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    seller?: string;
+    /**
+     * Unique item id on target e-commerce platform
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    usItemId?: string;
+    /**
+     * Product id on target e-commerce platform
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    productId?: string;
+    /**
+     * Product name
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    name?: string;
+    /**
+     * Product description
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    description?: string | null;
+    /**
+     * Url of product page on target e-commerce platform
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    url?: string;
+    /**
+     * Urls of product images
+     * @type {Array<string>}
+     * @memberof PurchaseCartItemGet
+     */
+    imagesUrls?: Array<string>;
+    /**
+     * Small image url to display on product thumb
+     * @type {string}
+     * @memberof PurchaseCartItemGet
+     */
+    smallImageUrl?: string | null;
+    /**
+     * "Selected variants for target product"
+     * @type {Array<Variant>}
+     * @memberof PurchaseCartItemGet
+     */
+    variants?: Array<Variant> | null;
+    /**
+     * "Available variants for target product grouped by categories"
+     * @type {Array<VariantCategory>}
+     * @memberof PurchaseCartItemGet
+     */
+    variantCategories?: Array<VariantCategory> | null;
+    /**
+     *
+     * @type {PriceData}
+     * @memberof PurchaseCartItemGet
+     */
+    priceData?: PriceData;
+}
+/**
+ *
+ * @export
+ * @interface PurchaseGet
+ */
+export interface PurchaseGet {
+    /**
+     * Purchase unique identifier
+     * @type {string}
+     * @memberof PurchaseGet
+     */
+    id?: string;
+    /**
+     * Offer unique identifier
+     * @type {string}
+     * @memberof PurchaseGet
+     */
+    offerId?: string | null;
+    /**
+     *
+     * @type {Discount}
+     * @memberof PurchaseGet
+     */
+    discount?: Discount;
+    /**
+     * Offer link if exists
+     * @type {string}
+     * @memberof PurchaseGet
+     */
+    offerLink?: string | null;
+    /**
+     * Purchase cart items
+     * @type {Array<PurchaseCartItemGet>}
+     * @memberof PurchaseGet
+     */
+    cartItems?: Array<PurchaseCartItemGet> | null;
+}
+/**
+ * Purchase
+ * @export
+ * @interface PurchaseGetAllOf
+ */
+export interface PurchaseGetAllOf {
+    /**
+     * Purchase cart items
+     * @type {Array<PurchaseCartItemGet>}
+     * @memberof PurchaseGetAllOf
+     */
+    cartItems?: Array<PurchaseCartItemGet> | null;
+}
+/**
+ * Purchase
+ * @export
+ * @interface PurchasePost
+ */
+export interface PurchasePost {
+    /**
+     *
+     * @type {ShoppingCart}
+     * @memberof PurchasePost
+     */
+    cart?: ShoppingCart;
+}
+/**
  * Result with guid id
  * @export
  * @interface ResultGuid
@@ -1562,6 +2446,325 @@ export interface ResultGuid {
      * @memberof ResultGuid
      */
     id?: string;
+}
+/**
+ * Shopping cart
+ * @export
+ * @interface ShoppingCart
+ */
+export interface ShoppingCart {
+    /**
+     * Cart items
+     * @type {Array<ShoppingCartItem>}
+     * @memberof ShoppingCart
+     */
+    cartItems?: Array<ShoppingCartItem>;
+    /**
+     * Offer id
+     * @type {string}
+     * @memberof ShoppingCart
+     */
+    offerId?: string | null;
+    /**
+     * Offer link
+     * @type {string}
+     * @memberof ShoppingCart
+     */
+    offerLink?: string | null;
+    /**
+     *
+     * @type {Discount}
+     * @memberof ShoppingCart
+     */
+    discount?: Discount;
+}
+/**
+ * Shopping cart error data
+ * @export
+ * @interface ShoppingCartErrorData
+ */
+export interface ShoppingCartErrorData {
+    /**
+     *
+     * @type {ShoppingCart}
+     * @memberof ShoppingCartErrorData
+     */
+    cart?: ShoppingCart;
+    /**
+     * Problems list
+     * @type {Array<ShoppingCartProblem>}
+     * @memberof ShoppingCartErrorData
+     */
+    problems?: Array<ShoppingCartProblem> | null;
+}
+/**
+ *
+ * @export
+ * @interface ShoppingCartItem
+ */
+export interface ShoppingCartItem {
+    /**
+     * Unique item id on target e-commerce platform
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    usItemId?: string;
+    /**
+     * Seller host on target e-commerce platform
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    seller?: string;
+    /**
+     * Product id on target e-commerce platform
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    productId?: string;
+    /**
+     * Product name
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    name?: string;
+    /**
+     * Product description
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    description?: string | null;
+    /**
+     * Url of product page on target e-commerce platform
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    url?: string;
+    /**
+     * Urls of product images
+     * @type {Array<string>}
+     * @memberof ShoppingCartItem
+     */
+    imagesUrls?: Array<string>;
+    /**
+     * Small image url to display on product thumb
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    smallImageUrl?: string | null;
+    /**
+     * "Selected variants for target product"
+     * @type {Array<Variant>}
+     * @memberof ShoppingCartItem
+     */
+    variants?: Array<Variant> | null;
+    /**
+     * "Available variants for target product grouped by categories"
+     * @type {Array<VariantCategory>}
+     * @memberof ShoppingCartItem
+     */
+    variantCategories?: Array<VariantCategory> | null;
+    /**
+     *
+     * @type {PriceData}
+     * @memberof ShoppingCartItem
+     */
+    priceData?: PriceData;
+    /**
+     * "Product availability"
+     * @type {boolean}
+     * @memberof ShoppingCartItem
+     */
+    available?: boolean;
+    /**
+     *
+     * @type {EnPlatformType}
+     * @memberof ShoppingCartItem
+     */
+    platform?: EnPlatformType;
+    /**
+     * Serialized specific platform product data usually in JSON format
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    platformData?: string | null;
+    /**
+     * Categories in which the product belongs
+     * @type {Array<string>}
+     * @memberof ShoppingCartItem
+     */
+    productCategories?: Array<string> | null;
+    /**
+     * International marking code. UPC, GTIN-12, GTIN-13, GTIN-14 or ISBN
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    gtin?: string | null;
+    /**
+     * Product manufacturer code
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    mpn?: string | null;
+    /**
+     * Product brand
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    brand?: string | null;
+    /**
+     * Unique id
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    id?: string;
+    /**
+     * Unique e-commerce platform guid
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    platformId?: string;
+    /**
+     * Order limit for cart item count
+     * @type {number}
+     * @memberof ShoppingCartItem
+     */
+    orderLimit?: number | null;
+    /**
+     * Order limit for cart item count minimum
+     * @type {number}
+     * @memberof ShoppingCartItem
+     */
+    orderMinLimit?: number | null;
+    /**
+     * Cart item shippable
+     * @type {boolean}
+     * @memberof ShoppingCartItem
+     */
+    shippable?: boolean;
+    /**
+     *
+     * @type {PlatformState}
+     * @memberof ShoppingCartItem
+     */
+    platformState?: PlatformState;
+    /**
+     *
+     * @type {number}
+     * @memberof ShoppingCartItem
+     */
+    count?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof ShoppingCartItem
+     */
+    warning?: string | null;
+}
+/**
+ * Shopping cart item
+ * @export
+ * @interface ShoppingCartItemAllOf
+ */
+export interface ShoppingCartItemAllOf {
+    /**
+     *
+     * @type {number}
+     * @memberof ShoppingCartItemAllOf
+     */
+    count?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof ShoppingCartItemAllOf
+     */
+    warning?: string | null;
+}
+/**
+ * Shopping cart item
+ * @export
+ * @interface ShoppingCartItemPost
+ */
+export interface ShoppingCartItemPost {
+    /**
+     * Cart item id
+     * @type {string}
+     * @memberof ShoppingCartItemPost
+     */
+    cartItemId?: string;
+    /**
+     * Product variants if exists
+     * @type {Array<CartItemVariantSelect>}
+     * @memberof ShoppingCartItemPost
+     */
+    variants?: Array<CartItemVariantSelect> | null;
+    /**
+     * Count of product
+     * @type {number}
+     * @memberof ShoppingCartItemPost
+     */
+    count?: number;
+    /**
+     *
+     * @type {PlatformState}
+     * @memberof ShoppingCartItemPost
+     */
+    platformState?: PlatformState;
+}
+/**
+ * Shopping cart
+ * @export
+ * @interface ShoppingCartPost
+ */
+export interface ShoppingCartPost {
+    /**
+     * Shopping cart items
+     * @type {Array<ShoppingCartItemPost>}
+     * @memberof ShoppingCartPost
+     */
+    cartItems?: Array<ShoppingCartItemPost> | null;
+    /**
+     * Offer link
+     * @type {string}
+     * @memberof ShoppingCartPost
+     */
+    offerLink?: string | null;
+    /**
+     *
+     * @type {Discount}
+     * @memberof ShoppingCartPost
+     */
+    discountCoupons?: Discount;
+}
+/**
+ * Shopping cart problem
+ * @export
+ * @interface ShoppingCartProblem
+ */
+export interface ShoppingCartProblem {
+    /**
+     *
+     * @type {ShoppingCartItemPost}
+     * @memberof ShoppingCartProblem
+     */
+    cartItem?: ShoppingCartItemPost;
+    /**
+     *
+     * @type {ShoppingCartItem}
+     * @memberof ShoppingCartProblem
+     */
+    result?: ShoppingCartItem;
+    /**
+     * Problem text
+     * @type {string}
+     * @memberof ShoppingCartProblem
+     */
+    problem?: string;
+    /**
+     * Problem code
+     * @type {number}
+     * @memberof ShoppingCartProblem
+     */
+    code?: number | null;
 }
 /**
  * Product variant

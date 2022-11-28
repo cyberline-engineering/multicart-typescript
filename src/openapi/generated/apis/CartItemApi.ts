@@ -19,6 +19,7 @@ import type {
     CartItemGet,
     CartItemPagingResponse,
     CartItemPatch,
+    CartItemSync,
     EnPageDirection,
     EnPlatformType,
     ResultGuid,
@@ -32,10 +33,15 @@ export interface CartItemGetRequest {
     id: string;
 }
 
+export interface CartItemGetWithSyncRequest {
+    id: string;
+}
+
 export interface CartItemListRequest {
     platform?: EnPlatformType;
     seller?: string | null;
     usItemId?: string | null;
+    userId?: string | null;
     pageSize?: number | null;
     dir?: EnPageDirection;
     pageToken?: string | null;
@@ -175,6 +181,65 @@ export class CartItemApi extends runtime.BaseAPI {
     }
 
     /**
+     * Retrieves cart item by unique id with sync
+     * Get cart item by id with sync
+     */
+    async cartItemGetWithSyncRaw(
+        requestParameters: CartItemGetWithSyncRequest,
+        initOverrides?: RequestInit | runtime.InitOverrideFunction
+    ): Promise<runtime.ApiResponse<CartItemSync>> {
+        if (
+            requestParameters.id === null ||
+            requestParameters.id === undefined
+        ) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter requestParameters.id was null or undefined when calling cartItemGetWithSync.'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters['Authorization'] =
+                await this.configuration.accessToken('bearer', []);
+        }
+
+        const response = await this.request(
+            {
+                path: `/api/CartItem/{id}/sync`.replace(
+                    `{${'id'}}`,
+                    encodeURIComponent(String(requestParameters.id))
+                ),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            },
+            initOverrides
+        );
+
+        return new runtime.JSONApiResponse(response);
+    }
+
+    /**
+     * Retrieves cart item by unique id with sync
+     * Get cart item by id with sync
+     */
+    async cartItemGetWithSync(
+        requestParameters: CartItemGetWithSyncRequest,
+        initOverrides?: RequestInit | runtime.InitOverrideFunction
+    ): Promise<CartItemSync> {
+        const response = await this.cartItemGetWithSyncRaw(
+            requestParameters,
+            initOverrides
+        );
+        return await response.value();
+    }
+
+    /**
      * Retrieves cart items by pages applying filter (platform, seller, usItemId)
      * Get cart items for user (paged)
      */
@@ -194,6 +259,10 @@ export class CartItemApi extends runtime.BaseAPI {
 
         if (requestParameters.usItemId !== undefined) {
             queryParameters['UsItemId'] = requestParameters.usItemId;
+        }
+
+        if (requestParameters.userId !== undefined) {
+            queryParameters['UserId'] = requestParameters.userId;
         }
 
         if (requestParameters.pageSize !== undefined) {

@@ -3,10 +3,10 @@
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-| **cookies** | [**List**](PlatformCookie.md) | Platform cookies | [optional] [default to null] |
 | **platformType** | [**EnPlatformType**](EnPlatformType.md) |  | [optional] [default to null] |
-| **platformDataRequest** | **String** | Request from shopping platform service (for example, if it needs some action from the user) | [optional] [default to null] |
-| **platformDataResponse** | **String** | Response to shopping platform service (if ше needs a response from the user) | [optional] [default to null] |
+| **state** | **String** | Platform state between sessions | [optional] [default to null] |
+| **serverRequest** | **String** | Request from shopping platform service (for example, if it needs some action from the user) | [optional] [default to null] |
+| **clientResponse** | **String** | Response to shopping platform service (if ше needs a response from the user) | [optional] [default to null] |
 | **step** | **String** | Current step of a platform service process | [optional] [default to null] |
 | **type** | **String** | Type of current platform state | [optional] [default to null] |
 | **isCaptchaChallenge** | **Boolean** | Captcha challenge | [optional] [default to null] |

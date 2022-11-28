@@ -6,6 +6,7 @@ All URIs are relative to *https://stage.redoc.cledeploy.com*
 |------------- | ------------- | -------------|
 | [**offerDelete**](OfferApi.md#offerDelete) | **DELETE** /api/Offer/{id} | Delete offer |
 | [**offerGet**](OfferApi.md#offerGet) | **GET** /api/Offer/{id} | Get offer by id |
+| [**offerGetByLink**](OfferApi.md#offerGetByLink) | **GET** /api/Offer/link/{link} | Get offer by link |
 | [**offerList**](OfferApi.md#offerList) | **GET** /api/Offer | Get offers for user (paged) |
 | [**offerPatch**](OfferApi.md#offerPatch) | **PATCH** /api/Offer/{id} | Patch offer |
 | [**offerPost**](OfferApi.md#offerPost) | **POST** /api/Offer | Create new offer |
@@ -66,9 +67,36 @@ Get offer by id
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
+<a name="offerGetByLink"></a>
+# **offerGetByLink**
+> OfferGet offerGetByLink(link)
+
+Get offer by link
+
+    Retrieves offer by unique link
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **link** | **String**|  | [default to null] |
+
+### Return type
+
+[**OfferGet**](../Models/OfferGet.md)
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 <a name="offerList"></a>
 # **offerList**
-> OfferPagingResponse offerList(Name, GroupId, PageSize, Dir, PageToken, IncludedProperties)
+> OfferPagingResponse offerList(Name, GroupId, UserId, PageSize, Dir, PageToken, IncludedProperties)
 
 Get offers for user (paged)
 
@@ -80,6 +108,7 @@ Get offers for user (paged)
 |------------- | ------------- | ------------- | -------------|
 | **Name** | **String**| Offer name | [optional] [default to null] |
 | **GroupId** | **String**| Offer group id | [optional] [default to null] |
+| **UserId** | **String**| User id | [optional] [default to null] |
 | **PageSize** | **Integer**| Page size (from 1 to 50, default 20) | [optional] [default to null] |
 | **Dir** | [**EnPageDirection**](../Models/.md)| Direction of paging | [optional] [default to null] [enum: Desc, Asc] |
 | **PageToken** | **String**| Current position token (from previous page response) | [optional] [default to null] |
@@ -128,7 +157,7 @@ null (empty response body)
 
 <a name="offerPost"></a>
 # **offerPost**
-> offerPost(OfferPost)
+> ResultGuid offerPost(OfferPost)
 
 Create new offer
 
@@ -140,7 +169,7 @@ Create new offer
 
 ### Return type
 
-null (empty response body)
+[**ResultGuid**](../Models/ResultGuid.md)
 
 ### Authorization
 

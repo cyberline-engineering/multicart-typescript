@@ -13,7 +13,7 @@
 | **smallImageUrl** | **String** | Small image url to display on product thumb | [optional] [default to null] |
 | **variants** | [**List**](Variant.md) | \&quot;Selected variants for target product\&quot; | [optional] [default to null] |
 | **variantCategories** | [**List**](VariantCategory.md) | \&quot;Available variants for target product grouped by categories\&quot; | [optional] [default to null] |
-| **priceInfo** | [**PriceData**](PriceData.md) |  | [optional] [default to null] |
+| **priceData** | [**PriceData**](PriceData.md) |  | [optional] [default to null] |
 | **available** | **Boolean** | \&quot;Product availability\&quot; | [optional] [default to null] |
 | **platform** | [**EnPlatformType**](EnPlatformType.md) |  | [optional] [default to null] |
 | **platformData** | **String** | Serialized specific platform product data usually in JSON format | [optional] [default to null] |

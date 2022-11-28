@@ -22,12 +22,14 @@ All URIs are relative to *https://stage.redoc.cledeploy.com*
 *CartItemApi* | [**cartItemPut**](Apis/CartItemApi.md#cartitemput) | **PUT** /api/CartItem/{id} | Update cart item |
 | *OfferApi* | [**offerDelete**](Apis/OfferApi.md#offerdelete) | **DELETE** /api/Offer/{id} | Delete offer |
 *OfferApi* | [**offerGet**](Apis/OfferApi.md#offerget) | **GET** /api/Offer/{id} | Get offer by id |
+*OfferApi* | [**offerGetByLink**](Apis/OfferApi.md#offergetbylink) | **GET** /api/Offer/link/{link} | Get offer by link |
 *OfferApi* | [**offerList**](Apis/OfferApi.md#offerlist) | **GET** /api/Offer | Get offers for user (paged) |
 *OfferApi* | [**offerPatch**](Apis/OfferApi.md#offerpatch) | **PATCH** /api/Offer/{id} | Patch offer |
 *OfferApi* | [**offerPost**](Apis/OfferApi.md#offerpost) | **POST** /api/Offer | Create new offer |
 *OfferApi* | [**offerPut**](Apis/OfferApi.md#offerput) | **PUT** /api/Offer/{id} | Update offer |
-| *PurchaseApi* | [**purchasePostCart**](Apis/PurchaseApi.md#purchasepostcart) | **POST** /api/Purchase/cart | Create shopping cart |
-*PurchaseApi* | [**purchasePostOfferCart**](Apis/PurchaseApi.md#purchasepostoffercart) | **POST** /api/Purchase/offer/{offerId}/cart | Create shopping cart from offer |
+| *PurchaseApi* | [**purchaseGet**](Apis/PurchaseApi.md#purchaseget) | **GET** /api/Purchase/{id} | Get purchase by id |
+*PurchaseApi* | [**purchasePost**](Apis/PurchaseApi.md#purchasepost) | **POST** /api/Purchase | Create purchase |
+*PurchaseApi* | [**purchasePostCart**](Apis/PurchaseApi.md#purchasepostcart) | **POST** /api/Purchase/cart | Create shopping cart |
 
 
 <a name="documentation-for-models"></a>
@@ -58,14 +60,12 @@ All URIs are relative to *https://stage.redoc.cledeploy.com*
  - [CartItemVariantSelect](./Models/CartItemVariantSelect.md)
  - [CreateOfferConflictErrorData](./Models/CreateOfferConflictErrorData.md)
  - [CreateOfferLimitReachedErrorData](./Models/CreateOfferLimitReachedErrorData.md)
- - [DiscountCoupon](./Models/DiscountCoupon.md)
- - [DiscountCoupons](./Models/DiscountCoupons.md)
+ - [Discount](./Models/Discount.md)
  - [EnPageDirection](./Models/EnPageDirection.md)
  - [EnPlatformType](./Models/EnPlatformType.md)
  - [OfferBody](./Models/OfferBody.md)
  - [OfferGet](./Models/OfferGet.md)
  - [OfferGet_allOf](./Models/OfferGet_allOf.md)
- - [OfferInfo](./Models/OfferInfo.md)
  - [OfferLinkData](./Models/OfferLinkData.md)
  - [OfferPagingResponse](./Models/OfferPagingResponse.md)
  - [OfferPatch](./Models/OfferPatch.md)
@@ -75,9 +75,13 @@ All URIs are relative to *https://stage.redoc.cledeploy.com*
  - [PagingResponseOfCartItemGet](./Models/PagingResponseOfCartItemGet.md)
  - [PagingResponseOfOfferGet](./Models/PagingResponseOfOfferGet.md)
  - [PerimetrXOptions](./Models/PerimetrXOptions.md)
- - [PlatformCookie](./Models/PlatformCookie.md)
  - [PlatformState](./Models/PlatformState.md)
  - [PriceData](./Models/PriceData.md)
+ - [PurchaseBody](./Models/PurchaseBody.md)
+ - [PurchaseCartItemGet](./Models/PurchaseCartItemGet.md)
+ - [PurchaseGet](./Models/PurchaseGet.md)
+ - [PurchaseGet_allOf](./Models/PurchaseGet_allOf.md)
+ - [PurchasePost](./Models/PurchasePost.md)
  - [ResultGuid](./Models/ResultGuid.md)
  - [ShoppingCart](./Models/ShoppingCart.md)
  - [ShoppingCartErrorData](./Models/ShoppingCartErrorData.md)
