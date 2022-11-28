@@ -47,7 +47,6 @@ module.exports = defineConfig({
             copyDtsFiles: false,
             staticImport: true,
             skipDiagnostics: false,
-            logDiagnostics: true,
             rollupTypes: true,
             insertTypesEntry: true,
         }),

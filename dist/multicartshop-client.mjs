@@ -1,11 +1,11 @@
-var xe = Object.defineProperty;
-var Oe = (e, t, r) => t in e ? xe(e, t, { enumerable: !0, configurable: !0, writable: !0, value: r }) : e[t] = r;
-var L = (e, t, r) => (Oe(e, typeof t != "symbol" ? t + "" : t, r), r);
+var Ue = Object.defineProperty;
+var Oe = (e, t, s) => t in e ? Ue(e, t, { enumerable: !0, configurable: !0, writable: !0, value: s }) : e[t] = s;
+var L = (e, t, s) => (Oe(e, typeof t != "symbol" ? t + "" : t, s), s);
 const Be = "https://stage.redoc.cledeploy.com".replace(
   /\/+$/,
   ""
 );
-class le {
+class ge {
   constructor(t = {}) {
     this.configuration = t;
   }
@@ -22,7 +22,7 @@ class le {
     return this.configuration.middleware || [];
   }
   get queryParamsStringify() {
-    return this.configuration.queryParamsStringify || ge;
+    return this.configuration.queryParamsStringify || _e;
   }
   get username() {
     return this.configuration.username;
@@ -47,84 +47,84 @@ class le {
     return this.configuration.credentials;
   }
 }
-const ue = new le();
-class X {
-  constructor(t = ue) {
+const pe = new ge();
+class te {
+  constructor(t = pe) {
     L(this, "middleware");
-    L(this, "fetchApi", async (t, r) => {
-      let i = { url: t, init: r };
+    L(this, "fetchApi", async (t, s) => {
+      let i = { url: t, init: s };
       for (const n of this.middleware)
         n.pre && (i = await n.pre({
           fetch: this.fetchApi,
           ...i
         }) || i);
-      let s;
+      let r;
       try {
-        s = await (this.configuration.fetchApi || fetch)(
+        r = await (this.configuration.fetchApi || fetch)(
           i.url,
           i.init
         );
       } catch (n) {
         for (const o of this.middleware)
-          o.onError && (s = await o.onError({
+          o.onError && (r = await o.onError({
             fetch: this.fetchApi,
             url: i.url,
             init: i.init,
             error: n,
-            response: s ? s.clone() : void 0
-          }) || s);
-        if (s === void 0)
+            response: r ? r.clone() : void 0
+          }) || r);
+        if (r === void 0)
           throw n instanceof Error ? new He(
             n,
             "The request failed and the interceptors did not return an alternative response"
           ) : n;
       }
       for (const n of this.middleware)
-        n.post && (s = await n.post({
+        n.post && (r = await n.post({
           fetch: this.fetchApi,
           url: i.url,
           init: i.init,
-          response: s.clone()
-        }) || s);
-      return s;
+          response: r.clone()
+        }) || r);
+      return r;
     });
     this.configuration = t, this.middleware = t.middleware;
   }
   withMiddleware(...t) {
-    const r = this.clone();
-    return r.middleware = r.middleware.concat(...t), r;
+    const s = this.clone();
+    return s.middleware = s.middleware.concat(...t), s;
   }
   withPreMiddleware(...t) {
-    const r = t.map((i) => ({ pre: i }));
-    return this.withMiddleware(...r);
+    const s = t.map((i) => ({ pre: i }));
+    return this.withMiddleware(...s);
   }
   withPostMiddleware(...t) {
-    const r = t.map((i) => ({ post: i }));
-    return this.withMiddleware(...r);
+    const s = t.map((i) => ({ post: i }));
+    return this.withMiddleware(...s);
   }
-  async request(t, r) {
-    const { url: i, init: s } = await this.createFetchParams(
+  async request(t, s) {
+    const { url: i, init: r } = await this.createFetchParams(
       t,
-      r
-    ), n = await this.fetchApi(i, s);
+      s
+    ), n = await this.fetchApi(i, r);
     if (n.status >= 200 && n.status < 300)
       return n;
     throw new Ne(n, "Response returned an error code");
   }
-  async createFetchParams(t, r) {
+  async createFetchParams(t, s) {
     let i = this.configuration.basePath + t.path;
     t.query !== void 0 && Object.keys(t.query).length !== 0 && (i += "?" + this.configuration.queryParamsStringify(t.query));
-    const s = Object.assign(
+    const r = Object.assign(
       {},
       this.configuration.headers,
       t.headers
     );
-    Object.keys(s).forEach(
-      (l) => s[l] === void 0 ? delete s[l] : {}
+    Object.keys(r).forEach(
+      (l) => r[l] === void 0 ? delete r[l] : {}
     );
-    const n = typeof r == "function" ? r : async () => r, o = {
+    const n = typeof s == "function" ? s : async () => s, o = {
       method: t.method,
-      headers: s,
+      headers: r,
       body: t.body,
       credentials: this.configuration.credentials
     }, c = {
@@ -135,64 +135,64 @@ class X {
       })
     }, d = {
       ...c,
-      body: qe(c.body) || c.body instanceof URLSearchParams || Me(c.body) ? c.body : JSON.stringify(c.body)
+      body: Me(c.body) || c.body instanceof URLSearchParams || qe(c.body) ? c.body : JSON.stringify(c.body)
     };
     return { url: i, init: d };
   }
   clone() {
-    const t = this.constructor, r = new t(this.configuration);
-    return r.middleware = this.middleware.slice(), r;
+    const t = this.constructor, s = new t(this.configuration);
+    return s.middleware = this.middleware.slice(), s;
   }
 }
-function Me(e) {
+function qe(e) {
   return typeof Blob < "u" && e instanceof Blob;
 }
-function qe(e) {
+function Me(e) {
   return typeof FormData < "u" && e instanceof FormData;
 }
 class Ne extends Error {
-  constructor(r, i) {
+  constructor(s, i) {
     super(i);
     L(this, "name", "ResponseError");
-    this.response = r;
+    this.response = s;
   }
 }
 class He extends Error {
-  constructor(r, i) {
+  constructor(s, i) {
     super(i);
     L(this, "name", "FetchError");
-    this.cause = r;
+    this.cause = s;
   }
 }
 class T extends Error {
-  constructor(r, i) {
+  constructor(s, i) {
     super(i);
     L(this, "name", "RequiredError");
-    this.field = r;
+    this.field = s;
   }
 }
-const xt = {
+const Ut = {
   csv: ",",
   ssv: " ",
   tsv: "	",
   pipes: "|"
 };
-function ge(e, t = "") {
-  return Object.keys(e).map((r) => pe(r, e[r], t)).filter((r) => r.length > 0).join("&");
+function _e(e, t = "") {
+  return Object.keys(e).map((s) => fe(s, e[s], t)).filter((s) => s.length > 0).join("&");
 }
-function pe(e, t, r = "") {
-  const i = r + (r.length ? `[${e}]` : e);
+function fe(e, t, s = "") {
+  const i = s + (s.length ? `[${e}]` : e);
   if (t instanceof Array) {
-    const s = t.map((n) => encodeURIComponent(String(n))).join(`&${encodeURIComponent(i)}=`);
-    return `${encodeURIComponent(i)}=${s}`;
+    const r = t.map((n) => encodeURIComponent(String(n))).join(`&${encodeURIComponent(i)}=`);
+    return `${encodeURIComponent(i)}=${r}`;
   }
   if (t instanceof Set) {
-    const s = Array.from(t);
-    return pe(e, s, r);
+    const r = Array.from(t);
+    return fe(e, r, s);
   }
   return t instanceof Date ? `${encodeURIComponent(i)}=${encodeURIComponent(
     t.toISOString()
-  )}` : t instanceof Object ? ge(t, i) : `${encodeURIComponent(i)}=${encodeURIComponent(
+  )}` : t instanceof Object ? _e(t, i) : `${encodeURIComponent(i)}=${encodeURIComponent(
     String(t)
   )}`;
 }
@@ -202,15 +202,15 @@ function Ot(e) {
       return !0;
   return !1;
 }
-class q {
-  constructor(t, r = (i) => i) {
-    this.raw = t, this.transformer = r;
+class N {
+  constructor(t, s = (i) => i) {
+    this.raw = t, this.transformer = s;
   }
   async value() {
     return this.transformer(await this.raw.json());
   }
 }
-class x {
+class U {
   constructor(t) {
     this.raw = t;
   }
@@ -225,7 +225,7 @@ class Bt {
     return await this.raw.blob();
   }
 }
-class Mt {
+class qt {
   constructor(t) {
     this.raw = t;
   }
@@ -233,15 +233,15 @@ class Mt {
     return await this.raw.text();
   }
 }
-class qt extends X {
-  async adminCartItemDeleteRaw(t, r) {
+class Mt extends te {
+  async adminCartItemDeleteRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
         "Required parameter requestParameters.id was null or undefined when calling adminCartItemDelete."
       );
-    const i = {}, s = {};
-    this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/admin/CartItem/{id}".replace(
@@ -249,24 +249,24 @@ class qt extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "DELETE",
-        headers: s,
+        headers: r,
         query: i
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async adminCartItemDelete(t, r) {
-    await this.adminCartItemDeleteRaw(t, r);
+  async adminCartItemDelete(t, s) {
+    await this.adminCartItemDeleteRaw(t, s);
   }
-  async adminCartItemGetRaw(t, r) {
+  async adminCartItemGetRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
         "Required parameter requestParameters.id was null or undefined when calling adminCartItemGet."
       );
-    const i = {}, s = {};
-    this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/admin/CartItem/{id}".replace(
@@ -274,42 +274,42 @@ class qt extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "GET",
-        headers: s,
+        headers: r,
         query: i
       },
-      r
+      s
     );
-    return new q(n);
+    return new N(n);
   }
-  async adminCartItemGet(t, r) {
+  async adminCartItemGet(t, s) {
     return await (await this.adminCartItemGetRaw(
       t,
-      r
+      s
     )).value();
   }
-  async adminCartItemListRaw(t, r) {
+  async adminCartItemListRaw(t, s) {
     const i = {};
     t.userId !== void 0 && (i.UserId = t.userId), t.platform !== void 0 && (i.Platform = t.platform), t.seller !== void 0 && (i.Seller = t.seller), t.usItemId !== void 0 && (i.UsItemId = t.usItemId), t.pageSize !== void 0 && (i.PageSize = t.pageSize), t.dir !== void 0 && (i.Dir = t.dir), t.pageToken !== void 0 && (i.PageToken = t.pageToken), t.includedProperties && (i.IncludedProperties = t.includedProperties);
-    const s = {};
-    this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const r = {};
+    this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/admin/CartItem",
         method: "GET",
-        headers: s,
+        headers: r,
         query: i
       },
-      r
+      s
     );
-    return new q(n);
+    return new N(n);
   }
-  async adminCartItemList(t = {}, r) {
+  async adminCartItemList(t = {}, s) {
     return await (await this.adminCartItemListRaw(
       t,
-      r
+      s
     )).value();
   }
-  async adminCartItemPatchRaw(t, r) {
+  async adminCartItemPatchRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
@@ -320,8 +320,8 @@ class qt extends X {
         "cartItemPatch",
         "Required parameter requestParameters.cartItemPatch was null or undefined when calling adminCartItemPatch."
       );
-    const i = {}, s = {};
-    s["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    r["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/admin/CartItem/{id}".replace(
@@ -329,44 +329,44 @@ class qt extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "PATCH",
-        headers: s,
+        headers: r,
         query: i,
         body: t.cartItemPatch
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async adminCartItemPatch(t, r) {
-    await this.adminCartItemPatchRaw(t, r);
+  async adminCartItemPatch(t, s) {
+    await this.adminCartItemPatchRaw(t, s);
   }
-  async adminCartItemPostRaw(t, r) {
+  async adminCartItemPostRaw(t, s) {
     if (t.cartItemBodyAdmin === null || t.cartItemBodyAdmin === void 0)
       throw new T(
         "cartItemBodyAdmin",
         "Required parameter requestParameters.cartItemBodyAdmin was null or undefined when calling adminCartItemPost."
       );
-    const i = {}, s = {};
-    s["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    r["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/admin/CartItem",
         method: "POST",
-        headers: s,
+        headers: r,
         query: i,
         body: t.cartItemBodyAdmin
       },
-      r
+      s
     );
-    return new q(n);
+    return new N(n);
   }
-  async adminCartItemPost(t, r) {
+  async adminCartItemPost(t, s) {
     return await (await this.adminCartItemPostRaw(
       t,
-      r
+      s
     )).value();
   }
-  async adminCartItemPutRaw(t, r) {
+  async adminCartItemPutRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
@@ -377,8 +377,8 @@ class qt extends X {
         "cartItemBody",
         "Required parameter requestParameters.cartItemBody was null or undefined when calling adminCartItemPut."
       );
-    const i = {}, s = {};
-    s["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    r["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/admin/CartItem/{id}".replace(
@@ -386,27 +386,27 @@ class qt extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "PUT",
-        headers: s,
+        headers: r,
         query: i,
         body: t.cartItemBody
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async adminCartItemPut(t, r) {
-    await this.adminCartItemPutRaw(t, r);
+  async adminCartItemPut(t, s) {
+    await this.adminCartItemPutRaw(t, s);
   }
 }
-class Nt extends X {
-  async cartItemDeleteRaw(t, r) {
+class Nt extends te {
+  async cartItemDeleteRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
         "Required parameter requestParameters.id was null or undefined when calling cartItemDelete."
       );
-    const i = {}, s = {};
-    this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/CartItem/{id}".replace(
@@ -414,24 +414,24 @@ class Nt extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "DELETE",
-        headers: s,
+        headers: r,
         query: i
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async cartItemDelete(t, r) {
-    await this.cartItemDeleteRaw(t, r);
+  async cartItemDelete(t, s) {
+    await this.cartItemDeleteRaw(t, s);
   }
-  async cartItemGetRaw(t, r) {
+  async cartItemGetRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
         "Required parameter requestParameters.id was null or undefined when calling cartItemGet."
       );
-    const i = {}, s = {};
-    this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/CartItem/{id}".replace(
@@ -439,42 +439,42 @@ class Nt extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "GET",
-        headers: s,
+        headers: r,
         query: i
       },
-      r
+      s
     );
-    return new q(n);
+    return new N(n);
   }
-  async cartItemGet(t, r) {
+  async cartItemGet(t, s) {
     return await (await this.cartItemGetRaw(
       t,
-      r
+      s
     )).value();
   }
-  async cartItemListRaw(t, r) {
+  async cartItemListRaw(t, s) {
     const i = {};
     t.platform !== void 0 && (i.Platform = t.platform), t.seller !== void 0 && (i.Seller = t.seller), t.usItemId !== void 0 && (i.UsItemId = t.usItemId), t.pageSize !== void 0 && (i.PageSize = t.pageSize), t.dir !== void 0 && (i.Dir = t.dir), t.pageToken !== void 0 && (i.PageToken = t.pageToken), t.includedProperties && (i.IncludedProperties = t.includedProperties);
-    const s = {};
-    this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const r = {};
+    this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/CartItem",
         method: "GET",
-        headers: s,
+        headers: r,
         query: i
       },
-      r
+      s
     );
-    return new q(n);
+    return new N(n);
   }
-  async cartItemList(t = {}, r) {
+  async cartItemList(t = {}, s) {
     return await (await this.cartItemListRaw(
       t,
-      r
+      s
     )).value();
   }
-  async cartItemPatchRaw(t, r) {
+  async cartItemPatchRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
@@ -485,8 +485,8 @@ class Nt extends X {
         "cartItemPatch",
         "Required parameter requestParameters.cartItemPatch was null or undefined when calling cartItemPatch."
       );
-    const i = {}, s = {};
-    s["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    r["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/CartItem/{id}".replace(
@@ -494,44 +494,44 @@ class Nt extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "PATCH",
-        headers: s,
+        headers: r,
         query: i,
         body: t.cartItemPatch
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async cartItemPatch(t, r) {
-    await this.cartItemPatchRaw(t, r);
+  async cartItemPatch(t, s) {
+    await this.cartItemPatchRaw(t, s);
   }
-  async cartItemPostRaw(t, r) {
+  async cartItemPostRaw(t, s) {
     if (t.cartItemBody === null || t.cartItemBody === void 0)
       throw new T(
         "cartItemBody",
         "Required parameter requestParameters.cartItemBody was null or undefined when calling cartItemPost."
       );
-    const i = {}, s = {};
-    s["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    r["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/CartItem",
         method: "POST",
-        headers: s,
+        headers: r,
         query: i,
         body: t.cartItemBody
       },
-      r
+      s
     );
-    return new q(n);
+    return new N(n);
   }
-  async cartItemPost(t, r) {
+  async cartItemPost(t, s) {
     return await (await this.cartItemPostRaw(
       t,
-      r
+      s
     )).value();
   }
-  async cartItemPutRaw(t, r) {
+  async cartItemPutRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
@@ -542,8 +542,8 @@ class Nt extends X {
         "cartItemBody",
         "Required parameter requestParameters.cartItemBody was null or undefined when calling cartItemPut."
       );
-    const i = {}, s = {};
-    s["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    r["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/CartItem/{id}".replace(
@@ -551,27 +551,27 @@ class Nt extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "PUT",
-        headers: s,
+        headers: r,
         query: i,
         body: t.cartItemBody
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async cartItemPut(t, r) {
-    await this.cartItemPutRaw(t, r);
+  async cartItemPut(t, s) {
+    await this.cartItemPutRaw(t, s);
   }
 }
-class Ht extends X {
-  async offerDeleteRaw(t, r) {
+class Ht extends te {
+  async offerDeleteRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
         "Required parameter requestParameters.id was null or undefined when calling offerDelete."
       );
-    const i = {}, s = {};
-    this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/Offer/{id}".replace(
@@ -579,24 +579,24 @@ class Ht extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "DELETE",
-        headers: s,
+        headers: r,
         query: i
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async offerDelete(t, r) {
-    await this.offerDeleteRaw(t, r);
+  async offerDelete(t, s) {
+    await this.offerDeleteRaw(t, s);
   }
-  async offerGetRaw(t, r) {
+  async offerGetRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
         "Required parameter requestParameters.id was null or undefined when calling offerGet."
       );
-    const i = {}, s = {};
-    this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/Offer/{id}".replace(
@@ -604,42 +604,42 @@ class Ht extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "GET",
-        headers: s,
+        headers: r,
         query: i
       },
-      r
+      s
     );
-    return new q(n);
+    return new N(n);
   }
-  async offerGet(t, r) {
+  async offerGet(t, s) {
     return await (await this.offerGetRaw(
       t,
-      r
+      s
     )).value();
   }
-  async offerListRaw(t, r) {
+  async offerListRaw(t, s) {
     const i = {};
     t.name !== void 0 && (i.Name = t.name), t.groupId !== void 0 && (i.GroupId = t.groupId), t.pageSize !== void 0 && (i.PageSize = t.pageSize), t.dir !== void 0 && (i.Dir = t.dir), t.pageToken !== void 0 && (i.PageToken = t.pageToken), t.includedProperties && (i.IncludedProperties = t.includedProperties);
-    const s = {};
-    this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const r = {};
+    this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/Offer",
         method: "GET",
-        headers: s,
+        headers: r,
         query: i
       },
-      r
+      s
     );
-    return new q(n);
+    return new N(n);
   }
-  async offerList(t = {}, r) {
+  async offerList(t = {}, s) {
     return await (await this.offerListRaw(
       t,
-      r
+      s
     )).value();
   }
-  async offerPatchRaw(t, r) {
+  async offerPatchRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
@@ -650,8 +650,8 @@ class Ht extends X {
         "offerPatch",
         "Required parameter requestParameters.offerPatch was null or undefined when calling offerPatch."
       );
-    const i = {}, s = {};
-    s["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    r["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/Offer/{id}".replace(
@@ -659,41 +659,41 @@ class Ht extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "PATCH",
-        headers: s,
+        headers: r,
         query: i,
         body: t.offerPatch
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async offerPatch(t, r) {
-    await this.offerPatchRaw(t, r);
+  async offerPatch(t, s) {
+    await this.offerPatchRaw(t, s);
   }
-  async offerPostRaw(t, r) {
+  async offerPostRaw(t, s) {
     if (t.offerPost === null || t.offerPost === void 0)
       throw new T(
         "offerPost",
         "Required parameter requestParameters.offerPost was null or undefined when calling offerPost."
       );
-    const i = {}, s = {};
-    s["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    r["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/Offer",
         method: "POST",
-        headers: s,
+        headers: r,
         query: i,
         body: t.offerPost
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async offerPost(t, r) {
-    await this.offerPostRaw(t, r);
+  async offerPost(t, s) {
+    await this.offerPostRaw(t, s);
   }
-  async offerPutRaw(t, r) {
+  async offerPutRaw(t, s) {
     if (t.id === null || t.id === void 0)
       throw new T(
         "id",
@@ -704,8 +704,8 @@ class Ht extends X {
         "offerPost",
         "Required parameter requestParameters.offerPost was null or undefined when calling offerPut."
       );
-    const i = {}, s = {};
-    s["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (s.Authorization = await this.configuration.accessToken("bearer", []));
+    const i = {}, r = {};
+    r["Content-Type"] = "application/json", this.configuration && this.configuration.accessToken && (r.Authorization = await this.configuration.accessToken("bearer", []));
     const n = await this.request(
       {
         path: "/api/Offer/{id}".replace(
@@ -713,16 +713,16 @@ class Ht extends X {
           encodeURIComponent(String(t.id))
         ),
         method: "PUT",
-        headers: s,
+        headers: r,
         query: i,
         body: t.offerPost
       },
-      r
+      s
     );
-    return new x(n);
+    return new U(n);
   }
-  async offerPut(t, r) {
-    await this.offerPutRaw(t, r);
+  async offerPut(t, s) {
+    await this.offerPutRaw(t, s);
   }
 }
 const jt = {
@@ -891,37 +891,37 @@ var H = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : ty
 function je(e) {
   var t = e.default;
   if (typeof t == "function") {
-    var r = function() {
+    var s = function() {
       return t.apply(this, arguments);
     };
-    r.prototype = t.prototype;
+    s.prototype = t.prototype;
   } else
-    r = {};
-  return Object.defineProperty(r, "__esModule", { value: !0 }), Object.keys(e).forEach(function(i) {
-    var s = Object.getOwnPropertyDescriptor(e, i);
-    Object.defineProperty(r, i, s.get ? s : {
+    s = {};
+  return Object.defineProperty(s, "__esModule", { value: !0 }), Object.keys(e).forEach(function(i) {
+    var r = Object.getOwnPropertyDescriptor(e, i);
+    Object.defineProperty(s, i, r.get ? r : {
       enumerable: !0,
       get: function() {
         return e[i];
       }
     });
-  }), r;
+  }), s;
 }
 function Le(e) {
   throw new Error('Could not dynamically require "' + e + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
 }
-var ie = { exports: {} };
+var oe = { exports: {} };
 const De = {}, We = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: De
 }, Symbol.toStringTag, { value: "Module" })), Fe = /* @__PURE__ */ je(We);
-var se;
+var ae;
 function $() {
-  return se || (se = 1, function(e, t) {
-    (function(r, i) {
+  return ae || (ae = 1, function(e, t) {
+    (function(s, i) {
       e.exports = i();
     })(H, function() {
-      var r = r || function(i, s) {
+      var s = s || function(i, r) {
         var n;
         if (typeof window < "u" && window.crypto && (n = window.crypto), typeof self < "u" && self.crypto && (n = self.crypto), typeof globalThis < "u" && globalThis.crypto && (n = globalThis.crypto), !n && typeof window < "u" && window.msCrypto && (n = window.msCrypto), !n && typeof H < "u" && H.crypto && (n = H.crypto), !n && typeof Le == "function")
           try {
@@ -974,7 +974,7 @@ function $() {
           };
         }(), g = l.WordArray = p.extend({
           init: function(a, h) {
-            a = this.words = a || [], h != s ? this.sigBytes = h : this.sigBytes = a.length * 4;
+            a = this.words = a || [], h != r ? this.sigBytes = h : this.sigBytes = a.length * 4;
           },
           toString: function(a) {
             return (a || w).stringify(this);
@@ -983,12 +983,12 @@ function $() {
             var h = this.words, _ = a.words, m = this.sigBytes, v = a.sigBytes;
             if (this.clamp(), m % 4)
               for (var k = 0; k < v; k++) {
-                var R = _[k >>> 2] >>> 24 - k % 4 * 8 & 255;
-                h[m + k >>> 2] |= R << 24 - (m + k) % 4 * 8;
+                var C = _[k >>> 2] >>> 24 - k % 4 * 8 & 255;
+                h[m + k >>> 2] |= C << 24 - (m + k) % 4 * 8;
               }
             else
-              for (var C = 0; C < v; C += 4)
-                h[m + C >>> 2] = _[C >>> 2];
+              for (var R = 0; R < v; R += 4)
+                h[m + R >>> 2] = _[R >>> 2];
             return this.sigBytes += v, this;
           },
           clamp: function() {
@@ -1049,12 +1049,12 @@ function $() {
             typeof a == "string" && (a = u.parse(a)), this._data.concat(a), this._nDataBytes += a.sigBytes;
           },
           _process: function(a) {
-            var h, _ = this._data, m = _.words, v = _.sigBytes, k = this.blockSize, R = k * 4, C = v / R;
-            a ? C = i.ceil(C) : C = i.max((C | 0) - this._minBufferSize, 0);
-            var B = C * k, E = i.min(B * 4, v);
+            var h, _ = this._data, m = _.words, v = _.sigBytes, k = this.blockSize, C = k * 4, R = v / C;
+            a ? R = i.ceil(R) : R = i.max((R | 0) - this._minBufferSize, 0);
+            var B = R * k, E = i.min(B * 4, v);
             if (B) {
-              for (var N = 0; N < B; N += k)
-                this._doProcessBlock(m, N);
+              for (var q = 0; q < B; q += k)
+                this._doProcessBlock(m, q);
               h = m.splice(0, B), _.sigBytes -= E;
             }
             return new g.init(h, E);
@@ -1096,17 +1096,17 @@ function $() {
         var I = d.algo = {};
         return d;
       }(Math);
-      return r;
+      return s;
     });
-  }(ie)), ie.exports;
+  }(oe)), oe.exports;
 }
-var ze = $(), _e = { exports: {} };
+var ze = $(), we = { exports: {} };
 (function(e, t) {
-  (function(r, i) {
+  (function(s, i) {
     e.exports = i($());
-  })(H, function(r) {
+  })(H, function(s) {
     return function(i) {
-      var s = r, n = s.lib, o = n.WordArray, c = n.Hasher, d = s.algo, l = [], p = [];
+      var r = s, n = r.lib, o = n.WordArray, c = n.Hasher, d = r.algo, l = [], p = [];
       (function() {
         function w(I) {
           for (var a = i.sqrt(I), h = 2; h <= a; h++)
@@ -1125,15 +1125,15 @@ var ze = $(), _e = { exports: {} };
           this._hash = new o.init(l.slice(0));
         },
         _doProcessBlock: function(w, b) {
-          for (var u = this._hash.words, y = u[0], I = u[1], a = u[2], h = u[3], _ = u[4], m = u[5], v = u[6], k = u[7], R = 0; R < 64; R++) {
-            if (R < 16)
-              g[R] = w[b + R] | 0;
+          for (var u = this._hash.words, y = u[0], I = u[1], a = u[2], h = u[3], _ = u[4], m = u[5], v = u[6], k = u[7], C = 0; C < 64; C++) {
+            if (C < 16)
+              g[C] = w[b + C] | 0;
             else {
-              var C = g[R - 15], B = (C << 25 | C >>> 7) ^ (C << 14 | C >>> 18) ^ C >>> 3, E = g[R - 2], N = (E << 15 | E >>> 17) ^ (E << 13 | E >>> 19) ^ E >>> 10;
-              g[R] = B + g[R - 7] + N + g[R - 16];
+              var R = g[C - 15], B = (R << 25 | R >>> 7) ^ (R << 14 | R >>> 18) ^ R >>> 3, E = g[C - 2], q = (E << 15 | E >>> 17) ^ (E << 13 | E >>> 19) ^ E >>> 10;
+              g[C] = B + g[C - 7] + q + g[C - 16];
             }
-            var G = _ & m ^ ~_ & v, Pe = y & I ^ y & a ^ I & a, Ee = (y << 30 | y >>> 2) ^ (y << 19 | y >>> 13) ^ (y << 10 | y >>> 22), Ae = (_ << 26 | _ >>> 6) ^ (_ << 21 | _ >>> 11) ^ (_ << 7 | _ >>> 25), re = k + Ae + G + p[R] + g[R], Ue = Ee + Pe;
-            k = v, v = m, m = _, _ = h + re | 0, h = a, a = I, I = y, y = re + Ue | 0;
+            var G = _ & m ^ ~_ & v, J = y & I ^ y & a ^ I & a, K = (y << 30 | y >>> 2) ^ (y << 19 | y >>> 13) ^ (y << 10 | y >>> 22), Ae = (_ << 26 | _ >>> 6) ^ (_ << 21 | _ >>> 11) ^ (_ << 7 | _ >>> 25), ne = k + Ae + G + p[C] + g[C], xe = K + J;
+            k = v, v = m, m = _, _ = h + ne | 0, h = a, a = I, I = y, y = ne + xe | 0;
           }
           u[0] = u[0] + y | 0, u[1] = u[1] + I | 0, u[2] = u[2] + a | 0, u[3] = u[3] + h | 0, u[4] = u[4] + _ | 0, u[5] = u[5] + m | 0, u[6] = u[6] + v | 0, u[7] = u[7] + k | 0;
         },
@@ -1146,18 +1146,18 @@ var ze = $(), _e = { exports: {} };
           return w._hash = this._hash.clone(), w;
         }
       });
-      s.SHA256 = c._createHelper(S), s.HmacSHA256 = c._createHmacHelper(S);
-    }(Math), r.SHA256;
+      r.SHA256 = c._createHelper(S), r.HmacSHA256 = c._createHmacHelper(S);
+    }(Math), s.SHA256;
   });
-})(_e);
-const $e = _e.exports;
-var fe = { exports: {} };
+})(we);
+const $e = we.exports;
+var me = { exports: {} };
 (function(e, t) {
-  (function(r, i) {
+  (function(s, i) {
     e.exports = i($());
-  })(H, function(r) {
+  })(H, function(s) {
     return function() {
-      var i = r, s = i.lib, n = s.WordArray, o = i.enc;
+      var i = s, r = i.lib, n = r.WordArray, o = i.enc;
       o.Base64 = {
         stringify: function(d) {
           var l = d.words, p = d.sigBytes, g = this._map;
@@ -1195,28 +1195,28 @@ var fe = { exports: {} };
           }
         return n.create(g, S);
       }
-    }(), r.enc.Base64;
+    }(), s.enc.Base64;
   });
-})(fe);
-const ne = fe.exports;
-var we = { exports: {} };
+})(me);
+const ce = me.exports;
+var ye = { exports: {} };
 (function(e, t) {
-  (function(r, i) {
+  (function(s, i) {
     e.exports = i($());
-  })(H, function(r) {
-    return r.enc.Utf8;
+  })(H, function(s) {
+    return s.enc.Utf8;
   });
-})(we);
-const Ge = we.exports;
-function J(e) {
+})(ye);
+const Ge = ye.exports;
+function Q(e) {
   this.message = e;
 }
-J.prototype = new Error(), J.prototype.name = "InvalidCharacterError";
-var oe = typeof window < "u" && window.atob && window.atob.bind(window) || function(e) {
+Q.prototype = new Error(), Q.prototype.name = "InvalidCharacterError";
+var de = typeof window < "u" && window.atob && window.atob.bind(window) || function(e) {
   var t = String(e).replace(/=+$/, "");
   if (t.length % 4 == 1)
-    throw new J("'atob' failed: The string to be decoded is not correctly encoded.");
-  for (var r, i, s = 0, n = 0, o = ""; i = t.charAt(n++); ~i && (r = s % 4 ? 64 * r + i : i, s++ % 4) ? o += String.fromCharCode(255 & r >> (-2 * s & 6)) : 0)
+    throw new Q("'atob' failed: The string to be decoded is not correctly encoded.");
+  for (var s, i, r = 0, n = 0, o = ""; i = t.charAt(n++); ~i && (s = r % 4 ? 64 * s + i : i, r++ % 4) ? o += String.fromCharCode(255 & s >> (-2 * r & 6)) : 0)
     i = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".indexOf(i);
   return o;
 };
@@ -1235,14 +1235,14 @@ function Je(e) {
       throw "Illegal base64url string!";
   }
   try {
-    return function(r) {
-      return decodeURIComponent(oe(r).replace(/(.)/g, function(i, s) {
-        var n = s.charCodeAt(0).toString(16).toUpperCase();
+    return function(s) {
+      return decodeURIComponent(de(s).replace(/(.)/g, function(i, r) {
+        var n = r.charCodeAt(0).toString(16).toUpperCase();
         return n.length < 2 && (n = "0" + n), "%" + n;
       }));
     }(t);
   } catch {
-    return oe(t);
+    return de(t);
   }
 }
 function F(e) {
@@ -1251,9 +1251,9 @@ function F(e) {
 function Ke(e, t) {
   if (typeof e != "string")
     throw new F("Invalid token specified");
-  var r = (t = t || {}).header === !0 ? 0 : 1;
+  var s = (t = t || {}).header === !0 ? 0 : 1;
   try {
-    return JSON.parse(Je(e.split(".")[r]));
+    return JSON.parse(Je(e.split(".")[s]));
   } catch (i) {
     throw new F("Invalid token specified: " + i.message);
   }
@@ -1268,20 +1268,20 @@ var Ve = {
   },
   error: () => {
   }
-}, A, U, z = /* @__PURE__ */ ((e) => (e[e.NONE = 0] = "NONE", e[e.ERROR = 1] = "ERROR", e[e.WARN = 2] = "WARN", e[e.INFO = 3] = "INFO", e[e.DEBUG = 4] = "DEBUG", e))(z || {});
+}, A, x, z = /* @__PURE__ */ ((e) => (e[e.NONE = 0] = "NONE", e[e.ERROR = 1] = "ERROR", e[e.WARN = 2] = "WARN", e[e.INFO = 3] = "INFO", e[e.DEBUG = 4] = "DEBUG", e))(z || {});
 ((e) => {
   function t() {
-    A = 3, U = Ve;
+    A = 3, x = Ve;
   }
   e.reset = t;
-  function r(s) {
-    if (!(0 <= s && s <= 4))
+  function s(r) {
+    if (!(0 <= r && r <= 4))
       throw new Error("Invalid log level");
-    A = s;
+    A = r;
   }
-  e.setLevel = r;
-  function i(s) {
-    U = s;
+  e.setLevel = s;
+  function i(r) {
+    x = r;
   }
   e.setLogger = i;
 })(z || (z = {}));
@@ -1290,16 +1290,16 @@ var f = class {
     this._name = e;
   }
   debug(...e) {
-    A >= 4 && U.debug(f._format(this._name, this._method), ...e);
+    A >= 4 && x.debug(f._format(this._name, this._method), ...e);
   }
   info(...e) {
-    A >= 3 && U.info(f._format(this._name, this._method), ...e);
+    A >= 3 && x.info(f._format(this._name, this._method), ...e);
   }
   warn(...e) {
-    A >= 2 && U.warn(f._format(this._name, this._method), ...e);
+    A >= 2 && x.warn(f._format(this._name, this._method), ...e);
   }
   error(...e) {
-    A >= 1 && U.error(f._format(this._name, this._method), ...e);
+    A >= 1 && x.error(f._format(this._name, this._method), ...e);
   }
   throw(e) {
     throw this.error(e), e;
@@ -1309,24 +1309,24 @@ var f = class {
     return t._method = e, t.debug("begin"), t;
   }
   static createStatic(e, t) {
-    const r = new f(`${e}.${t}`);
-    return r.debug("begin"), r;
+    const s = new f(`${e}.${t}`);
+    return s.debug("begin"), s;
   }
   static _format(e, t) {
-    const r = `[${e}]`;
-    return t ? `${r} ${t}:` : r;
+    const s = `[${e}]`;
+    return t ? `${s} ${t}:` : s;
   }
   static debug(e, ...t) {
-    A >= 4 && U.debug(f._format(e), ...t);
+    A >= 4 && x.debug(f._format(e), ...t);
   }
   static info(e, ...t) {
-    A >= 3 && U.info(f._format(e), ...t);
+    A >= 3 && x.info(f._format(e), ...t);
   }
   static warn(e, ...t) {
-    A >= 2 && U.warn(f._format(e), ...t);
+    A >= 2 && x.warn(f._format(e), ...t);
   }
   static error(e, ...t) {
-    A >= 1 && U.error(f._format(e), ...t);
+    A >= 1 && x.error(f._format(e), ...t);
   }
 };
 z.reset();
@@ -1346,14 +1346,14 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   static generateCodeChallenge(e) {
     try {
       const t = $e(e);
-      return ne.stringify(t).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+      return ce.stringify(t).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
     } catch (t) {
       throw f.error("CryptoUtils.generateCodeChallenge", t), t;
     }
   }
   static generateBasicAuth(e, t) {
-    const r = Ge.parse([e, t].join(":"));
-    return ne.stringify(r);
+    const s = Ge.parse([e, t].join(":"));
+    return ce.stringify(s);
   }
 }, M = class {
   constructor(e) {
@@ -1371,7 +1371,7 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     for (const t of this._callbacks)
       t(...e);
   }
-}, K = class {
+}, Y = class {
   static decode(e) {
     try {
       return Ke(e);
@@ -1379,13 +1379,13 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       throw f.error("JwtUtils.decode", t), t;
     }
   }
-}, ae = class {
+}, he = class {
   static center({ ...e }) {
     var t;
-    return e.width == null && (e.width = (t = [800, 720, 600, 480].find((r) => r <= window.outerWidth / 1.618)) != null ? t : 360), e.left != null || (e.left = Math.max(0, Math.round(window.screenX + (window.outerWidth - e.width) / 2))), e.height != null && (e.top != null || (e.top = Math.max(0, Math.round(window.screenY + (window.outerHeight - e.height) / 2)))), e;
+    return e.width == null && (e.width = (t = [800, 720, 600, 480].find((s) => s <= window.outerWidth / 1.618)) != null ? t : 360), e.left != null || (e.left = Math.max(0, Math.round(window.screenX + (window.outerWidth - e.width) / 2))), e.height != null && (e.top != null || (e.top = Math.max(0, Math.round(window.screenY + (window.outerHeight - e.height) / 2)))), e;
   }
   static serialize(e) {
-    return Object.entries(e).filter(([, t]) => t != null).map(([t, r]) => `${t}=${typeof r != "boolean" ? r : r ? "yes" : "no"}`).join(",");
+    return Object.entries(e).filter(([, t]) => t != null).map(([t, s]) => `${t}=${typeof s != "boolean" ? s : s ? "yes" : "no"}`).join(",");
   }
 }, P = class extends M {
   constructor() {
@@ -1400,12 +1400,12 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   init(e) {
     const t = this._logger.create("init");
     e = Math.max(Math.floor(e), 1);
-    const r = P.getEpochTime() + e;
-    if (this.expiration === r && this._timerHandle) {
+    const s = P.getEpochTime() + e;
+    if (this.expiration === s && this._timerHandle) {
       t.debug("skipping since already initialized for expiration at", this.expiration);
       return;
     }
-    this.cancel(), t.debug("using duration", e), this._expiration = r;
+    this.cancel(), t.debug("using duration", e), this._expiration = s;
     const i = Math.min(e, 5);
     this._timerHandle = setInterval(this._callback, i * 1e3);
   }
@@ -1415,21 +1415,21 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   cancel() {
     this._logger.create("cancel"), this._timerHandle && (clearInterval(this._timerHandle), this._timerHandle = null);
   }
-}, V = class {
+}, X = class {
   static readParams(e, t = "query") {
     if (!e)
       throw new TypeError("Invalid URL");
-    const r = new URL(e, window.location.origin)[t === "fragment" ? "hash" : "search"];
-    return new URLSearchParams(r.slice(1));
+    const s = new URL(e, window.location.origin)[t === "fragment" ? "hash" : "search"];
+    return new URLSearchParams(s.slice(1));
   }
 }, j = class extends Error {
   constructor(e, t) {
-    var r, i, s;
+    var s, i, r;
     if (super(e.error_description || e.error || ""), this.form = t, this.name = "ErrorResponse", !e.error)
       throw f.error("ErrorResponse", "No error passed"), new Error("No error passed");
-    this.error = e.error, this.error_description = (r = e.error_description) != null ? r : null, this.error_uri = (i = e.error_uri) != null ? i : null, this.state = e.userState, this.session_state = (s = e.session_state) != null ? s : null;
+    this.error = e.error, this.error_description = (s = e.error_description) != null ? s : null, this.error_uri = (i = e.error_uri) != null ? i : null, this.state = e.userState, this.session_state = (r = e.session_state) != null ? r : null;
   }
-}, Z = class extends Error {
+}, se = class extends Error {
   constructor(e) {
     super(e), this.name = "ErrorTimeout";
   }
@@ -1440,13 +1440,13 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   load(e) {
     const t = this._logger.create("load");
     if (e.access_token && e.expires_in !== void 0) {
-      const r = e.expires_in;
-      if (t.debug("access token present, remaining duration:", r), r > 0) {
-        let s = r - this._expiringNotificationTimeInSeconds;
-        s <= 0 && (s = 1), t.debug("registering expiring timer, raising in", s, "seconds"), this._expiringTimer.init(s);
+      const s = e.expires_in;
+      if (t.debug("access token present, remaining duration:", s), s > 0) {
+        let r = s - this._expiringNotificationTimeInSeconds;
+        r <= 0 && (r = 1), t.debug("registering expiring timer, raising in", r, "seconds"), this._expiringTimer.init(r);
       } else
         t.debug("canceling existing expiring timer because we're past expiration."), this._expiringTimer.cancel();
-      const i = r + 1;
+      const i = s + 1;
       t.debug("registering expired timer, raising in", i, "seconds"), this._expiredTimer.init(i);
     } else
       this._expiringTimer.cancel(), this._expiredTimer.cancel();
@@ -1467,11 +1467,11 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     this._expiredTimer.removeHandler(e);
   }
 }, Xe = class {
-  constructor(e, t, r, i, s) {
-    this._callback = e, this._client_id = t, this._intervalInSeconds = i, this._stopOnError = s, this._logger = new f("CheckSessionIFrame"), this._timer = null, this._session_state = null, this._message = (o) => {
+  constructor(e, t, s, i, r) {
+    this._callback = e, this._client_id = t, this._intervalInSeconds = i, this._stopOnError = r, this._logger = new f("CheckSessionIFrame"), this._timer = null, this._session_state = null, this._message = (o) => {
       o.origin === this._frame_origin && o.source === this._frame.contentWindow && (o.data === "error" ? (this._logger.error("error message from check session op iframe"), this._stopOnError && this.stop()) : o.data === "changed" ? (this._logger.debug("changed message from check session op iframe"), this.stop(), this._callback()) : this._logger.debug(o.data + " message from check session op iframe"));
     };
-    const n = new URL(r);
+    const n = new URL(s);
     this._frame_origin = n.origin, this._frame = window.document.createElement("iframe"), this._frame.style.visibility = "hidden", this._frame.style.position = "fixed", this._frame.style.left = "-1000px", this._frame.style.top = "0", this._frame.width = "0", this._frame.height = "0", this._frame.src = n.href;
   }
   load() {
@@ -1493,7 +1493,7 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   stop() {
     this._logger.create("stop"), this._session_state = null, this._timer && (clearInterval(this._timer), this._timer = null);
   }
-}, me = class {
+}, Se = class {
   constructor() {
     this._logger = new f("InMemoryWebStorage"), this._data = {};
   }
@@ -1515,67 +1515,68 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   key(e) {
     return Object.getOwnPropertyNames(this._data)[e];
   }
-}, ee = class {
+}, ie = class {
   constructor(e = [], t = null) {
     this._jwtHandler = t, this._logger = new f("JsonService"), this._contentTypes = [], this._contentTypes.push(...e, "application/json"), t && this._contentTypes.push("application/jwt");
   }
   async fetchWithTimeout(e, t = {}) {
-    const { timeoutInSeconds: r, ...i } = t;
-    if (!r)
+    const { timeoutInSeconds: s, ...i } = t;
+    if (!s)
       return await fetch(e, i);
-    const s = new AbortController(), n = setTimeout(() => s.abort(), r * 1e3);
+    const r = new AbortController(), n = setTimeout(() => r.abort(), s * 1e3);
     try {
       return await fetch(e, {
         ...t,
-        signal: s.signal
+        signal: r.signal
       });
     } catch (o) {
-      throw o instanceof DOMException && o.name === "AbortError" ? new Z("Network timed out") : o;
+      throw o instanceof DOMException && o.name === "AbortError" ? new se("Network timed out") : o;
     } finally {
       clearTimeout(n);
     }
   }
   async getJson(e, {
-    token: t
+    token: t,
+    credentials: s
   } = {}) {
-    const r = this._logger.create("getJson"), i = {
+    const i = this._logger.create("getJson"), r = {
       Accept: this._contentTypes.join(", ")
     };
-    t && (r.debug("token passed, setting Authorization header"), i.Authorization = "Bearer " + t);
-    let s;
+    t && (i.debug("token passed, setting Authorization header"), r.Authorization = "Bearer " + t);
+    let n;
     try {
-      r.debug("url:", e), s = await this.fetchWithTimeout(e, { method: "GET", headers: i });
-    } catch (c) {
-      throw r.error("Network Error"), c;
+      i.debug("url:", e), n = await this.fetchWithTimeout(e, { method: "GET", headers: r, credentials: s });
+    } catch (d) {
+      throw i.error("Network Error"), d;
     }
-    r.debug("HTTP response received, status", s.status);
-    const n = s.headers.get("Content-Type");
-    if (n && !this._contentTypes.find((c) => n.startsWith(c)) && r.throw(new Error(`Invalid response Content-Type: ${n != null ? n : "undefined"}, from URL: ${e}`)), s.ok && this._jwtHandler && (n == null ? void 0 : n.startsWith("application/jwt")))
-      return await this._jwtHandler(await s.text());
-    let o;
+    i.debug("HTTP response received, status", n.status);
+    const o = n.headers.get("Content-Type");
+    if (o && !this._contentTypes.find((d) => o.startsWith(d)) && i.throw(new Error(`Invalid response Content-Type: ${o != null ? o : "undefined"}, from URL: ${e}`)), n.ok && this._jwtHandler && (o == null ? void 0 : o.startsWith("application/jwt")))
+      return await this._jwtHandler(await n.text());
+    let c;
     try {
-      o = await s.json();
-    } catch (c) {
-      throw r.error("Error parsing JSON response", c), s.ok ? c : new Error(`${s.statusText} (${s.status})`);
+      c = await n.json();
+    } catch (d) {
+      throw i.error("Error parsing JSON response", d), n.ok ? d : new Error(`${n.statusText} (${n.status})`);
     }
-    if (!s.ok)
-      throw r.error("Error from server:", o), o.error ? new j(o) : new Error(`${s.statusText} (${s.status}): ${JSON.stringify(o)}`);
-    return o;
+    if (!n.ok)
+      throw i.error("Error from server:", c), c.error ? new j(c) : new Error(`${n.statusText} (${n.status}): ${JSON.stringify(c)}`);
+    return c;
   }
   async postForm(e, {
     body: t,
-    basicAuth: r,
+    basicAuth: s,
     timeoutInSeconds: i,
-    initCredentials: s
+    initCredentials: r
   }) {
     const n = this._logger.create("postForm"), o = {
       Accept: this._contentTypes.join(", "),
       "Content-Type": "application/x-www-form-urlencoded"
     };
-    r !== void 0 && (o.Authorization = "Basic " + r);
+    s !== void 0 && (o.Authorization = "Basic " + s);
     let c;
     try {
-      n.debug("url:", e), c = await this.fetchWithTimeout(e, { method: "POST", headers: o, body: t, timeoutInSeconds: i, credentials: s });
+      n.debug("url:", e), c = await this.fetchWithTimeout(e, { method: "POST", headers: o, body: t, timeoutInSeconds: i, credentials: r });
     } catch (g) {
       throw n.error("Network error"), g;
     }
@@ -1597,7 +1598,7 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   }
 }, Ze = class {
   constructor(e) {
-    this._settings = e, this._logger = new f("MetadataService"), this._jsonService = new ee(["application/jwk-set+json"]), this._signingKeys = null, this._metadata = null, this._metadataUrl = this._settings.metadataUrl, this._settings.signingKeys && (this._logger.debug("using signingKeys from settings"), this._signingKeys = this._settings.signingKeys), this._settings.metadata && (this._logger.debug("using metadata from settings"), this._metadata = this._settings.metadata);
+    this._settings = e, this._logger = new f("MetadataService"), this._jsonService = new ie(["application/jwk-set+json"]), this._signingKeys = null, this._metadata = null, this._metadataUrl = this._settings.metadataUrl, this._settings.signingKeys && (this._logger.debug("using signingKeys from settings"), this._signingKeys = this._settings.signingKeys), this._settings.metadata && (this._logger.debug("using metadata from settings"), this._metadata = this._settings.metadata), this._settings.fetchRequestCredentials && (this._logger.debug("using fetchRequestCredentials from settings"), this._fetchRequestCredentials = this._settings.fetchRequestCredentials);
   }
   resetSigningKeys() {
     this._signingKeys = null;
@@ -1609,7 +1610,7 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     if (!this._metadataUrl)
       throw e.throw(new Error("No authority or metadataUrl configured on settings")), null;
     e.debug("getting metadata from", this._metadataUrl);
-    const t = await this._jsonService.getJson(this._metadataUrl);
+    const t = await this._jsonService.getJson(this._metadataUrl, { credentials: this._fetchRequestCredentials });
     return e.debug("merging remote JSON with seed metadata"), this._metadata = Object.assign({}, this._settings.metadataSeed, t), this._metadata;
   }
   getIssuer() {
@@ -1637,13 +1638,13 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     return this._getMetadataProperty("jwks_uri", e);
   }
   async _getMetadataProperty(e, t = !1) {
-    const r = this._logger.create(`_getMetadataProperty('${e}')`), i = await this.getMetadata();
-    if (r.debug("resolved"), i[e] === void 0) {
+    const s = this._logger.create(`_getMetadataProperty('${e}')`), i = await this.getMetadata();
+    if (s.debug("resolved"), i[e] === void 0) {
       if (t === !0) {
-        r.warn("Metadata does not contain optional property");
+        s.warn("Metadata does not contain optional property");
         return;
       }
-      r.throw(new Error("Metadata does not contain property " + e));
+      s.throw(new Error("Metadata does not contain property " + e));
     }
     return i[e];
   }
@@ -1653,51 +1654,52 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       return e.debug("returning signingKeys from cache"), this._signingKeys;
     const t = await this.getKeysEndpoint(!1);
     e.debug("got jwks_uri", t);
-    const r = await this._jsonService.getJson(t);
-    if (e.debug("got key set", r), !Array.isArray(r.keys))
+    const s = await this._jsonService.getJson(t);
+    if (e.debug("got key set", s), !Array.isArray(s.keys))
       throw e.throw(new Error("Missing keys on keyset")), null;
-    return this._signingKeys = r.keys, this._signingKeys;
+    return this._signingKeys = s.keys, this._signingKeys;
   }
-}, ye = class {
-  constructor({ prefix: e = "oidc.", store: t = localStorage } = {}) {
+}, ve = class {
+  constructor({
+    prefix: e = "oidc.",
+    store: t = localStorage
+  } = {}) {
     this._logger = new f("WebStorageStateStore"), this._store = t, this._prefix = e;
   }
-  set(e, t) {
-    return this._logger.create(`set('${e}')`), e = this._prefix + e, this._store.setItem(e, t), Promise.resolve();
+  async set(e, t) {
+    this._logger.create(`set('${e}')`), e = this._prefix + e, await this._store.setItem(e, t);
   }
-  get(e) {
-    this._logger.create(`get('${e}')`), e = this._prefix + e;
-    const t = this._store.getItem(e);
-    return Promise.resolve(t);
+  async get(e) {
+    return this._logger.create(`get('${e}')`), e = this._prefix + e, await this._store.getItem(e);
   }
-  remove(e) {
+  async remove(e) {
     this._logger.create(`remove('${e}')`), e = this._prefix + e;
-    const t = this._store.getItem(e);
-    return this._store.removeItem(e), Promise.resolve(t);
+    const t = await this._store.getItem(e);
+    return await this._store.removeItem(e), t;
   }
-  getAllKeys() {
+  async getAllKeys() {
     this._logger.create("getAllKeys");
-    const e = [];
-    for (let t = 0; t < this._store.length; t++) {
-      const r = this._store.key(t);
-      r && r.indexOf(this._prefix) === 0 && e.push(r.substr(this._prefix.length));
+    const e = await this._store.length, t = [];
+    for (let s = 0; s < e; s++) {
+      const i = await this._store.key(s);
+      i && i.indexOf(this._prefix) === 0 && t.push(i.substr(this._prefix.length));
     }
-    return Promise.resolve(e);
+    return t;
   }
-}, et = "code", tt = "openid", rt = "client_secret_post", it = "query", st = 60 * 15, nt = 60 * 5, Se = class {
+}, et = "code", tt = "openid", st = "client_secret_post", it = "query", rt = 60 * 15, nt = 60 * 5, be = class {
   constructor({
     authority: e,
     metadataUrl: t,
-    metadata: r,
+    metadata: s,
     signingKeys: i,
-    metadataSeed: s,
+    metadataSeed: r,
     client_id: n,
     client_secret: o,
     response_type: c = et,
     scope: d = tt,
     redirect_uri: l,
     post_logout_redirect_uri: p,
-    client_authentication: g = rt,
+    client_authentication: g = st,
     prompt: S,
     display: w,
     max_age: b,
@@ -1707,114 +1709,145 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     response_mode: a = it,
     filterProtocolClaims: h = !0,
     loadUserInfo: _ = !1,
-    staleStateAgeInSeconds: m = st,
+    staleStateAgeInSeconds: m = rt,
     clockSkewInSeconds: v = nt,
     userInfoJwtIssuer: k = "OP",
-    mergeClaims: R = !1,
-    stateStore: C,
-    refreshTokenCredentials: B = "same-origin",
-    extraQueryParams: E = {},
-    extraTokenParams: N = {}
+    mergeClaims: C = !1,
+    stateStore: R,
+    refreshTokenCredentials: B,
+    revokeTokenAdditionalContentTypes: E,
+    fetchRequestCredentials: q,
+    extraQueryParams: G = {},
+    extraTokenParams: J = {}
   }) {
-    if (this.authority = e, t ? this.metadataUrl = t : (this.metadataUrl = e, e && (this.metadataUrl.endsWith("/") || (this.metadataUrl += "/"), this.metadataUrl += ".well-known/openid-configuration")), this.metadata = r, this.metadataSeed = s, this.signingKeys = i, this.client_id = n, this.client_secret = o, this.response_type = c, this.scope = d, this.redirect_uri = l, this.post_logout_redirect_uri = p, this.client_authentication = g, this.prompt = S, this.display = w, this.max_age = b, this.ui_locales = u, this.acr_values = y, this.resource = I, this.response_mode = a, this.filterProtocolClaims = !!h, this.loadUserInfo = !!_, this.staleStateAgeInSeconds = m, this.clockSkewInSeconds = v, this.userInfoJwtIssuer = k, this.mergeClaims = !!R, this.refreshTokenCredentials = B, C)
-      this.stateStore = C;
+    if (this.authority = e, t ? this.metadataUrl = t : (this.metadataUrl = e, e && (this.metadataUrl.endsWith("/") || (this.metadataUrl += "/"), this.metadataUrl += ".well-known/openid-configuration")), this.metadata = s, this.metadataSeed = r, this.signingKeys = i, this.client_id = n, this.client_secret = o, this.response_type = c, this.scope = d, this.redirect_uri = l, this.post_logout_redirect_uri = p, this.client_authentication = g, this.prompt = S, this.display = w, this.max_age = b, this.ui_locales = u, this.acr_values = y, this.resource = I, this.response_mode = a, this.filterProtocolClaims = !!h, this.loadUserInfo = !!_, this.staleStateAgeInSeconds = m, this.clockSkewInSeconds = v, this.userInfoJwtIssuer = k, this.mergeClaims = !!C, this.revokeTokenAdditionalContentTypes = E, q && B && console.warn("Both fetchRequestCredentials and refreshTokenCredentials is set. Only fetchRequestCredentials will be used."), this.fetchRequestCredentials = q || B || "same-origin", R)
+      this.stateStore = R;
     else {
-      const G = typeof window < "u" ? window.localStorage : new me();
-      this.stateStore = new ye({ store: G });
+      const K = typeof window < "u" ? window.localStorage : new Se();
+      this.stateStore = new ve({ store: K });
     }
-    this.extraQueryParams = E, this.extraTokenParams = N;
+    this.extraQueryParams = G, this.extraTokenParams = J;
   }
 }, ot = class {
-  constructor(e) {
-    this._metadataService = e, this._logger = new f("UserInfoService"), this._getClaimsFromJwt = async (t) => {
-      const r = this._logger.create("_getClaimsFromJwt");
+  constructor(e, t) {
+    this._settings = e, this._metadataService = t, this._logger = new f("UserInfoService"), this._getClaimsFromJwt = async (s) => {
+      const i = this._logger.create("_getClaimsFromJwt");
       try {
-        const i = K.decode(t);
-        return r.debug("JWT decoding successful"), i;
-      } catch (i) {
-        throw r.error("Error parsing JWT response"), i;
+        const r = Y.decode(s);
+        return i.debug("JWT decoding successful"), r;
+      } catch (r) {
+        throw i.error("Error parsing JWT response"), r;
       }
-    }, this._jsonService = new ee(void 0, this._getClaimsFromJwt);
+    }, this._jsonService = new ie(void 0, this._getClaimsFromJwt);
   }
   async getClaims(e) {
     const t = this._logger.create("getClaims");
     e || this._logger.throw(new Error("No token passed"));
-    const r = await this._metadataService.getUserInfoEndpoint();
-    t.debug("got userinfo url", r);
-    const i = await this._jsonService.getJson(r, { token: e });
+    const s = await this._metadataService.getUserInfoEndpoint();
+    t.debug("got userinfo url", s);
+    const i = await this._jsonService.getJson(s, {
+      token: e,
+      credentials: this._settings.fetchRequestCredentials
+    });
     return t.debug("got claims", i), i;
   }
-}, ve = class {
+}, ke = class {
   constructor(e, t) {
-    this._settings = e, this._metadataService = t, this._logger = new f("TokenClient"), this._jsonService = new ee();
+    this._settings = e, this._metadataService = t, this._logger = new f("TokenClient"), this._jsonService = new ie(this._settings.revokeTokenAdditionalContentTypes);
   }
   async exchangeCode({
     grant_type: e = "authorization_code",
     redirect_uri: t = this._settings.redirect_uri,
-    client_id: r = this._settings.client_id,
+    client_id: s = this._settings.client_id,
     client_secret: i = this._settings.client_secret,
-    ...s
+    ...r
   }) {
     const n = this._logger.create("exchangeCode");
-    r || n.throw(new Error("A client_id is required")), t || n.throw(new Error("A redirect_uri is required")), s.code || n.throw(new Error("A code is required")), s.code_verifier || n.throw(new Error("A code_verifier is required"));
+    s || n.throw(new Error("A client_id is required")), t || n.throw(new Error("A redirect_uri is required")), r.code || n.throw(new Error("A code is required")), r.code_verifier || n.throw(new Error("A code_verifier is required"));
     const o = new URLSearchParams({ grant_type: e, redirect_uri: t });
-    for (const [p, g] of Object.entries(s))
+    for (const [p, g] of Object.entries(r))
       g != null && o.set(p, g);
     let c;
     switch (this._settings.client_authentication) {
       case "client_secret_basic":
         if (!i)
           throw n.throw(new Error("A client_secret is required")), null;
-        c = O.generateBasicAuth(r, i);
+        c = O.generateBasicAuth(s, i);
         break;
       case "client_secret_post":
-        o.append("client_id", r), i && o.append("client_secret", i);
+        o.append("client_id", s), i && o.append("client_secret", i);
         break;
     }
     const d = await this._metadataService.getTokenEndpoint(!1);
     n.debug("got token endpoint");
-    const l = await this._jsonService.postForm(d, { body: o, basicAuth: c });
+    const l = await this._jsonService.postForm(d, { body: o, basicAuth: c, initCredentials: this._settings.fetchRequestCredentials });
     return n.debug("got response"), l;
   }
-  async exchangeRefreshToken({
-    grant_type: e = "refresh_token",
+  async exchangeCredentials({
+    grant_type: e = "password",
     client_id: t = this._settings.client_id,
-    client_secret: r = this._settings.client_secret,
-    timeoutInSeconds: i,
-    refreshTokenCredentials: s,
-    ...n
+    client_secret: s = this._settings.client_secret,
+    scope: i = this._settings.scope,
+    username: r,
+    password: n
   }) {
-    const o = this._logger.create("exchangeRefreshToken");
-    t || o.throw(new Error("A client_id is required")), n.refresh_token || o.throw(new Error("A refresh_token is required"));
-    const c = new URLSearchParams({ grant_type: e });
-    for (const [g, S] of Object.entries(n))
-      S != null && c.set(g, S);
+    const o = this._logger.create("exchangeCredentials");
+    t || o.throw(new Error("A client_id is required"));
+    const c = new URLSearchParams({ grant_type: e, username: r, password: n, scope: i });
     let d;
     switch (this._settings.client_authentication) {
       case "client_secret_basic":
-        if (!r)
+        if (!s)
           throw o.throw(new Error("A client_secret is required")), null;
-        d = O.generateBasicAuth(t, r);
+        d = O.generateBasicAuth(t, s);
         break;
       case "client_secret_post":
-        c.append("client_id", t), r && c.append("client_secret", r);
+        c.append("client_id", t), s && c.append("client_secret", s);
         break;
     }
     const l = await this._metadataService.getTokenEndpoint(!1);
     o.debug("got token endpoint");
-    const p = await this._jsonService.postForm(l, { body: c, basicAuth: d, timeoutInSeconds: i, initCredentials: s });
+    const p = await this._jsonService.postForm(l, { body: c, basicAuth: d, initCredentials: this._settings.fetchRequestCredentials });
     return o.debug("got response"), p;
+  }
+  async exchangeRefreshToken({
+    grant_type: e = "refresh_token",
+    client_id: t = this._settings.client_id,
+    client_secret: s = this._settings.client_secret,
+    timeoutInSeconds: i,
+    ...r
+  }) {
+    const n = this._logger.create("exchangeRefreshToken");
+    t || n.throw(new Error("A client_id is required")), r.refresh_token || n.throw(new Error("A refresh_token is required"));
+    const o = new URLSearchParams({ grant_type: e });
+    for (const [p, g] of Object.entries(r))
+      g != null && o.set(p, g);
+    let c;
+    switch (this._settings.client_authentication) {
+      case "client_secret_basic":
+        if (!s)
+          throw n.throw(new Error("A client_secret is required")), null;
+        c = O.generateBasicAuth(t, s);
+        break;
+      case "client_secret_post":
+        o.append("client_id", t), s && o.append("client_secret", s);
+        break;
+    }
+    const d = await this._metadataService.getTokenEndpoint(!1);
+    n.debug("got token endpoint");
+    const l = await this._jsonService.postForm(d, { body: o, basicAuth: c, timeoutInSeconds: i, initCredentials: this._settings.fetchRequestCredentials });
+    return n.debug("got response"), l;
   }
   async revoke(e) {
     var t;
-    const r = this._logger.create("revoke");
-    e.token || r.throw(new Error("A token is required"));
+    const s = this._logger.create("revoke");
+    e.token || s.throw(new Error("A token is required"));
     const i = await this._metadataService.getRevocationEndpoint(!1);
-    r.debug(`got revocation endpoint, revoking ${(t = e.token_type_hint) != null ? t : "default token type"}`);
-    const s = new URLSearchParams();
+    s.debug(`got revocation endpoint, revoking ${(t = e.token_type_hint) != null ? t : "default token type"}`);
+    const r = new URLSearchParams();
     for (const [n, o] of Object.entries(e))
-      o != null && s.set(n, o);
-    s.set("client_id", this._settings.client_id), this._settings.client_secret && s.set("client_secret", this._settings.client_secret), await this._jsonService.postForm(i, { body: s }), r.debug("got response");
+      o != null && r.set(n, o);
+    r.set("client_id", this._settings.client_id), this._settings.client_secret && r.set("client_secret", this._settings.client_secret), await this._jsonService.postForm(i, { body: r }), s.debug("got response");
   }
 }, at = [
   "iss",
@@ -1831,59 +1864,63 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   "at_hash"
 ], ct = class {
   constructor(e, t) {
-    this._settings = e, this._metadataService = t, this._logger = new f("ResponseValidator"), this._userInfoService = new ot(this._metadataService), this._tokenClient = new ve(this._settings, this._metadataService);
+    this._settings = e, this._metadataService = t, this._logger = new f("ResponseValidator"), this._userInfoService = new ot(this._settings, this._metadataService), this._tokenClient = new ke(this._settings, this._metadataService);
   }
   async validateSigninResponse(e, t) {
-    const r = this._logger.create("validateSigninResponse");
-    this._processSigninState(e, t), r.debug("state processed"), await this._processCode(e, t), r.debug("code processed"), e.isOpenId && this._validateIdTokenAttributes(e), r.debug("tokens validated"), await this._processClaims(e, t == null ? void 0 : t.skipUserInfo, e.isOpenId), r.debug("claims processed");
+    const s = this._logger.create("validateSigninResponse");
+    this._processSigninState(e, t), s.debug("state processed"), await this._processCode(e, t), s.debug("code processed"), e.isOpenId && this._validateIdTokenAttributes(e), s.debug("tokens validated"), await this._processClaims(e, t == null ? void 0 : t.skipUserInfo, e.isOpenId), s.debug("claims processed");
+  }
+  async validateCredentialsResponse(e, t) {
+    const s = this._logger.create("validateCredentialsResponse");
+    e.isOpenId && this._validateIdTokenAttributes(e), s.debug("tokens validated"), await this._processClaims(e, t, e.isOpenId), s.debug("claims processed");
   }
   async validateRefreshResponse(e, t) {
-    const r = this._logger.create("validateRefreshResponse");
-    e.userState = t.data, e.session_state != null || (e.session_state = t.session_state), e.scope != null || (e.scope = t.scope);
+    const s = this._logger.create("validateRefreshResponse");
+    e.userState = t.data, e.session_state != null || (e.session_state = t.session_state), e.scope != null || (e.scope = t.scope), e.isOpenId && !!e.id_token && (this._validateIdTokenAttributes(e, t.id_token), s.debug("ID Token validated")), e.id_token || (e.id_token = t.id_token, e.profile = t.profile);
     const i = e.isOpenId && !!e.id_token;
-    i && (this._validateIdTokenAttributes(e, t.id_token), r.debug("ID Token validated")), await this._processClaims(e, !1, i), r.debug("claims processed");
+    await this._processClaims(e, !1, i), s.debug("claims processed");
   }
   validateSignoutResponse(e, t) {
-    const r = this._logger.create("validateSignoutResponse");
-    if (t.id !== e.state && r.throw(new Error("State does not match")), r.debug("state validated"), e.userState = t.data, e.error)
-      throw r.warn("Response was error", e.error), new j(e);
+    const s = this._logger.create("validateSignoutResponse");
+    if (t.id !== e.state && s.throw(new Error("State does not match")), s.debug("state validated"), e.userState = t.data, e.error)
+      throw s.warn("Response was error", e.error), new j(e);
   }
   _processSigninState(e, t) {
-    const r = this._logger.create("_processSigninState");
-    if (t.id !== e.state && r.throw(new Error("State does not match")), t.client_id || r.throw(new Error("No client_id on state")), t.authority || r.throw(new Error("No authority on state")), this._settings.authority !== t.authority && r.throw(new Error("authority mismatch on settings vs. signin state")), this._settings.client_id && this._settings.client_id !== t.client_id && r.throw(new Error("client_id mismatch on settings vs. signin state")), r.debug("state validated"), e.userState = t.data, e.scope != null || (e.scope = t.scope), e.error)
-      throw r.warn("Response was error", e.error), new j(e);
-    t.code_verifier && !e.code && r.throw(new Error("Expected code in response")), !t.code_verifier && e.code && r.throw(new Error("Unexpected code in response"));
+    const s = this._logger.create("_processSigninState");
+    if (t.id !== e.state && s.throw(new Error("State does not match")), t.client_id || s.throw(new Error("No client_id on state")), t.authority || s.throw(new Error("No authority on state")), this._settings.authority !== t.authority && s.throw(new Error("authority mismatch on settings vs. signin state")), this._settings.client_id && this._settings.client_id !== t.client_id && s.throw(new Error("client_id mismatch on settings vs. signin state")), s.debug("state validated"), e.userState = t.data, e.scope != null || (e.scope = t.scope), e.error)
+      throw s.warn("Response was error", e.error), new j(e);
+    t.code_verifier && !e.code && s.throw(new Error("Expected code in response")), !t.code_verifier && e.code && s.throw(new Error("Unexpected code in response"));
   }
-  async _processClaims(e, t = !1, r = !0) {
+  async _processClaims(e, t = !1, s = !0) {
     const i = this._logger.create("_processClaims");
     if (e.profile = this._filterProtocolClaims(e.profile), t || !this._settings.loadUserInfo || !e.access_token) {
       i.debug("not loading user info");
       return;
     }
     i.debug("loading user info");
-    const s = await this._userInfoService.getClaims(e.access_token);
-    i.debug("user info claims received from user info endpoint"), r && s.sub !== e.profile.sub && i.throw(new Error("subject from UserInfo response does not match subject in ID Token")), e.profile = this._mergeClaims(e.profile, this._filterProtocolClaims(s)), i.debug("user info claims received, updated profile:", e.profile);
+    const r = await this._userInfoService.getClaims(e.access_token);
+    i.debug("user info claims received from user info endpoint"), s && r.sub !== e.profile.sub && i.throw(new Error("subject from UserInfo response does not match subject in ID Token")), e.profile = this._mergeClaims(e.profile, this._filterProtocolClaims(r)), i.debug("user info claims received, updated profile:", e.profile);
   }
   _mergeClaims(e, t) {
-    const r = { ...e };
-    for (const [i, s] of Object.entries(t))
-      for (const n of Array.isArray(s) ? s : [s]) {
-        const o = r[i];
-        o ? Array.isArray(o) ? o.includes(n) || o.push(n) : r[i] !== n && (typeof n == "object" && this._settings.mergeClaims ? r[i] = this._mergeClaims(o, n) : r[i] = [o, n]) : r[i] = n;
+    const s = { ...e };
+    for (const [i, r] of Object.entries(t))
+      for (const n of Array.isArray(r) ? r : [r]) {
+        const o = s[i];
+        o ? Array.isArray(o) ? o.includes(n) || o.push(n) : s[i] !== n && (typeof n == "object" && this._settings.mergeClaims ? s[i] = this._mergeClaims(o, n) : s[i] = [o, n]) : s[i] = n;
       }
-    return r;
+    return s;
   }
   _filterProtocolClaims(e) {
     const t = { ...e };
     if (this._settings.filterProtocolClaims)
-      for (const r of at)
-        delete t[r];
+      for (const s of at)
+        delete t[s];
     return t;
   }
   async _processCode(e, t) {
-    const r = this._logger.create("_processCode");
+    const s = this._logger.create("_processCode");
     if (e.code) {
-      r.debug("Validating code");
+      s.debug("Validating code");
       const i = await this._tokenClient.exchangeCode({
         client_id: t.client_id,
         client_secret: t.client_secret,
@@ -1894,18 +1931,18 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       });
       Object.assign(e, i);
     } else
-      r.debug("No code to process");
+      s.debug("No code to process");
   }
   _validateIdTokenAttributes(e, t) {
-    var r;
+    var s;
     const i = this._logger.create("_validateIdTokenAttributes");
     i.debug("decoding ID Token JWT");
-    const s = K.decode((r = e.id_token) != null ? r : "");
-    if (s.sub || i.throw(new Error("ID Token is missing a subject claim")), t) {
-      const n = K.decode(t);
-      n.sub !== s.sub && i.throw(new Error("sub in id_token does not match current sub")), n.auth_time && n.auth_time !== s.auth_time && i.throw(new Error("auth_time in id_token does not match original auth_time")), n.azp && n.azp !== s.azp && i.throw(new Error("azp in id_token does not match original azp")), !n.azp && s.azp && i.throw(new Error("azp not in id_token, but present in original id_token"));
+    const r = Y.decode((s = e.id_token) != null ? s : "");
+    if (r.sub || i.throw(new Error("ID Token is missing a subject claim")), t) {
+      const n = Y.decode(t);
+      n.sub !== r.sub && i.throw(new Error("sub in id_token does not match current sub")), n.auth_time && n.auth_time !== r.auth_time && i.throw(new Error("auth_time in id_token does not match original auth_time")), n.azp && n.azp !== r.azp && i.throw(new Error("azp in id_token does not match original azp")), !n.azp && r.azp && i.throw(new Error("azp not in id_token, but present in original id_token"));
     }
-    e.profile = s;
+    e.profile = r;
   }
 }, D = class {
   constructor(e) {
@@ -1923,24 +1960,24 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     return f.createStatic("State", "fromStorageString"), new D(JSON.parse(e));
   }
   static async clearStaleState(e, t) {
-    const r = f.createStatic("State", "clearStaleState"), i = P.getEpochTime() - t, s = await e.getAllKeys();
-    r.debug("got keys", s);
-    for (let n = 0; n < s.length; n++) {
-      const o = s[n], c = await e.get(o);
+    const s = f.createStatic("State", "clearStaleState"), i = P.getEpochTime() - t, r = await e.getAllKeys();
+    s.debug("got keys", r);
+    for (let n = 0; n < r.length; n++) {
+      const o = r[n], c = await e.get(o);
       let d = !1;
       if (c)
         try {
           const l = D.fromStorageString(c);
-          r.debug("got item from key:", o, l.created), l.created <= i && (d = !0);
+          s.debug("got item from key:", o, l.created), l.created <= i && (d = !0);
         } catch (l) {
-          r.error("Error parsing state for key:", o, l), d = !0;
+          s.error("Error parsing state for key:", o, l), d = !0;
         }
       else
-        r.debug("no item in storage for key:", o), d = !0;
-      d && (r.debug("removed item for key:", o), e.remove(o));
+        s.debug("no item in storage for key:", o), d = !0;
+      d && (s.debug("removed item for key:", o), e.remove(o));
     }
   }
-}, te = class extends D {
+}, re = class extends D {
   constructor(e) {
     super(e), e.code_verifier === !0 ? this.code_verifier = O.generateCodeVerifier() : e.code_verifier && (this.code_verifier = e.code_verifier), this.code_verifier && (this.code_challenge = O.generateCodeChallenge(this.code_verifier)), this.authority = e.authority, this.client_id = e.client_id, this.redirect_uri = e.redirect_uri, this.scope = e.scope, this.client_secret = e.client_secret, this.extraTokenParams = e.extraTokenParams, this.response_mode = e.response_mode, this.skipUserInfo = e.skipUserInfo;
   }
@@ -1964,15 +2001,15 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   static fromStorageString(e) {
     f.createStatic("SigninState", "fromStorageString");
     const t = JSON.parse(e);
-    return new te(t);
+    return new re(t);
   }
 }, dt = class {
   constructor({
     url: e,
     authority: t,
-    client_id: r,
+    client_id: s,
     redirect_uri: i,
-    response_type: s,
+    response_type: r,
     scope: n,
     state_data: o,
     response_mode: c,
@@ -1986,21 +2023,21 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   }) {
     if (this._logger = new f("SigninRequest"), !e)
       throw this._logger.error("ctor: No url passed"), new Error("url");
-    if (!r)
+    if (!s)
       throw this._logger.error("ctor: No client_id passed"), new Error("client_id");
     if (!i)
       throw this._logger.error("ctor: No redirect_uri passed"), new Error("redirect_uri");
-    if (!s)
+    if (!r)
       throw this._logger.error("ctor: No response_type passed"), new Error("response_type");
     if (!n)
       throw this._logger.error("ctor: No scope passed"), new Error("scope");
     if (!t)
       throw this._logger.error("ctor: No authority passed"), new Error("authority");
-    this.state = new te({
+    this.state = new re({
       data: o,
       request_type: d,
       code_verifier: !0,
-      client_id: r,
+      client_id: s,
       authority: t,
       redirect_uri: i,
       response_mode: c,
@@ -2010,12 +2047,12 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       skipUserInfo: g
     });
     const u = new URL(e);
-    u.searchParams.append("client_id", r), u.searchParams.append("redirect_uri", i), u.searchParams.append("response_type", s), u.searchParams.append("scope", n), p && u.searchParams.append("nonce", p), u.searchParams.append("state", this.state.id), this.state.code_challenge && (u.searchParams.append("code_challenge", this.state.code_challenge), u.searchParams.append("code_challenge_method", "S256"));
+    u.searchParams.append("client_id", s), u.searchParams.append("redirect_uri", i), u.searchParams.append("response_type", r), u.searchParams.append("scope", n), p && u.searchParams.append("nonce", p), u.searchParams.append("state", this.state.id), this.state.code_challenge && (u.searchParams.append("code_challenge", this.state.code_challenge), u.searchParams.append("code_challenge_method", "S256"));
     for (const [y, I] of Object.entries({ response_mode: c, ...b, ...S }))
       I != null && u.searchParams.append(y, I.toString());
     this.url = u.href;
   }
-}, ht = "openid", ce = class {
+}, ht = "openid", V = class {
   constructor(e) {
     this.access_token = "", this.token_type = "", this.profile = {}, this.state = e.get("state"), this.session_state = e.get("session_state"), this.error = e.get("error"), this.error_description = e.get("error_description"), this.error_uri = e.get("error_uri"), this.code = e.get("code");
   }
@@ -2034,16 +2071,16 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   constructor({
     url: e,
     state_data: t,
-    id_token_hint: r,
+    id_token_hint: s,
     post_logout_redirect_uri: i,
-    extraQueryParams: s,
+    extraQueryParams: r,
     request_type: n
   }) {
     if (this._logger = new f("SignoutRequest"), !e)
       throw this._logger.error("ctor: No url passed"), new Error("url");
     const o = new URL(e);
-    r && o.searchParams.append("id_token_hint", r), i && (o.searchParams.append("post_logout_redirect_uri", i), t && (this.state = new D({ data: t, request_type: n }), o.searchParams.append("state", this.state.id)));
-    for (const [c, d] of Object.entries({ ...s }))
+    s && o.searchParams.append("id_token_hint", s), i && (o.searchParams.append("post_logout_redirect_uri", i), t && (this.state = new D({ data: t, request_type: n }), o.searchParams.append("state", this.state.id)));
+    for (const [c, d] of Object.entries({ ...r }))
       d != null && o.searchParams.append(c, d.toString());
     this.url = o.href;
   }
@@ -2053,14 +2090,14 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   }
 }, gt = class {
   constructor(e) {
-    this._logger = new f("OidcClient"), this.settings = new Se(e), this.metadataService = new Ze(this.settings), this._validator = new ct(this.settings, this.metadataService), this._tokenClient = new ve(this.settings, this.metadataService);
+    this._logger = new f("OidcClient"), this.settings = new be(e), this.metadataService = new Ze(this.settings), this._validator = new ct(this.settings, this.metadataService), this._tokenClient = new ke(this.settings, this.metadataService);
   }
   async createSigninRequest({
     state: e,
     request: t,
-    request_uri: r,
+    request_uri: s,
     request_type: i,
-    id_token_hint: s,
+    id_token_hint: r,
     login_hint: n,
     skipUserInfo: o,
     nonce: c,
@@ -2094,12 +2131,12 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       display: S,
       max_age: w,
       ui_locales: b,
-      id_token_hint: s,
+      id_token_hint: r,
       login_hint: n,
       acr_values: u,
       resource: y,
       request: t,
-      request_uri: r,
+      request_uri: s,
       extraQueryParams: a,
       extraTokenParams: h,
       request_type: i,
@@ -2113,36 +2150,43 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     return await this.settings.stateStore.set(k.id, k.toStorageString()), v;
   }
   async readSigninResponseState(e, t = !1) {
-    const r = this._logger.create("readSigninResponseState"), i = new ce(V.readParams(e, this.settings.response_mode));
+    const s = this._logger.create("readSigninResponseState"), i = new V(X.readParams(e, this.settings.response_mode));
     if (!i.state)
-      throw r.throw(new Error("No state in response")), null;
-    const s = await this.settings.stateStore[t ? "remove" : "get"](i.state);
-    if (!s)
-      throw r.throw(new Error("No matching state found in storage")), null;
-    return { state: te.fromStorageString(s), response: i };
+      throw s.throw(new Error("No state in response")), null;
+    const r = await this.settings.stateStore[t ? "remove" : "get"](i.state);
+    if (!r)
+      throw s.throw(new Error("No matching state found in storage")), null;
+    return { state: re.fromStorageString(r), response: i };
   }
   async processSigninResponse(e) {
-    const t = this._logger.create("processSigninResponse"), { state: r, response: i } = await this.readSigninResponseState(e, !0);
-    return t.debug("received state from storage; validating response"), await this._validator.validateSigninResponse(i, r), i;
+    const t = this._logger.create("processSigninResponse"), { state: s, response: i } = await this.readSigninResponseState(e, !0);
+    return t.debug("received state from storage; validating response"), await this._validator.validateSigninResponse(i, s), i;
+  }
+  async processResourceOwnerPasswordCredentials({
+    username: e,
+    password: t,
+    skipUserInfo: s = !1
+  }) {
+    const i = await this._tokenClient.exchangeCredentials({ username: e, password: t }), r = new V(new URLSearchParams());
+    return Object.assign(r, i), await this._validator.validateCredentialsResponse(r, s), r;
   }
   async useRefreshToken({
     state: e,
     timeoutInSeconds: t
   }) {
-    const r = this._logger.create("useRefreshToken"), i = await this._tokenClient.exchangeRefreshToken({
+    const s = this._logger.create("useRefreshToken"), i = await this._tokenClient.exchangeRefreshToken({
       refresh_token: e.refresh_token,
       scope: e.scope,
-      timeoutInSeconds: t,
-      refreshTokenCredentials: this.settings.refreshTokenCredentials
-    }), s = new ce(new URLSearchParams());
-    return Object.assign(s, i), r.debug("validating response", s), await this._validator.validateRefreshResponse(s, e), s;
+      timeoutInSeconds: t
+    }), r = new V(new URLSearchParams());
+    return Object.assign(r, i), s.debug("validating response", r), await this._validator.validateRefreshResponse(r, e), r;
   }
   async createSignoutRequest({
     state: e,
     id_token_hint: t,
-    request_type: r,
+    request_type: s,
     post_logout_redirect_uri: i = this.settings.post_logout_redirect_uri,
-    extraQueryParams: s = this.settings.extraQueryParams
+    extraQueryParams: r = this.settings.extraQueryParams
   } = {}) {
     const n = this._logger.create("createSignoutRequest"), o = await this.metadataService.getEndSessionEndpoint();
     if (!o)
@@ -2153,28 +2197,28 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       id_token_hint: t,
       post_logout_redirect_uri: i,
       state_data: e,
-      extraQueryParams: s,
-      request_type: r
+      extraQueryParams: r,
+      request_type: s
     });
     await this.clearStaleState();
     const d = c.state;
     return d && (n.debug("Signout request has state to persist"), await this.settings.stateStore.set(d.id, d.toStorageString())), c;
   }
   async readSignoutResponseState(e, t = !1) {
-    const r = this._logger.create("readSignoutResponseState"), i = new ut(V.readParams(e, this.settings.response_mode));
+    const s = this._logger.create("readSignoutResponseState"), i = new ut(X.readParams(e, this.settings.response_mode));
     if (!i.state) {
-      if (r.debug("No state in response"), i.error)
-        throw r.warn("Response was error:", i.error), new j(i);
+      if (s.debug("No state in response"), i.error)
+        throw s.warn("Response was error:", i.error), new j(i);
       return { state: void 0, response: i };
     }
-    const s = await this.settings.stateStore[t ? "remove" : "get"](i.state);
-    if (!s)
-      throw r.throw(new Error("No matching state found in storage")), null;
-    return { state: D.fromStorageString(s), response: i };
+    const r = await this.settings.stateStore[t ? "remove" : "get"](i.state);
+    if (!r)
+      throw s.throw(new Error("No matching state found in storage")), null;
+    return { state: D.fromStorageString(r), response: i };
   }
   async processSignoutResponse(e) {
-    const t = this._logger.create("processSignoutResponse"), { state: r, response: i } = await this.readSignoutResponseState(e, !0);
-    return r ? (t.debug("Received state from storage; validating response"), this._validator.validateSignoutResponse(i, r)) : t.debug("No state from storage; skipping response validation"), i;
+    const t = this._logger.create("processSignoutResponse"), { state: s, response: i } = await this.readSignoutResponseState(e, !0);
+    return s ? (t.debug("Received state from storage; validating response"), this._validator.validateSignoutResponse(i, s)) : t.debug("No state from storage; skipping response validation"), i;
   }
   clearStaleState() {
     return this._logger.create("clearStaleState"), D.clearStaleState(this.settings.stateStore, this.settings.staleStateAgeInSeconds);
@@ -2188,41 +2232,41 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
 }, pt = class {
   constructor(e) {
     this._userManager = e, this._logger = new f("SessionMonitor"), this._start = async (t) => {
-      const r = t.session_state;
-      if (!r)
+      const s = t.session_state;
+      if (!s)
         return;
       const i = this._logger.create("_start");
-      if (t.profile ? (this._sub = t.profile.sub, this._sid = t.profile.sid, i.debug("session_state", r, ", sub", this._sub)) : (this._sub = void 0, this._sid = void 0, i.debug("session_state", r, ", anonymous user")), this._checkSessionIFrame) {
-        this._checkSessionIFrame.start(r);
+      if (t.profile ? (this._sub = t.profile.sub, this._sid = t.profile.sid, i.debug("session_state", s, ", sub", this._sub)) : (this._sub = void 0, this._sid = void 0, i.debug("session_state", s, ", anonymous user")), this._checkSessionIFrame) {
+        this._checkSessionIFrame.start(s);
         return;
       }
       try {
-        const s = await this._userManager.metadataService.getCheckSessionIframe();
-        if (s) {
+        const r = await this._userManager.metadataService.getCheckSessionIframe();
+        if (r) {
           i.debug("initializing check session iframe");
-          const n = this._userManager.settings.client_id, o = this._userManager.settings.checkSessionIntervalInSeconds, c = this._userManager.settings.stopCheckSessionOnError, d = new Xe(this._callback, n, s, o, c);
-          await d.load(), this._checkSessionIFrame = d, d.start(r);
+          const n = this._userManager.settings.client_id, o = this._userManager.settings.checkSessionIntervalInSeconds, c = this._userManager.settings.stopCheckSessionOnError, d = new Xe(this._callback, n, r, o, c);
+          await d.load(), this._checkSessionIFrame = d, d.start(s);
         } else
           i.warn("no check session iframe found in the metadata");
-      } catch (s) {
-        i.error("Error from getCheckSessionIframe:", s instanceof Error ? s.message : s);
+      } catch (r) {
+        i.error("Error from getCheckSessionIframe:", r instanceof Error ? r.message : r);
       }
     }, this._stop = () => {
       const t = this._logger.create("_stop");
       if (this._sub = void 0, this._sid = void 0, this._checkSessionIFrame && this._checkSessionIFrame.stop(), this._userManager.settings.monitorAnonymousSession) {
-        const r = setInterval(async () => {
-          clearInterval(r);
+        const s = setInterval(async () => {
+          clearInterval(s);
           try {
             const i = await this._userManager.querySessionStatus();
             if (i) {
-              const s = {
+              const r = {
                 session_state: i.session_state,
                 profile: i.sub && i.sid ? {
                   sub: i.sub,
                   sid: i.sid
                 } : null
               };
-              this._start(s);
+              this._start(r);
             }
           } catch (i) {
             t.error("error from querySessionStatus", i instanceof Error ? i.message : i);
@@ -2232,11 +2276,11 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     }, this._callback = async () => {
       const t = this._logger.create("_callback");
       try {
-        const r = await this._userManager.querySessionStatus();
+        const s = await this._userManager.querySessionStatus();
         let i = !0;
-        r && this._checkSessionIFrame ? r.sub === this._sub ? (i = !1, this._checkSessionIFrame.start(r.session_state), r.sid === this._sid ? t.debug("same sub still logged in at OP, restarting check session iframe; session_state", r.session_state) : (t.debug("same sub still logged in at OP, session state has changed, restarting check session iframe; session_state", r.session_state), this._userManager.events._raiseUserSessionChanged())) : t.debug("different subject signed into OP", r.sub) : t.debug("subject no longer signed into OP"), i ? this._sub ? this._userManager.events._raiseUserSignedOut() : this._userManager.events._raiseUserSignedIn() : t.debug("no change in session detected, no event to raise");
-      } catch (r) {
-        this._sub && (t.debug("Error calling queryCurrentSigninSession; raising signed out event", r), this._userManager.events._raiseUserSignedOut());
+        s && this._checkSessionIFrame ? s.sub === this._sub ? (i = !1, this._checkSessionIFrame.start(s.session_state), s.sid === this._sid ? t.debug("same sub still logged in at OP, restarting check session iframe; session_state", s.session_state) : (t.debug("same sub still logged in at OP, session state has changed, restarting check session iframe; session_state", s.session_state), this._userManager.events._raiseUserSessionChanged())) : t.debug("different subject signed into OP", s.sub) : t.debug("subject no longer signed into OP"), i ? this._sub ? this._userManager.events._raiseUserSignedOut() : this._userManager.events._raiseUserSignedIn() : t.debug("no change in session detected, no event to raise");
+      } catch (s) {
+        this._sub && (t.debug("Error calling queryCurrentSigninSession; raising signed out event", s), this._userManager.events._raiseUserSignedOut());
       }
     }, e || this._logger.throw(new Error("No user manager passed")), this._userManager.events.addUserLoaded(this._start), this._userManager.events.addUserUnloaded(this._stop), this._init().catch((t) => {
       this._logger.error(t);
@@ -2250,14 +2294,14 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     else if (this._userManager.settings.monitorAnonymousSession) {
       const t = await this._userManager.querySessionStatus();
       if (t) {
-        const r = {
+        const s = {
           session_state: t.session_state,
           profile: t.sub && t.sid ? {
             sub: t.sub,
             sid: t.sid
           } : null
         };
-        this._start(r);
+        this._start(s);
       }
     }
   }
@@ -2297,7 +2341,7 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   static fromStorageString(e) {
     return f.createStatic("User", "fromStorageString"), new W(JSON.parse(e));
   }
-}, de = "oidc-client", be = class {
+}, le = "oidc-client", Ie = class {
   constructor() {
     this._abort = new M("Window navigation aborted"), this._disposeHandlers = /* @__PURE__ */ new Set(), this._window = null;
   }
@@ -2306,26 +2350,26 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     if (!this._window)
       throw new Error("Attempted to navigate on a disposed window");
     t.debug("setting URL in window"), this._window.location.replace(e.url);
-    const { url: r, keepOpen: i } = await new Promise((s, n) => {
+    const { url: s, keepOpen: i } = await new Promise((r, n) => {
       const o = (c) => {
         var d;
         const l = c.data, p = (d = e.scriptOrigin) != null ? d : window.location.origin;
-        if (!(c.origin !== p || (l == null ? void 0 : l.source) !== de)) {
+        if (!(c.origin !== p || (l == null ? void 0 : l.source) !== le)) {
           try {
-            const g = V.readParams(l.url, e.response_mode).get("state");
+            const g = X.readParams(l.url, e.response_mode).get("state");
             if (g || t.warn("no state found in response url"), c.source !== this._window && g !== e.state)
               return;
           } catch {
             this._dispose(), n(new Error("Invalid response from window"));
           }
-          s(l);
+          r(l);
         }
       };
       window.addEventListener("message", o, !1), this._disposeHandlers.add(() => window.removeEventListener("message", o, !1)), this._disposeHandlers.add(this._abort.addHandler((c) => {
         this._dispose(), n(c);
       }));
     });
-    return t.debug("got response from window"), this._dispose(), i || this.close(), { url: r };
+    return t.debug("got response from window"), this._dispose(), i || this.close(), { url: s };
   }
   _dispose() {
     this._logger.create("_dispose");
@@ -2333,30 +2377,30 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       e();
     this._disposeHandlers.clear();
   }
-  static _notifyParent(e, t, r = !1, i = window.location.origin) {
+  static _notifyParent(e, t, s = !1, i = window.location.origin) {
     e.postMessage({
-      source: de,
+      source: le,
       url: t,
-      keepOpen: r
+      keepOpen: s
     }, i);
   }
-}, ke = {
+}, Te = {
   location: !1,
   toolbar: !1,
   height: 640
-}, Ie = "_blank", _t = 60, ft = 2, Te = 10, wt = class extends Se {
+}, Ce = "_blank", _t = 60, ft = 2, Re = 10, wt = class extends be {
   constructor(e) {
     const {
       popup_redirect_uri: t = e.redirect_uri,
-      popup_post_logout_redirect_uri: r = e.post_logout_redirect_uri,
-      popupWindowFeatures: i = ke,
-      popupWindowTarget: s = Ie,
+      popup_post_logout_redirect_uri: s = e.post_logout_redirect_uri,
+      popupWindowFeatures: i = Te,
+      popupWindowTarget: r = Ce,
       redirectMethod: n = "assign",
       redirectTarget: o = "self",
       iframeNotifyParentOrigin: c = e.iframeNotifyParentOrigin,
       iframeScriptOrigin: d = e.iframeScriptOrigin,
       silent_redirect_uri: l = e.redirect_uri,
-      silentRequestTimeoutInSeconds: p = Te,
+      silentRequestTimeoutInSeconds: p = Re,
       automaticSilentRenew: g = !0,
       validateSubOnSilentRenew: S = !0,
       includeIdTokenInSilentRenew: w = !1,
@@ -2367,21 +2411,22 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       stopCheckSessionOnError: a = !0,
       revokeTokenTypes: h = ["access_token", "refresh_token"],
       revokeTokensOnSignout: _ = !1,
-      accessTokenExpiringNotificationTimeInSeconds: m = _t,
-      userStore: v
+      includeIdTokenInSilentSignout: m = !1,
+      accessTokenExpiringNotificationTimeInSeconds: v = _t,
+      userStore: k
     } = e;
-    if (super(e), this.popup_redirect_uri = t, this.popup_post_logout_redirect_uri = r, this.popupWindowFeatures = i, this.popupWindowTarget = s, this.redirectMethod = n, this.redirectTarget = o, this.iframeNotifyParentOrigin = c, this.iframeScriptOrigin = d, this.silent_redirect_uri = l, this.silentRequestTimeoutInSeconds = p, this.automaticSilentRenew = g, this.validateSubOnSilentRenew = S, this.includeIdTokenInSilentRenew = w, this.monitorSession = b, this.monitorAnonymousSession = u, this.checkSessionIntervalInSeconds = y, this.stopCheckSessionOnError = a, this.query_status_response_type = I, this.revokeTokenTypes = h, this.revokeTokensOnSignout = _, this.accessTokenExpiringNotificationTimeInSeconds = m, v)
-      this.userStore = v;
+    if (super(e), this.popup_redirect_uri = t, this.popup_post_logout_redirect_uri = s, this.popupWindowFeatures = i, this.popupWindowTarget = r, this.redirectMethod = n, this.redirectTarget = o, this.iframeNotifyParentOrigin = c, this.iframeScriptOrigin = d, this.silent_redirect_uri = l, this.silentRequestTimeoutInSeconds = p, this.automaticSilentRenew = g, this.validateSubOnSilentRenew = S, this.includeIdTokenInSilentRenew = w, this.monitorSession = b, this.monitorAnonymousSession = u, this.checkSessionIntervalInSeconds = y, this.stopCheckSessionOnError = a, this.query_status_response_type = I, this.revokeTokenTypes = h, this.revokeTokensOnSignout = _, this.includeIdTokenInSilentSignout = m, this.accessTokenExpiringNotificationTimeInSeconds = v, k)
+      this.userStore = k;
     else {
-      const k = typeof window < "u" ? window.sessionStorage : new me();
-      this.userStore = new ye({ store: k });
+      const C = typeof window < "u" ? window.sessionStorage : new Se();
+      this.userStore = new ve({ store: C });
     }
   }
-}, Q = class extends be {
+}, Z = class extends Ie {
   constructor({
-    silentRequestTimeoutInSeconds: e = Te
+    silentRequestTimeoutInSeconds: e = Re
   }) {
-    super(), this._logger = new f("IFrameWindow"), this._timeoutInSeconds = e, this._frame = Q.createHiddenIframe(), this._window = this._frame.contentWindow;
+    super(), this._logger = new f("IFrameWindow"), this._timeoutInSeconds = e, this._frame = Z.createHiddenIframe(), this._window = this._frame.contentWindow;
   }
   static createHiddenIframe() {
     const e = window.document.createElement("iframe");
@@ -2389,15 +2434,15 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   }
   async navigate(e) {
     this._logger.debug("navigate: Using timeout of:", this._timeoutInSeconds);
-    const t = setTimeout(() => this._abort.raise(new Z("IFrame timed out without a response")), this._timeoutInSeconds * 1e3);
+    const t = setTimeout(() => this._abort.raise(new se("IFrame timed out without a response")), this._timeoutInSeconds * 1e3);
     return this._disposeHandlers.add(() => clearTimeout(t)), await super.navigate(e);
   }
   close() {
     var e;
     this._frame && (this._frame.parentNode && (this._frame.addEventListener("load", (t) => {
-      var r;
+      var s;
       const i = t.target;
-      (r = i.parentNode) == null || r.removeChild(i), this._abort.raise(new Error("IFrame removed from DOM"));
+      (s = i.parentNode) == null || s.removeChild(i), this._abort.raise(new Error("IFrame removed from DOM"));
     }, !0), (e = this._frame.contentWindow) == null || e.location.replace("about:blank")), this._frame = null), this._window = null;
   }
   static notifyParent(e, t) {
@@ -2410,27 +2455,27 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   async prepare({
     silentRequestTimeoutInSeconds: e = this._settings.silentRequestTimeoutInSeconds
   }) {
-    return new Q({ silentRequestTimeoutInSeconds: e });
+    return new Z({ silentRequestTimeoutInSeconds: e });
   }
   async callback(e) {
-    this._logger.create("callback"), Q.notifyParent(e, this._settings.iframeNotifyParentOrigin);
+    this._logger.create("callback"), Z.notifyParent(e, this._settings.iframeNotifyParentOrigin);
   }
-}, yt = 500, he = class extends be {
+}, yt = 500, ue = class extends Ie {
   constructor({
-    popupWindowTarget: e = Ie,
+    popupWindowTarget: e = Ce,
     popupWindowFeatures: t = {}
   }) {
     super(), this._logger = new f("PopupWindow");
-    const r = ae.center({ ...ke, ...t });
-    this._window = window.open(void 0, e, ae.serialize(r));
+    const s = he.center({ ...Te, ...t });
+    this._window = window.open(void 0, e, he.serialize(s));
   }
   async navigate(e) {
     var t;
     (t = this._window) == null || t.focus();
-    const r = setInterval(() => {
+    const s = setInterval(() => {
       (!this._window || this._window.closed) && this._abort.raise(new Error("Popup closed by user"));
     }, yt);
-    return this._disposeHandlers.add(() => clearInterval(r)), await super.navigate(e);
+    return this._disposeHandlers.add(() => clearInterval(s)), await super.navigate(e);
   }
   close() {
     this._window && (this._window.closed || (this._window.close(), this._abort.raise(new Error("Popup closed")))), this._window = null;
@@ -2448,10 +2493,10 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     popupWindowFeatures: e = this._settings.popupWindowFeatures,
     popupWindowTarget: t = this._settings.popupWindowTarget
   }) {
-    return new he({ popupWindowFeatures: e, popupWindowTarget: t });
+    return new ue({ popupWindowFeatures: e, popupWindowTarget: t });
   }
   async callback(e, t = !1) {
-    this._logger.create("callback"), he.notifyOpener(e, t);
+    this._logger.create("callback"), ue.notifyOpener(e, t);
   }
 }, vt = class {
   constructor(e) {
@@ -2461,11 +2506,11 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     redirectMethod: e = this._settings.redirectMethod,
     redirectTarget: t = this._settings.redirectTarget
   }) {
-    var r;
+    var s;
     this._logger.create("prepare");
     let i = window.self;
-    t === "top" && (i = (r = window.top) != null ? r : window.self);
-    const s = i.location[e].bind(i.location);
+    t === "top" && (i = (s = window.top) != null ? s : window.self);
+    const r = i.location[e].bind(i.location);
     let n;
     return {
       navigate: async (o) => {
@@ -2473,7 +2518,7 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
         const c = new Promise((d, l) => {
           n = l;
         });
-        return s(o.url), await c;
+        return r(o.url), await c;
       },
       close: () => {
         this._logger.create("close"), n == null || n(new Error("Redirect aborted")), i.stop();
@@ -2544,12 +2589,12 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       const t = this._logger.create("_tokenExpiring");
       try {
         await this._userManager.signinSilent(), t.debug("silent token renewal successful");
-      } catch (r) {
-        if (r instanceof Z) {
-          t.warn("ErrorTimeout from signinSilent:", r, "retry in 5s"), this._retryTimer.init(5);
+      } catch (s) {
+        if (s instanceof se) {
+          t.warn("ErrorTimeout from signinSilent:", s, "retry in 5s"), this._retryTimer.init(5);
           return;
         }
-        t.error("Error from signinSilent:", r), this._userManager.events._raiseSilentRenewError(r);
+        t.error("Error from signinSilent:", s), this._userManager.events._raiseSilentRenewError(s);
       }
     };
   }
@@ -2569,7 +2614,7 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   }
 }, It = class {
   constructor(e) {
-    this.refresh_token = e.refresh_token, this.id_token = e.id_token, this.session_state = e.session_state, this.scope = e.scope, this.data = e.state;
+    this.refresh_token = e.refresh_token, this.id_token = e.id_token, this.session_state = e.session_state, this.scope = e.scope, this.profile = e.profile, this.data = e.state;
   }
 }, Tt = class {
   constructor(e) {
@@ -2593,67 +2638,77 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     this._logger.create("signinRedirect");
     const {
       redirectMethod: t,
-      ...r
+      ...s
     } = e, i = await this._redirectNavigator.prepare({ redirectMethod: t });
     await this._signinStart({
       request_type: "si:r",
-      ...r
+      ...s
     }, i);
   }
   async signinRedirectCallback(e = window.location.href) {
-    const t = this._logger.create("signinRedirectCallback"), r = await this._signinEnd(e);
-    return r.profile && r.profile.sub ? t.info("success, signed in subject", r.profile.sub) : t.info("no subject"), r;
+    const t = this._logger.create("signinRedirectCallback"), s = await this._signinEnd(e);
+    return s.profile && s.profile.sub ? t.info("success, signed in subject", s.profile.sub) : t.info("no subject"), s;
+  }
+  async signinResourceOwnerCredentials({
+    username: e,
+    password: t,
+    skipUserInfo: s = !1
+  }) {
+    const i = this._logger.create("signinResourceOwnerCredential"), r = await this._client.processResourceOwnerPasswordCredentials({ username: e, password: t, skipUserInfo: s });
+    i.debug("got signin response");
+    const n = await this._buildUser(r);
+    return n.profile && n.profile.sub ? i.info("success, signed in subject", n.profile.sub) : i.info("no subject"), n;
   }
   async signinPopup(e = {}) {
     const t = this._logger.create("signinPopup"), {
-      popupWindowFeatures: r,
+      popupWindowFeatures: s,
       popupWindowTarget: i,
-      ...s
+      ...r
     } = e, n = this.settings.popup_redirect_uri;
     n || t.throw(new Error("No popup_redirect_uri configured"));
-    const o = await this._popupNavigator.prepare({ popupWindowFeatures: r, popupWindowTarget: i }), c = await this._signin({
+    const o = await this._popupNavigator.prepare({ popupWindowFeatures: s, popupWindowTarget: i }), c = await this._signin({
       request_type: "si:p",
       redirect_uri: n,
       display: "popup",
-      ...s
+      ...r
     }, o);
     return c && (c.profile && c.profile.sub ? t.info("success, signed in subject", c.profile.sub) : t.info("no subject")), c;
   }
   async signinPopupCallback(e = window.location.href, t = !1) {
-    const r = this._logger.create("signinPopupCallback");
-    await this._popupNavigator.callback(e, t), r.info("success");
+    const s = this._logger.create("signinPopupCallback");
+    await this._popupNavigator.callback(e, t), s.info("success");
   }
   async signinSilent(e = {}) {
     var t;
-    const r = this._logger.create("signinSilent"), {
+    const s = this._logger.create("signinSilent"), {
       silentRequestTimeoutInSeconds: i,
-      ...s
+      ...r
     } = e;
     let n = await this._loadUser();
     if (n != null && n.refresh_token) {
-      r.debug("using refresh token");
+      s.debug("using refresh token");
       const l = new It(n);
       return await this._useRefreshToken(l);
     }
     const o = this.settings.silent_redirect_uri;
-    o || r.throw(new Error("No silent_redirect_uri configured"));
+    o || s.throw(new Error("No silent_redirect_uri configured"));
     let c;
-    n && this.settings.validateSubOnSilentRenew && (r.debug("subject prior to silent renew:", n.profile.sub), c = n.profile.sub);
+    n && this.settings.validateSubOnSilentRenew && (s.debug("subject prior to silent renew:", n.profile.sub), c = n.profile.sub);
     const d = await this._iframeNavigator.prepare({ silentRequestTimeoutInSeconds: i });
     return n = await this._signin({
       request_type: "si:s",
       redirect_uri: o,
       prompt: "none",
       id_token_hint: this.settings.includeIdTokenInSilentRenew ? n == null ? void 0 : n.id_token : void 0,
-      ...s
-    }, d, c), n && ((t = n.profile) != null && t.sub ? r.info("success, signed in subject", n.profile.sub) : r.info("no subject")), n;
+      ...r
+    }, d, c), n && ((t = n.profile) != null && t.sub ? s.info("success, signed in subject", n.profile.sub) : s.info("no subject")), n;
   }
   async _useRefreshToken(e) {
     const t = await this._client.useRefreshToken({
       state: e,
       timeoutInSeconds: this.settings.silentRequestTimeoutInSeconds
-    }), r = new W({ ...e, ...t });
-    return await this.storeUser(r), this._events.load(r), r;
+    }), s = new W({ ...e, ...t });
+    return await this.storeUser(s), this._events.load(s), s;
   }
   async signinSilentCallback(e = window.location.href) {
     const t = this._logger.create("signinSilentCallback");
@@ -2673,14 +2728,17 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     }
   }
   async signoutCallback(e = window.location.href, t = !1) {
-    const { state: r } = await this._client.readSignoutResponseState(e);
-    if (r)
-      switch (r.request_type) {
+    const { state: s } = await this._client.readSignoutResponseState(e);
+    if (s)
+      switch (s.request_type) {
         case "so:r":
           await this.signoutRedirectCallback(e);
           break;
         case "so:p":
           await this.signoutPopupCallback(e, t);
+          break;
+        case "so:s":
+          await this.signoutSilentCallback(e);
           break;
         default:
           throw new Error("invalid response_type in state");
@@ -2688,13 +2746,13 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
   }
   async querySessionStatus(e = {}) {
     const t = this._logger.create("querySessionStatus"), {
-      silentRequestTimeoutInSeconds: r,
+      silentRequestTimeoutInSeconds: s,
       ...i
-    } = e, s = this.settings.silent_redirect_uri;
-    s || t.throw(new Error("No silent_redirect_uri configured"));
-    const n = await this._loadUser(), o = await this._iframeNavigator.prepare({ silentRequestTimeoutInSeconds: r }), c = await this._signinStart({
+    } = e, r = this.settings.silent_redirect_uri;
+    r || t.throw(new Error("No silent_redirect_uri configured"));
+    const n = await this._loadUser(), o = await this._iframeNavigator.prepare({ silentRequestTimeoutInSeconds: s }), c = await this._signinStart({
       request_type: "si:s",
-      redirect_uri: s,
+      redirect_uri: r,
       prompt: "none",
       id_token_hint: this.settings.includeIdTokenInSilentRenew ? n == null ? void 0 : n.id_token : void 0,
       response_type: this.settings.query_status_response_type,
@@ -2723,111 +2781,130 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
       throw d;
     }
   }
-  async _signin(e, t, r) {
+  async _signin(e, t, s) {
     const i = await this._signinStart(e, t);
-    return await this._signinEnd(i.url, r);
+    return await this._signinEnd(i.url, s);
   }
   async _signinStart(e, t) {
-    const r = this._logger.create("_signinStart");
+    const s = this._logger.create("_signinStart");
     try {
       const i = await this._client.createSigninRequest(e);
-      return r.debug("got signin request"), await t.navigate({
+      return s.debug("got signin request"), await t.navigate({
         url: i.url,
         state: i.state.id,
         response_mode: i.state.response_mode,
         scriptOrigin: this.settings.iframeScriptOrigin
       });
     } catch (i) {
-      throw r.debug("error after preparing navigator, closing navigator window"), t.close(), i;
+      throw s.debug("error after preparing navigator, closing navigator window"), t.close(), i;
     }
   }
   async _signinEnd(e, t) {
-    const r = this._logger.create("_signinEnd"), i = await this._client.processSigninResponse(e);
-    r.debug("got signin response");
-    const s = new W(i);
+    const s = this._logger.create("_signinEnd"), i = await this._client.processSigninResponse(e);
+    return s.debug("got signin response"), await this._buildUser(i, t);
+  }
+  async _buildUser(e, t) {
+    const s = this._logger.create("_buildUser"), i = new W(e);
     if (t) {
-      if (t !== s.profile.sub)
-        throw r.debug("current user does not match user returned from signin. sub from signin:", s.profile.sub), new j({ ...i, error: "login_required" });
-      r.debug("current user matches user returned from signin");
+      if (t !== i.profile.sub)
+        throw s.debug("current user does not match user returned from signin. sub from signin:", i.profile.sub), new j({ ...e, error: "login_required" });
+      s.debug("current user matches user returned from signin");
     }
-    return await this.storeUser(s), r.debug("user stored"), this._events.load(s), s;
+    return await this.storeUser(i), s.debug("user stored"), this._events.load(i), i;
   }
   async signoutRedirect(e = {}) {
     const t = this._logger.create("signoutRedirect"), {
-      redirectMethod: r,
+      redirectMethod: s,
       ...i
-    } = e, s = await this._redirectNavigator.prepare({ redirectMethod: r });
+    } = e, r = await this._redirectNavigator.prepare({ redirectMethod: s });
     await this._signoutStart({
       request_type: "so:r",
       post_logout_redirect_uri: this.settings.post_logout_redirect_uri,
       ...i
-    }, s), t.info("success");
+    }, r), t.info("success");
   }
   async signoutRedirectCallback(e = window.location.href) {
-    const t = this._logger.create("signoutRedirectCallback"), r = await this._signoutEnd(e);
-    return t.info("success"), r;
+    const t = this._logger.create("signoutRedirectCallback"), s = await this._signoutEnd(e);
+    return t.info("success"), s;
   }
   async signoutPopup(e = {}) {
     const t = this._logger.create("signoutPopup"), {
-      popupWindowFeatures: r,
+      popupWindowFeatures: s,
       popupWindowTarget: i,
-      ...s
-    } = e, n = this.settings.popup_post_logout_redirect_uri, o = await this._popupNavigator.prepare({ popupWindowFeatures: r, popupWindowTarget: i });
+      ...r
+    } = e, n = this.settings.popup_post_logout_redirect_uri, o = await this._popupNavigator.prepare({ popupWindowFeatures: s, popupWindowTarget: i });
     await this._signout({
       request_type: "so:p",
       post_logout_redirect_uri: n,
       state: n == null ? void 0 : {},
-      ...s
+      ...r
     }, o), t.info("success");
   }
   async signoutPopupCallback(e = window.location.href, t = !1) {
-    const r = this._logger.create("signoutPopupCallback");
-    await this._popupNavigator.callback(e, t), r.info("success");
+    const s = this._logger.create("signoutPopupCallback");
+    await this._popupNavigator.callback(e, t), s.info("success");
   }
   async _signout(e, t) {
-    const r = await this._signoutStart(e, t);
-    return await this._signoutEnd(r.url);
+    const s = await this._signoutStart(e, t);
+    return await this._signoutEnd(s.url);
   }
   async _signoutStart(e = {}, t) {
-    var r;
+    var s;
     const i = this._logger.create("_signoutStart");
     try {
-      const s = await this._loadUser();
-      i.debug("loaded current user from storage"), this.settings.revokeTokensOnSignout && await this._revokeInternal(s);
-      const n = e.id_token_hint || s && s.id_token;
+      const r = await this._loadUser();
+      i.debug("loaded current user from storage"), this.settings.revokeTokensOnSignout && await this._revokeInternal(r);
+      const n = e.id_token_hint || r && r.id_token;
       n && (i.debug("setting id_token_hint in signout request"), e.id_token_hint = n), await this.removeUser(), i.debug("user removed, creating signout request");
       const o = await this._client.createSignoutRequest(e);
       return i.debug("got signout request"), await t.navigate({
         url: o.url,
-        state: (r = o.state) == null ? void 0 : r.id
+        state: (s = o.state) == null ? void 0 : s.id
       });
-    } catch (s) {
-      throw i.debug("error after preparing navigator, closing navigator window"), t.close(), s;
+    } catch (r) {
+      throw i.debug("error after preparing navigator, closing navigator window"), t.close(), r;
     }
   }
   async _signoutEnd(e) {
-    const t = this._logger.create("_signoutEnd"), r = await this._client.processSignoutResponse(e);
-    return t.debug("got signout response"), r;
+    const t = this._logger.create("_signoutEnd"), s = await this._client.processSignoutResponse(e);
+    return t.debug("got signout response"), s;
+  }
+  async signoutSilent(e = {}) {
+    var t;
+    const s = this._logger.create("signoutSilent"), {
+      silentRequestTimeoutInSeconds: i,
+      ...r
+    } = e, n = this.settings.includeIdTokenInSilentSignout ? (t = await this._loadUser()) == null ? void 0 : t.id_token : void 0, o = this.settings.popup_post_logout_redirect_uri, c = await this._iframeNavigator.prepare({ silentRequestTimeoutInSeconds: i });
+    await this._signout({
+      request_type: "so:s",
+      post_logout_redirect_uri: o,
+      id_token_hint: n,
+      ...r
+    }, c), s.info("success");
+  }
+  async signoutSilentCallback(e = window.location.href) {
+    const t = this._logger.create("signoutSilentCallback");
+    await this._iframeNavigator.callback(e), t.info("success");
   }
   async revokeTokens(e) {
     const t = await this._loadUser();
     await this._revokeInternal(t, e);
   }
   async _revokeInternal(e, t = this.settings.revokeTokenTypes) {
-    const r = this._logger.create("_revokeInternal");
+    const s = this._logger.create("_revokeInternal");
     if (!e)
       return;
-    const i = t.filter((s) => typeof e[s] == "string");
+    const i = t.filter((r) => typeof e[r] == "string");
     if (!i.length) {
-      r.debug("no need to revoke due to no token(s)");
+      s.debug("no need to revoke due to no token(s)");
       return;
     }
-    for (const s of i)
+    for (const r of i)
       await this._client.revokeToken(
-        e[s],
-        s
-      ), r.info(`${s} revoked successfully`), s !== "access_token" && (e[s] = null);
-    await this.storeUser(e), r.debug("user stored"), this._events.load(e);
+        e[r],
+        r
+      ), s.info(`${r} revoked successfully`), r !== "access_token" && (e[r] = null);
+    await this.storeUser(e), s.debug("user stored"), this._events.load(e);
   }
   startSilentRenew() {
     this._logger.create("startSilentRenew"), this._silentRenewService.start();
@@ -2846,17 +2923,17 @@ var Qe = "10000000-1000-4000-8000-100000000000", O = class {
     const t = this._logger.create("storeUser");
     if (e) {
       t.debug("storing user");
-      const r = e.toStorageString();
-      await this.settings.userStore.set(this._userStoreKey, r);
+      const s = e.toStorageString();
+      await this.settings.userStore.set(this._userStoreKey, s);
     } else
       this._logger.debug("removing user"), await this.settings.userStore.remove(this._userStoreKey);
   }
   async clearStaleState() {
     await this._client.clearStaleState();
   }
-}, Ct = "2.0.6", Ft = Ct;
-const Y = (e, t) => (e || (e = []), t || (t = []), Array.isArray(e) || (e = e.split(" ")), Array.isArray(t) || (t = t.split(" ")), e.concat(t).filter((r, i, s) => s.indexOf(r) === i).join(" ").trim()), Rt = "https://stage.identity.multicartshop.com", Pt = "https://identity.multicartshop.com", Et = "Multicart.TypeScript.Client";
-class Ce {
+}, Ct = "2.2.0", Ft = Ct;
+const ee = (e, t) => (e || (e = []), t || (t = []), Array.isArray(e) || (e = e.split(" ")), Array.isArray(t) || (t = t.split(" ")), e.concat(t).filter((s, i, r) => r.indexOf(s) === i).join(" ").trim()), Rt = "https://stage.identity.multicartshop.com", Pt = "https://identity.multicartshop.com", Et = "Multicart.TypeScript.Client";
+class Pe {
   constructor(t = {}) {
     this.configuration = t;
   }
@@ -2885,45 +2962,36 @@ class Ce {
     return this.configuration.scopes;
   }
 }
-const Re = new Ce();
+const Ee = new Pe();
 class At extends Tt {
-  constructor(t = Re) {
-    const r = {
+  constructor(t = Ee) {
+    const s = {
       authority: t.basePath,
       loadUserInfo: !0,
       client_id: t.client_id,
       redirect_uri: t.redirect_uri,
       post_logout_redirect_uri: t.logout_redirect_uri,
       client_secret: t.client_secret,
-      scope: Y(t.scopes)
+      scope: ee(t.scopes)
     };
-    super(r), this.configuration = t;
-  }
-  async signinPasswordGrant({
-    username: t,
-    password: r
-  }) {
-    const i = {
-      extraQueryParams: { username: t, password: r, grant_type: "password" }
-    };
-    return this.signinSilent(i);
+    super(s), this.configuration = t;
   }
   async signinClientCredentials({
     scopes: t
   } = {}) {
-    var r;
-    const i = this._logger.create("signinClientCredentials"), s = await this.metadataService.getTokenEndpoint().catch((l) => i.error(l));
-    if (!s)
+    var s;
+    const i = this._logger.create("signinClientCredentials"), r = await this.metadataService.getTokenEndpoint().catch((l) => i.error(l));
+    if (!r)
       throw new Error("Token endpoint not be empty");
     const {
       client_id: n,
       client_secret: o,
       scope: c
-    } = this.settings, d = Y(c, t);
+    } = this.settings, d = ee(c, t);
     if (!o)
       throw new Error("No client_secret configured");
     try {
-      const l = await (await fetch(s, {
+      const l = await (await fetch(r, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -2936,7 +3004,7 @@ class At extends Tt {
         }).toString(),
         mode: "cors"
       })).json(), p = new W(l);
-      return p.expires_at = Math.floor(Date.now() / 1e3) + ((r = l.expires_in) != null ? r : 0), await this.storeUser(p), i.debug("user stored"), this._events.load(p), p;
+      return p.expires_at = Math.floor(Date.now() / 1e3) + ((s = l.expires_in) != null ? s : 0), await this.storeUser(p), i.debug("user stored"), this._events.load(p), p;
     } catch (l) {
       throw i.error("Login failed", l), new Error("Login failed");
     }
@@ -2946,41 +3014,41 @@ const zt = ({
   oauthConfig: e,
   clientConfig: t
 } = {}) => {
-  if (Re.config = new Ce(
+  if (Ee.config = new Pe(
     Object.assign(
       {
         ...e
       },
-      { scopes: Y(e == null ? void 0 : e.scopes, ["multicart.api"]) }
+      { scopes: ee(e == null ? void 0 : e.scopes, ["multicart.api"]) }
     )
   ), !(t != null && t.accessToken)) {
-    const r = new At(), i = async () => {
-      const s = await r.signinSilent() || await r.signinPopup();
-      return s ? `Bearer ${s == null ? void 0 : s.access_token}` : "";
+    const s = new At(), i = async () => {
+      const r = await s.getUser() || await s.signinSilent() || await s.signinPopup();
+      return r ? `Bearer ${r == null ? void 0 : r.access_token}` : "";
     };
     t ? t.accessToken = i : t = { accessToken: i };
   }
-  ue.config = new le(t);
+  pe.config = new ge(t);
 };
 export {
   Ye as AccessTokenEvents,
-  qt as AdminCartItemApi,
+  Mt as AdminCartItemApi,
   Be as BASE_PATH,
-  X as BaseAPI,
+  te as BaseAPI,
   Bt as BlobApiResponse,
-  xt as COLLECTION_FORMATS,
+  Ut as COLLECTION_FORMATS,
   Nt as CartItemApi,
   Xe as CheckSessionIFrame,
-  le as Configuration,
-  ue as DefaultConfig,
-  Re as DefaultMulticartOAuthConfig,
+  ge as Configuration,
+  pe as DefaultConfig,
+  Ee as DefaultMulticartOAuthConfig,
   jt as EnPageDirection,
   Lt as EnPlatformType,
   j as ErrorResponse,
-  Z as ErrorTimeout,
+  se as ErrorTimeout,
   He as FetchError,
-  me as InMemoryWebStorage,
-  q as JSONApiResponse,
+  Se as InMemoryWebStorage,
+  N as JSONApiResponse,
   z as Log,
   f as Logger,
   Pt as MULTICART_AUTH_PROD_PATH,
@@ -2988,29 +3056,29 @@ export {
   Et as MULTICART_CLIENT_ID,
   Ze as MetadataService,
   At as MulticartOAuthClient,
-  Ce as MulticartOAuthConfiguration,
+  Pe as MulticartOAuthConfiguration,
   Ht as OfferApi,
   gt as OidcClient,
-  Se as OidcClientSettingsStore,
+  be as OidcClientSettingsStore,
   T as RequiredError,
   Ne as ResponseError,
   pt as SessionMonitor,
-  ce as SigninResponse,
-  te as SigninState,
+  V as SigninResponse,
+  re as SigninState,
   ut as SignoutResponse,
   D as State,
-  Mt as TextApiResponse,
+  qt as TextApiResponse,
   W as User,
   Tt as UserManager,
   wt as UserManagerSettingsStore,
   Dt as VariantCategoryDisplayType,
   Wt as VariantDisplayType,
   Ft as Version,
-  x as VoidApiResponse,
-  ye as WebStorageStateStore,
+  U as VoidApiResponse,
+  ve as WebStorageStateStore,
   Ot as canConsumeForm,
   zt as initializeMulticartApiClient,
-  Y as mergeScopes,
-  ge as querystring
+  ee as mergeScopes,
+  _e as querystring
 };
 //# sourceMappingURL=multicartshop-client.mjs.map
